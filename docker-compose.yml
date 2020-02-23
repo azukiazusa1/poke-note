@@ -1,0 +1,32 @@
+version: '3'
+services: 
+  web:
+    container_name: poke-note
+    build: 
+      context: .
+      dockerfile: ./Docker/php/Dockerfile
+    volumes: 
+      - .:/var/www/html:cached
+      - DATABASE_NAME=qa_app
+    command: bash -c "sh docker-init-setup.sh && apache2-foreground"
+    environment: 
+      - APP_DEFAULT_LOCALE=ja_JP
+      - APP_DEFAULT_TIMEZONE=Asia/Tokyo
+      - DATABASE_HOST=poke-note-db
+      - DATABASE_USER=root
+      - DATABASE_PASS=v6NXfEpc
+      - DATABASE_NAME=poke_note
+    ports: 
+      - "5000:80"
+  db:
+    container_name: poke-note-db
+    build: 
+      context: .
+      dockerfile: ./Docker/mysql/Dockerfile
+    volumes: 
+      - ./Docker/mysql/sqls:/docker-entrypoint-initdb.d
+      - ./Docker/mysql/data:/var/lib/mysql
+    environment: 
+      - MYSQL_ROOT_PASSWORD=v6NXfEpc
+    ports: 
+      - "13306:3306"

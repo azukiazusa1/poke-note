@@ -1,0 +1,10 @@
+a.title:hover {
+  color: #37474f;
+  text-decoration:underline
+}
+
+a.title {
+  color: #000;
+  font-weight:bold;
+  text-decoration:none; 
+}
