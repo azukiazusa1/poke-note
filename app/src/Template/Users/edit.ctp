@@ -8,7 +8,8 @@
                     ['class' => 'collection-item black-text']) ?>
                 <?= $this->Html->link('パスワード', ['controller' => 'Users', 'action' => 'password'],
                     ['class' => 'collection-item black-text']) ?>
-                <a href="#!" class="collection-item black-text">Alvin</a>
+                <?= $this->Html->link('アカウントを削除', ['controller' => 'Users', 'action' => 'delete'],
+                    ['class' => 'collection-item black-text']) ?>
             </div>
         </div>
         <div class="col m9 s12">

@@ -44,12 +44,15 @@ class UsersTable extends Table
 
         $this->hasMany('Articles', [
             'foreignKey' => 'user_id',
+            'dependent' => true
         ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'user_id',
+            'dependent' => true
         ]);
         $this->hasMany('Favorites', [
             'foreignKey' => 'user_id',
+            'dependent' => true
         ]);
     }
 

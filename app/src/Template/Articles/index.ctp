@@ -35,7 +35,7 @@
                             <i class="tiny material-icons">date_range</i>
                             <?= h($article->created->format('Y/m/d')) ?>
                         </span>
-                        <span class="grey-text darken-1"> <i class="tiny material-icons light-blue-text">star</i> 10</span>
+                        <span class="grey-text darken-1"> <i class="tiny material-icons red-text accent-2">thumb_up</i> 10</span>
                     </p>
                 <?php endforeach ?>
             </ul>

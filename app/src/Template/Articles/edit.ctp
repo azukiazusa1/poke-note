@@ -1,11 +1,15 @@
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
+<?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <?= $this->Form->create($article, [
     'v-on:submit' => 'onSubmit'
 ]) ?>
-<?= $this->Form->control('title', ['label' => 'タイトル']) ?>
-<?= $this->Form->control('tag', ['label' => 'タグ']) ?>
+<?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate']) ?>
+<div class="chips chips-autocomplete"></div>
+<div id="chips-container">
+
+</div>
 <?= $this->Form->control('body', ['class' => 'hidden', 'label' => false, 'id' => 'body']) ?>
 <div id="app">
     <textarea name="body" class='hidden'>{{ value }}</textarea>
@@ -36,7 +40,38 @@ new Vue({
 })
 
 document.addEventListener('DOMContentLoaded', function() {
-    const elems = document.querySelectorAll('.tooltipped');
-    const instances = M.Tooltip.init(elems);
-  });
+    const tootip = document.querySelectorAll('.tooltipped')
+    M.Tooltip.init(tootip)
+
+    const chip = document.querySelectorAll('.chips')
+    const chipsContainer = document.getElementById('chips-container')
+    const chipInstance = M.Chips.init(chip, {
+        'data': [
+            {tag: 'ローブシン'},
+            {tag: 'ガオガエン'}
+        ],
+        'autocompleteOptions': {
+            'data': {
+                'シングル': null,
+                'ダブルバトル': null
+            }
+        },
+        'limit': 5,
+        'onChipAdd': (e, chip) => {
+            const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
+            axios.get(`/tags/add/${chipText}`)
+                .then(({data}) => {
+                    const hidden = document.createElement('input')
+                    hidden.type = 'hidden'
+                    hidden.name = 'tags[][id]'
+                    hidden.value = data.id
+                    chipsContainer.append(hidden)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        }
+    });
+});
 </script>

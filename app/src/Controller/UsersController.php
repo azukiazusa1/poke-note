@@ -92,13 +92,44 @@ class UsersController extends AppController
 		}
 	}
 
+	public function email()
+	{
+
+	}
+
+	public function delete()
+	{
+		$id = $this->Auth->user('id');
+		$user = $this->Users->get($id);
+		$this->set(compact('user'));
+		if ($this->request->is('post')) {
+			if (!password_verify($this->request->getData('password'), $user->password)) {
+				$this->Flash->error('現在のパスワードと一致しません。');
+				return $this->render();
+			} 
+
+			if ($this->Users->delete($user)) {
+				$this->Flash->success('アカウントを削除いたしました。今までのご利用ありがとうございました。');
+				return $this->redirect($this->Auth->logout());
+			} else {
+				$this->Flash->error('アカウントの削除に失敗しました。');
+			}
+		}
+	}
+
 	public function signup()
 	{
 		$user = $this->Users->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
+			if ($user->errors()) {
+				return $this->render();
+			}
+			$user->image = 'user/default.jpg';
 			if ($this->Users->save($user)) {
 				$this->Flash->success('ユーザー登録に成功しました。');
+				$this->Auth->setUser($user);
+				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Flash->success('ユーザー登録に成功しました。');
 			}

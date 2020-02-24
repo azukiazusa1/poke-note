@@ -27,6 +27,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css') ?>
     <?= $this->Html->css('my-style.css') ?>
+    <?= $this->Html->css("https://use.fontawesome.com/releases/v5.6.1/css/all.css") ?>
     <?= $this->Html->css('https://fonts.googleapis.com/icon?family=Material+Icons') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
