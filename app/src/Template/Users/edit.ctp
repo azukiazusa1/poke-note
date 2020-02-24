@@ -1,15 +1,17 @@
 <div class="container">
     <div class="row">
-        <div class="col m3">
+        <div class="col m3 s12">
             <div class="collection">
                 <?= $this->Html->link('プロフィール編集', ['controller' => 'Users', 'action' => 'edit'],
                     ['class' => 'collection-item red accent-2 white-text']) ?>
-                <a href="#!" class="collection-item black-text">Alvin</a>
-                <a href="#!" class="collection-item black-text">Alvin</a>
+                <?= $this->Html->link('メールアドレス', ['controller' => 'Users', 'action' => 'email'],
+                    ['class' => 'collection-item black-text']) ?>
+                <?= $this->Html->link('パスワード', ['controller' => 'Users', 'action' => 'password'],
+                    ['class' => 'collection-item black-text']) ?>
                 <a href="#!" class="collection-item black-text">Alvin</a>
             </div>
         </div>
-        <div class="col m9">
+        <div class="col m9 s12">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><h4>プロフィール編集 / @<?= h($user->username) ?></p></h4></span>

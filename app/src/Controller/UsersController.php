@@ -67,6 +67,31 @@ class UsersController extends AppController
 		$this->set(compact('user'));
 	}
 
+	public function password()
+	{
+		$id = $this->Auth->user('id');
+		$user = $this->Users->get($id);
+		$this->set(compact('user'));
+
+		if ($this->request->is('post')) {
+			if (!password_verify($this->request->getData('old_password'), $user->password)) {
+				$this->Flash->error('現在のパスワードと一致しません。');
+				return $this->render();
+			} 
+
+			$user = $this->Users->patchEntity($user, $this->request->getData());
+			if ($user->errors()) {
+				return $this->render();
+			}
+
+			if ($this->Users->save($user)) {
+				$this->Flash->success('パスワードの変更に成功しました。');
+			} else {
+				$this->Flash->error('パスワードの変更に失敗しました。');
+			}
+		}
+	}
+
 	public function signup()
 	{
 		$user = $this->Users->newEntity();
