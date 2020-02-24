@@ -24,7 +24,7 @@
                     <div class="file-field input-field">
                         <div class="btn red accent-2">
                             <span>プロフィール画像</span>
-                            <input type="file" name="image_file">
+                            <input type="file" name="image_file" accept="image/*">
                         </div>
                     <div class="file-path-wrapper">
                         <input type="text" class="file-path validate" />
