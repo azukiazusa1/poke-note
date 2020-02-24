@@ -7,10 +7,13 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `nickname` varchar(32),
   `email` varchar(255) NOT NULL,
+  `image` varchar(255),
+  'description' varchar(255),
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `articles` (
