@@ -3,8 +3,18 @@ a.title:hover {
   text-decoration:underline
 }
 
-a.title {
-  color: #000;
+a.title{
+  color: #000!important;
   font-weight:bold;
   text-decoration:none; 
+}
+
+.icon-image {
+  width: 42px!important;
+  height: 42px!important;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none!important;
 }

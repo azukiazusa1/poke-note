@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use RuntimeException;
+
 class UsersController extends AppController 
 {
 	/**
@@ -15,16 +17,54 @@ class UsersController extends AppController
 		$this->Auth->allow('signup');
 	}
 
-	/**
-	 * 記事一覧画面
-	 *
-	 * @return \Cake\Http\Response|void
-	 */
-	public function index()
+	public function show()
 	{
-		$articles = $this->paginate($this->Articles->find('all'));
 
-		$this->set(compact('articles'));
+	}
+
+	public function edit()
+	{
+		$id = $this->Auth->user('id');
+		$user = $this->Users->get($id);
+		if ($this->request->is('put')) {
+			$user = $this->Users->patchEntity($user, $this->request->getData());
+			$file = $this->request->getData('image_file');
+			try {
+				if (is_uploaded_file($file['tmp_name']) && $file['error'] === 0) {
+					$ext = array_search(mime_content_type($file['tmp_name']), [
+						'gif' => 'image/gif',
+						'jpg' => 'image/jpeg',
+						'png' => 'image/png',
+					], true);
+
+					if (!$ext) {
+						throw new RuntimeException('ファイル形式が不正です。');
+					}
+
+					$filename = 'user/' . sha1_file($file['tmp_name']) . '.' . $ext;
+					$path = '../webroot/img/' . $filename;
+
+					if (!move_uploaded_file($file['tmp_name'], $path)) {
+						throw new RuntimeException('ファイル保存時にエラーが発生しました。');
+					}
+
+					chmod($path, 0644);
+					$user->image = $filename;
+				}
+			} catch (RuntimeException $e) {
+				$this->Flash->error($e->getMessage());
+				return $this->render();
+			}
+
+			if ($this->Users->save($user)) {
+				$this->Flash->success('プロフィール編集に成功しました。');
+			} else {
+				$this->Flash->error('プロフィール編集に失敗しました。');
+			}
+
+		}
+
+		$this->set(compact('user'));
 	}
 
 	public function signup()

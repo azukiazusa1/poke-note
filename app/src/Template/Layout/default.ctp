@@ -33,24 +33,49 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
+    <ul id="dropdown1" class="dropdown-content">
+        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show'])?></li>
+        <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
+        <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
+    </ul>
     <nav class="red accent-2">
         <div class="nav-wrapper">
             <?= $this->Html->link('Logo',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo'])?>
             <ul class="right hide-on-med-and-down">
-                <li><?= $this->Html->link('ログイン', ['controller' => 'Users', 'action' => 'login'])?></li>
-                <li><?= $this->Html->link('ユーザー登録',['controller' => 'Users', 'action' => 'signup'])?></li>
-                <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-                <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-                <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+                <?php if (isset($login_user)): ?>
+                    <li>
+                        <?= $this->Html->link('投稿する<i class="material-icons left">create</i>', 
+                        ['controller' => 'Articles', 'action' => 'new'],
+                        ['escape' => false, 'class' => 'btn red darken-3']
+                        )?>
+                    </li>
+                    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+                    <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                        <?= $this->Html->image($login_user->image, [
+                            'alt' => 'Author',
+                            'class' => 'responsive-img circle icon-image',
+                        ])?>
+                        <i class="material-icons right">arrow_drop_down</i></a></li>
+                <?php else: ?>
+                    <li><?= $this->Html->link('ログイン', ['controller' => 'Users', 'action' => 'login'])?></li>
+                    <li><?= $this->Html->link('ユーザー登録',['controller' => 'Users', 'action' => 'signup'])?></li>
+                <?php endif ?>
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <?= $this->Flash->render() ?>
-        <?= $this->fetch('content') ?>
-    </div>
+    <?= $this->Flash->render() ?>
+    <?= $this->fetch('content') ?>
     <footer>
     </footer>
     <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const elems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(elems, {
+                coverTrigger: false
+            });
+        });
+    </script>
 </body>
 </html>

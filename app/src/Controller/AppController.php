@@ -40,6 +40,7 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+        $this->loadModel('Users');
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
@@ -65,6 +66,11 @@ class AppController extends Controller
             ],
             'authError' => 'ログインが必要です'
         ]);
+
+        if ($this->Auth->user('id')) {
+            $login_user = $this->Users->get($this->Auth->user('id'));
+            $this->set(compact('login_user'));
+        }
 
         /*
          * Enable the following component for recommended CakePHP security settings.

@@ -12,7 +12,7 @@ class ArticlesController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow('index');
+        $this->Auth->allow(['index', 'show']);
     }
 
     /**
@@ -22,8 +22,35 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-        $articles = $this->paginate($this->Articles->find('all'));
-
+        $articles = $this->paginate($this->Articles->find('all')->contain(['Users']));
         $this->set(compact('articles'));
+    }
+
+    public function new()
+    {
+        $article = $this->Articles->newEntity();
+        $this->set(compact('article'));
+        $this->render('edit');
+    }
+
+    public function show(int $id = null)
+    {
+        $article = $this->Articles->get($id);
+        $this->set(compact('article'));
+    }
+
+    public function edit($id = null)
+    {
+        $article = $this->Articles->newEntity();
+        if ($this->request->is('post')) {
+            $article = $this->Articles->patchEntity($article, $this->request->getData());
+            $article->user_id = $this->Auth->user('id');
+            if ($this->Articles->save($article)) {
+                $this->Flash->success('投稿に成功しました。');
+                $this->redirect(['controller' => 'Articles', 'action' => 'show', $article->id]);
+            }
+        }
+        $this->set(compact('article'));
+
     }
 }
