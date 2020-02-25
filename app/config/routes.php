@@ -69,7 +69,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/signin', ['controller' => 'Users', 'action' => 'signin']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
-    $routes->connect('/tags/:title', ['controller' => 'Tags', 'action' => 'search']);
+    $routes->connect('/tags/search/:title', ['controller' => 'Tags', 'action' => 'search']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.
@@ -98,6 +98,13 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+
+Router::prefix('api', function (RouteBuilder $routes) {
+    
+    $routes->setExtensions(['json']);
+    $routes->resources('Tags');
+
+});
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.

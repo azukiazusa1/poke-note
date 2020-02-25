@@ -13,24 +13,7 @@ class TagsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->Auth->allow(['add']);
-    }
-
-    public function add(string $title = null)
-    {
-        if ($this->request->is('post')) {
-            $this->autoRender = false;
-            $this->response->type('json');
-            $tag = $this->Tags->find()
-                ->where(['title' => $title])
-                ->first();
-            if (!isset($tag)) {
-                $tag = $this->Tags->newEntity();
-                $tag->title = $title;
-                $this->Tags->save($tag);
-            }
-            $this->response->body(json_encode($tag));
-        }
+        $this->Auth->allow(['index','add']);
     }
 
     public function search(string $title = null)

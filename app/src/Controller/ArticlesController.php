@@ -55,11 +55,11 @@ class ArticlesController extends AppController
         if ($this->Auth->user('id') !== $article->user_id) {
             throw new ForbiddenException();
         }
-        if ($this->request->is('post')) {
+        if ($this->request->is('put')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
             $article->user_id = $this->Auth->user('id');
             if ($this->Articles->save($article)) {
-                $this->Flash->success('投稿に成功しました。');
+                $this->Flash->success('更新に成功しました。');
                 $this->redirect(['controller' => 'Articles', 'action' => 'show', $article->id]);
             }
         }

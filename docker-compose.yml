@@ -14,7 +14,7 @@ services:
       - APP_DEFAULT_TIMEZONE=Asia/Tokyo
       - DATABASE_HOST=poke-note-db
       - DATABASE_USER=root
-      - DATABASE_PASS=v6NXfEpc
+      - DATABASE_PASS=YOUR_PASS
       - DATABASE_NAME=poke_note
     ports: 
       - "5000:80"
@@ -27,6 +27,6 @@ services:
       - ./Docker/mysql/sqls:/docker-entrypoint-initdb.d
       - ./Docker/mysql/data:/var/lib/mysql
     environment: 
-      - MYSQL_ROOT_PASSWORD=v6NXfEpc
+      - MYSQL_ROOT_PASSWORD=YOUR_PASS
     ports: 
       - "13306:3306"

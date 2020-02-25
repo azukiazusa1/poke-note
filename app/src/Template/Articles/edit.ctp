@@ -8,7 +8,11 @@
 <?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate']) ?>
 <div class="chips chips-autocomplete"></div>
 <div id="chips-container">
-
+    <?php if (isset($article->tags) && count($article->tags) > 0): ?>
+        <?php foreach ($article->tags as $tag): ?>
+            <?= $this->Form->hidden('tags[][id]', ['value' => $tag->id, 'id' => $tag->title, 'class' => 'tags']) ?>
+        <?php endforeach ?>
+    <?php endif ?>
 </div>
 <?= $this->Form->control('body', ['class' => 'hidden', 'label' => false, 'id' => 'body']) ?>
 <div id="app">
@@ -40,38 +44,59 @@ new Vue({
 })
 
 document.addEventListener('DOMContentLoaded', function() {
+    const articleId = '<?= $article->id?>';
     const tootip = document.querySelectorAll('.tooltipped')
     M.Tooltip.init(tootip)
 
     const chip = document.querySelectorAll('.chips')
     const chipsContainer = document.getElementById('chips-container')
-    const chipInstance = M.Chips.init(chip, {
-        'data': [
-            {tag: 'ローブシン'},
-            {tag: 'ガオガエン'}
-        ],
-        'autocompleteOptions': {
-            'data': {
-                'シングル': null,
-                'ダブルバトル': null
-            }
-        },
-        'limit': 5,
-        'onChipAdd': (e, chip) => {
-            const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
-            axios.get(`/tags/add/${chipText}`)
-                .then(({data}) => {
-                    const hidden = document.createElement('input')
-                    hidden.type = 'hidden'
-                    hidden.name = 'tags[][id]'
-                    hidden.value = data.id
-                    chipsContainer.append(hidden)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
-        }
+    const tags = chipsContainer.querySelectorAll('.tags')
+    let tagsData = [];
+    tags.forEach(tag => {
+        tagsData.push({tag: tag.id})
     });
+    (async () => {
+        const autocompleteData = {}
+        await axios.get('/api/tags.json')
+            .then(({data}) => {
+                data.tags.forEach(tag => {
+                    autocompleteData[tag.title] = null
+                })
+            }).catch(error => {
+                console.log(error)
+            })
+
+        const chipInstance = M.Chips.init(chip, {
+            'data': tagsData,
+            'autocompleteOptions': {
+                'data': autocompleteData
+            },
+            'limit': 5,
+            'onChipAdd': (e, chip) => {
+                const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
+                axios.post('/api/tags/.json', {'data': chipText})
+                    .then(({data}) => {
+                        console.log(data)
+                        const hidden = document.createElement('input')
+                        hidden.type = 'hidden'
+                        hidden.name = 'tags[][id]'
+                        hidden.value = data.tag.id
+                        hidden.id = data.tag.title
+                        hidden.class = 'tags'
+                        chipsContainer.append(hidden)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+            },
+            'onChipDelete': (e, chip) => {
+                const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
+                const deleteTag = document.getElementById(chipText)
+                axios.delete(`/api/tags/${deleteTag.value}.json`, {'data': articleId})
+                deleteTag.remove()
+            }
+        });
+    })()
 });
 </script>
