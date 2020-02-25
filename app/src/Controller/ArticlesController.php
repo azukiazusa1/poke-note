@@ -46,7 +46,8 @@ class ArticlesController extends AppController
     public function show(int $id = null)
     {
         $article = $this->Articles->get($id, ['contain' => ['Users', 'Tags']]);
-        $this->set(compact('article'));
+        $isAuthor = ($this->Auth->user('id') === $article->user_id);
+        $this->set(compact('article', 'isAuthor'));
     }
 
     public function edit($id = null)
@@ -64,6 +65,20 @@ class ArticlesController extends AppController
             }
         }
         $this->set(compact('article'));
+    }
 
+    public function delete($id = null)
+    {
+        $this->request->allowMethod(['post']);
+        $article = $this->Articles->get($id);
+        if ($this->Auth->user('id') !== $article->user_id) {
+            throw new ForbiddenException();
+        }
+        if ($this->Articles->delete($article)) {
+            $this->Flash->success('記事を削除しました。');
+            return $this->redirect(['controller' => 'Articles', 'action' => 'index']);
+        } else {
+            $this->Flash->success('記事の削除に失敗しました。');
+        }
     }
 }

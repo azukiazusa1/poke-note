@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
                 axios.post('/api/tags/.json', {'data': chipText})
                     .then(({data}) => {
-                        console.log(data)
                         const hidden = document.createElement('input')
                         hidden.type = 'hidden'
                         hidden.name = 'tags[][id]'

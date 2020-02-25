@@ -29,7 +29,7 @@
                     <p><br>
                         <span class="grey-text darken-1">
                             <i class="tiny material-icons">account_circle</i> 
-                            <?= h($article->user->username) ?>
+                            @<?= h($article->user->username) ?>
                         </span>
                         <span class="grey-text darken-1">
                             <i class="tiny material-icons">date_range</i>

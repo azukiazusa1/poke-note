@@ -4,7 +4,7 @@
             <ul>
                 <li><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a></li>
                 <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter blue"></i></a></li>
-                <li><a class="btn-floating btn-large red z-depth-3"><i class="material-icons">add</i></a></li>
+                <li><a class="btn-floating btn-large z-depth-3"><i class="material-icons">comment</i></a></li>
                 <li><a class="btn-floating btn-large red z-depth-3"><i class="material-icons">add</i></a></li>
         </div>
         <div class="col s12 m11">
@@ -15,9 +15,42 @@
                     'class' => 'responsive-img circle icon-image',
                 ])?></span>
                 <span>　@<?= h($article->user->username) ?></span>
-                <span class="grey-text darken-1">　<i class="tiny material-icons">date_range</i>
+                <span class="grey-text darken-1 hide-on-small-only">　<i class="tiny material-icons">date_range</i>
                 <?= h($article->created->format('Y/m/d')) ?></span>
+                <?php if($isAuthor): ?>
+                    <?= $this->Form->postLink('削除<i class="material-icons left">delete</i>', 
+                        ['controller' => 'Articles', 'action' => 'delete', $article->id],
+                        ['escape' => false, 'class' => 'btn-flat white red-text btn-small right hide-on-small-only',
+                         'confirm' => 'この記事を削除します。本当によろしいですか？']
+                    )?>
+                    <?= $this->Html->link('編集する<i class="material-icons left">create</i>', 
+                        ['controller' => 'Articles', 'action' => 'edit', $article->id],
+                        ['escape' => false, 'class' => 'btn red accent-2 btn-small right hide-on-small-only']
+                    )?>
+                    <p class="grey-text darken-1 hide-on-med-and-up">　
+                        <i class="tiny material-icons">date_range</i>
+                        <?= h($article->created->format('Y/m/d')) ?>
+                        <i class='dropdown-trigger-article material-icons right' data-target='dropdown-article'>dehaze</i>
+                    </p>
+
+                    <ul id='dropdown-article' class='dropdown-content'>
+                        <li>
+                            <?= $this->Html->link('<i class="material-icons tiny">create</i>編集', 
+                                ['controller' => 'Articles', 'action' => 'edit', $article->id],
+                                ['escape' => false, 'class' => 'black-text']
+                            )?>
+                        </li>
+                        <li>
+                            <?= $this->Form->postLink('<i class="material-icons tiny">delete</i>削除', 
+                                ['controller' => 'Articles', 'action' => 'delete', $article->id],
+                                ['escape' => false, 'class' => 'white red-text',
+                                'confirm' => 'この記事を削除します。本当によろしいですか？'],
+                            )?>
+                        </li>
+                    </ul>
+                <?php endif ?>
                 <hr class="list-divider">
+                <span class="card-title"><h1><?= h($article->title) ?></h1></span>
                 <?php if (count($article->tags) > 0): ?>
                     <?php foreach($article->tags as $tag): ?>
                         <div class="chip">
@@ -27,10 +60,12 @@
                         </div>
                     <?php endforeach ?>
                 <?php else: ?>
-                    <span>この記事にタグはありません。</span>
+                    <span class="small-text">この記事にタグはありません。</span>
                 <?php endif ?>
-                <hr class="list-divider">
-                <span class="card-title"><h1><?= h($article->title) ?></h1></span>
+                <br>
+                <a class="btn-floating red accent-2 hide-on-med-and-up"><i class="material-icons">thumb_up</i></a>
+                <a class="btn-floating hide-on-med-and-up"><i class="fab fa-twitter blue"></i></a>
+                <a class="btn-floating hide-on-med-and-up"><i class="material-icons">comment</i></a>
                 <hr class="list-divider">
                 <div id="content"></div>
             </div>
@@ -39,17 +74,24 @@
     </div>
 
         <div id="content"></div>
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script>
-        const content = `<?= h($article->body) ?>`;
-        document.getElementById('content').innerHTML =
-            marked(content);
-        </script>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+const content = `<?= h($article->body) ?>`;
+document.getElementById('content').innerHTML =
+    marked(content);
 
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.querySelector('.dropdown-trigger-article');
+    M.Dropdown.init(dropdown);
+});
+</script>
 <style>
     .btn-floating{
         margin: 5px;
+    }
+    .dropdown-content li>a>i {
+        margin: 0!important;
     }
 </style>
