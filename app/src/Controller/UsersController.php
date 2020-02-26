@@ -131,7 +131,7 @@ class UsersController extends AppController
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Flash->success('ユーザー登録に成功しました。');
+				$this->Flash->error('ユーザー登録に失敗しました。');
 			}
 		}
 		$this->set(compact($user));

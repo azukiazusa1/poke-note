@@ -44,7 +44,8 @@ class UsersTable extends Table
 
         $this->hasMany('Articles', [
             'foreignKey' => 'user_id',
-            'dependent' => true
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
         $this->hasMany('Comments', [
             'foreignKey' => 'user_id',

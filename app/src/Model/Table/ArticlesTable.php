@@ -48,12 +48,15 @@ class ArticlesTable extends Table
             'joinType' => 'INNER',
         ]);
         $this->hasMany('Comments', [
+            'dependent' => true,
             'foreignKey' => 'article_id',
         ]);
         $this->hasMany('Favorites', [
+            'dependent' => true,
             'foreignKey' => 'article_id',
         ]);
         $this->belongsToMany('Tags', [
+            'dependent' => true,
             'foreignKey' => 'article_id',
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'articles_tags',
