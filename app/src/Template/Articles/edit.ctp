@@ -14,9 +14,9 @@
         <?php endforeach ?>
     <?php endif ?>
 </div>
-<?= $this->Form->control('body', ['class' => 'hidden', 'label' => false, 'id' => 'body']) ?>
+<?= $this->Form->control('body', ['class' => 'hide', 'label' => false, 'id' => 'body']) ?>
 <div id="app">
-    <textarea name="body" class=''>{{ value }}</textarea>
+    <textarea name="body" class='hide'>{{ value }}</textarea>
     <mavon-editor 
     language="ja" 
     v-model="value"
