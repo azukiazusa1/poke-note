@@ -87,11 +87,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </ul>
         </div>
     </nav>
+    <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
     <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
     <footer>
     </footer>
-    <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const dropdown = document.querySelectorAll('.dropdown-trigger');

@@ -3,4 +3,6 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
 }
 ?>
-<div class="message error" onclick="this.classList.add('hidden');"><?= $message ?></div>
+<script>
+    M.toast({html: '<?= $message ?>', classes: 'rounded red lighten-4 red-text darken-2-text'})
+</script>
