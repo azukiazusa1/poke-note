@@ -16,8 +16,11 @@
 </div>
 <?= $this->Form->control('body', ['class' => 'hidden', 'label' => false, 'id' => 'body']) ?>
 <div id="app">
-    <textarea name="body" class='hidden'>{{ value }}</textarea>
-    <mavon-editor language="ja" v-model="value"/>
+    <textarea name="body" class=''>{{ value }}</textarea>
+    <mavon-editor 
+    language="ja" 
+    v-model="value"
+    />
 </div>
 <div class="right">
     <label>
