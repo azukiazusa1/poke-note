@@ -5,10 +5,13 @@
     <div class="row">
         <div class="col m1 hide-on-small-only">
             <ul>
-                <li><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a></li>
+                <li><p class="center-align count">10</p><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a></li>
+                <li>
+                    <p class="center count"><?= h($article->comment_count) ?></p>
+                    <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
+                </li>
                 <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></li>
                 <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></li>
-                <li><a class="btn-floating btn-large z-depth-3"><i class="material-icons">comment</i></a></li>
         </div>
         <div class="col s12 m11">
             <div class="card">
@@ -66,10 +69,12 @@
                         <span class="small-text">この記事にタグはありません。</span>
                     <?php endif ?>
                     <br>
-                    <a class="btn-floating red accent-2 hide-on-med-and-up"><i class="material-icons">thumb_up</i></a>
-                    <a class="btn-floating hide-on-med-and-up"><i class="fab fa-twitter twitter"></i></a>
-                    <a class="btn-floating hide-on-med-and-up"><i class="fab fa-facebook-f facebook"></i></a>
-                    <a class="btn-floating hide-on-med-and-up"><i class="material-icons">comment</i></a>
+                    <div class="hide-on-med-and-up">
+                        <a class="btn-floating red accent-2"><i class="material-icons">thumb_up</i></a>10
+                        <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a><?= h($article->comment_count) ?>
+                        <a class="btn-floating"><i class="fab fa-twitter twitter"></i></a>
+                        <a class="btn-floating"><i class="fab fa-facebook-f facebook"></i></a>
+                    </div>
                     <hr class="list-divider">
                     <input type="hidden" id="body" value="<?= $article->body ?>" />
                     <div id="app">
@@ -87,6 +92,21 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title" id="comment"><h3>コメント</h3></span>
+                    <?= $this->Form->create($comment, ['url' => ['controller' => 'comments', 'action' => 'add']]) ?>
+                    <?= $this->Form->hidden('article_id', ['value' => $article->id]) ?>
+                    <?= $this->Form->control('body', ['label' => 'コメント']) ?>
+                </div>
+                <div class="card-action">
+                    <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?> 
+                    <?= $this->Form->end() ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -109,7 +129,10 @@ new Vue({
 </script>
 <style>
     .btn-floating{
-        margin: 5px;
+        margin: 5px 0;
+    }
+    .count {
+        margin: 0;
     }
     .dropdown-content li>a>i {
         margin: 0!important;

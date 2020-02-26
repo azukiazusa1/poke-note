@@ -15,6 +15,7 @@ class ArticlesController extends AppController
     {
         parent::initialize();
         $this->Auth->allow(['index', 'show']);
+        $this->loadModel('Comments');
     }
 
     /**
@@ -45,9 +46,10 @@ class ArticlesController extends AppController
 
     public function show(int $id = null)
     {
-        $article = $this->Articles->get($id, ['contain' => ['Users', 'Tags']]);
+        $article = $this->Articles->get($id, ['contain' => ['Users', 'Comments', 'Tags']]);
+        $comment = $this->Comments->newEntity();
         $isAuthor = ($this->Auth->user('id') === $article->user_id);
-        $this->set(compact('article', 'isAuthor'));
+        $this->set(compact('article', 'comment', 'isAuthor'));
     }
 
     public function edit($id = null)

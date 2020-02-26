@@ -40,6 +40,9 @@ class CommentsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', [
+            'Articles' => ['comment_count']
+        ]);
 
         $this->belongsTo('Articles', [
             'foreignKey' => 'article_id',
