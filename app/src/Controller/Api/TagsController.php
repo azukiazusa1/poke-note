@@ -32,16 +32,8 @@ class TagsController extends AppController
     {
         $title = $this->request->getData('data');
         $message = 'Saved';
-        $tag = $this->Tags->find()
-            ->where(['title' => $title])
-            ->first();
-        if (!isset($tag)) {
-            $tag = $this->Tags->newEntity();
-            $tag->title = $title;
-            if (!$this->Tags->save($tag)) {
-                $message = 'Saved';
-            }
-        }
+
+        $tag = $this->Tags->findOrCreate(['title' => $title]);
         $this->set([
             'message' => $message,
             'tag' => $tag,
