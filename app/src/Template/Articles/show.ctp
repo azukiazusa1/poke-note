@@ -3,9 +3,9 @@
         <div class="col m1 hide-on-small-only">
             <ul>
                 <li><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a></li>
-                <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter blue"></i></a></li>
+                <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></li>
+                <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></li>
                 <li><a class="btn-floating btn-large z-depth-3"><i class="material-icons">comment</i></a></li>
-                <li><a class="btn-floating btn-large red z-depth-3"><i class="material-icons">add</i></a></li>
         </div>
         <div class="col s12 m11">
         <div class="card">
@@ -64,7 +64,8 @@
                 <?php endif ?>
                 <br>
                 <a class="btn-floating red accent-2 hide-on-med-and-up"><i class="material-icons">thumb_up</i></a>
-                <a class="btn-floating hide-on-med-and-up"><i class="fab fa-twitter blue"></i></a>
+                <a class="btn-floating hide-on-med-and-up"><i class="fab fa-twitter twitter"></i></a>
+                <a class="btn-floating hide-on-med-and-up"><i class="fab fa-facebook-f facebook"></i></a>
                 <a class="btn-floating hide-on-med-and-up"><i class="material-icons">comment</i></a>
                 <hr class="list-divider">
                 <div id="content"></div>

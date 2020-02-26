@@ -39,19 +39,41 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
         <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
     </ul>
+    <ul id="dropdown2" class="dropdown-content">
+    <form method="get" action="search">
+        <div class="input-field">
+            <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
+        </div>
+    </form>
+    </ul>
     <nav class="red accent-2">
         <div class="nav-wrapper">
-            <?= $this->Html->link('Logo',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo'])?>
-            <ul class="right hide-on-med-and-down">
+            <?= $this->Html->link('Note!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
+            <ul class="right">
                 <?php if (isset($login_user)): ?>
-                    <li>
+                    <li class="hide-on-small-only">
+                        <form method="get" action="search">
+                            <div class="input-field">
+                                <i class="material-icons prefix white-text">search</i>
+                                <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
+                            </div>
+                        </form>
+                    </li>
+                    <li class="hide-on-small-only">
                         <?= $this->Html->link('投稿する<i class="material-icons left">create</i>', 
                         ['controller' => 'Articles', 'action' => 'new'],
                         ['escape' => false, 'class' => 'btn red darken-3']
                         )?>
-                    </li>
-                    <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-                    <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+                    </li> 
+                    <li class="hide-on-med-and-up">
+                    <a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons">search</i></a>
+                    </li> 
+                    <li class="hide-on-med-and-up">
+                        <?= $this->Html->link('<i class="material-icons">create</i>', 
+                        ['controller' => 'Articles', 'action' => 'new'],
+                        ['escape' => false, 'class' => 'red darken-3 btn']
+                        )?>
+                    </li> 
                     <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">
                         <?= $this->Html->image($login_user->image, [
                             'alt' => 'Author',
@@ -72,9 +94,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const elems = document.querySelectorAll('.dropdown-trigger');
-            M.Dropdown.init(elems, {
-                coverTrigger: false
+            const dropdown = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(dropdown, {
+                coverTrigger: false, 
+                constrainWidth: false,
+                closeOnClick: false,
             });
         });
     </script>

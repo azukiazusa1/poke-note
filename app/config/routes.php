@@ -63,6 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Articles', 'action' => 'index']);
+    $routes->connect('/search', ['controller' => 'Articles', 'action' => 'search']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/password', ['controller' => 'Users', 'action' => 'password']);
     $routes->connect('/email', ['controller' => 'Users', 'action' => 'email']);

@@ -18,3 +18,15 @@ a.title{
 .hidden {
   display: none!important;
 }
+
+#search {
+  border-radius: 3px;
+}
+
+.twitter {
+  background-color: #1DA1F2;
+}
+
+.facebook {
+  background-color: #3B5998;
+}

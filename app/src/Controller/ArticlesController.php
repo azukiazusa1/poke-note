@@ -81,4 +81,10 @@ class ArticlesController extends AppController
             $this->Flash->success('記事の削除に失敗しました。');
         }
     }
+
+    public function search()
+    {
+        $q = $this->request->getQuery('q');
+        $this->set(compact('q'));
+    }
 }
