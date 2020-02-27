@@ -2,18 +2,17 @@
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <div class="container">
+    <div class="hide-on-med-and-down fixed-action-btn" style="top:50px; left: 100px">
+            <p><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a>10</p>
+            <p>
+                <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
+                <?= h($article->comment_count) ?>
+            </p>
+            <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></p>
+            <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></p>
+    </div>
     <div class="row">
-        <div class="col m1 hide-on-small-only">
-            <ul>
-                <li><p class="center-align count">10</p><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a></li>
-                <li>
-                    <p class="center count"><?= h($article->comment_count) ?></p>
-                    <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
-                </li>
-                <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></li>
-                <li><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></li>
-        </div>
-        <div class="col s12 m11">
+        <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
                     <span><?= $this->Html->image(h($article->user->image), [
@@ -74,7 +73,7 @@
                         <span class="small-text">この記事にタグはありません。</span>
                     <?php endif ?>
                     <br>
-                    <div class="hide-on-med-and-up">
+                    <div class="hide-on-large-only">
                         <a class="btn-floating red accent-2"><i class="material-icons">thumb_up</i></a>10
                         <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a><?= h($article->comment_count) ?>
                         <a class="btn-floating"><i class="fab fa-twitter twitter"></i></a>
@@ -98,7 +97,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12">
+        <div class="col s12 m12">
             <div class="card">
                 <div class="card-content">
                     <h5 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h5>
@@ -168,7 +167,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12">
+        <div class="col s12 m12">
             <div class="card">
                 <?php if (isset($login_user)) :?>
                     <div class="card-content">
