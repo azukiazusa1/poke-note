@@ -109,18 +109,48 @@
                                     <div class="card horizontal light-blue lighten-5">
                                         <div class="card-stacked">
                                             <div class="card-content">
-                                            <span><?= $this->Html->image(h($comment->user->image), [
-                                                'alt' => 'user',
-                                                'class' => 'responsive-img circle icon-image',
-                                                'url' => ['controller' => 'User', 'action' => 'show', $comment->user->username]
-                                            ])?></span>
-                                            <span>
-                                                <?= $this->Html->link('@' . h($comment->user->username), 
-                                                    ['controller' => 'Users', 'action' => 'show', $comment->user->username],
-                                                )?>
-                                            </span>
-                                            <span class="grey-text darken-1"><i class="tiny material-icons">date_range</i>
-                                            <?= h($comment->created->format('Y/m/d')) ?></span>
+                                                <span><?= $this->Html->image(h($comment->user->image), [
+                                                    'alt' => 'user',
+                                                    'class' => 'responsive-img circle icon-image',
+                                                    'url' => ['controller' => 'User', 'action' => 'show', $comment->user->username]
+                                                ])?></span>
+                                                <span>
+                                                    <?= $this->Html->link('@' . h($comment->user->username), 
+                                                        ['controller' => 'Users', 'action' => 'show', $comment->user->username],
+                                                    )?>
+                                                </span>
+                                                <span class="grey-text darken-1"><i class="tiny material-icons">date_range</i>
+                                                <?= h($comment->created->format('Y/m/d')) ?></span>
+                                                <?php if (isset($login_user)): ?>
+                                                    <?php if ($login_user->id === $comment->user_id) :?>
+                                                        <?= $this->Form->postLink('削除<i class="material-icons left">delete</i>', 
+                                                            ['controller' => 'Comments', 'action' => 'delete', $comment->id],
+                                                            ['escape' => false, 'class' => 'btn-flat white red-text btn-small right hide-on-small-only light-blue lighten-5',
+                                                            'confirm' => 'このコメントを削除します。本当によろしいですか？']
+                                                        )?>
+                                                        <?= $this->Html->link('編集する<i class="material-icons left">create</i>', 
+                                                            ['controller' => 'Comments', 'action' => 'edit', $comment->id],
+                                                            ['escape' => false, 'class' => 'btn red accent-2 btn-small right hide-on-small-only']
+                                                        )?>
+                                                        <i class='dropdown-trigger-comment material-icons right hide-on-med-and-up' data-target='dropdown-comment'>dehaze</i>
+
+                                                        <ul id='dropdown-comment' class='dropdown-content'>
+                                                            <li>
+                                                                <?= $this->Html->link('<i class="material-icons tiny">create</i>編集', 
+                                                                    ['controller' => 'Comments', 'action' => 'edit', $comment->id],
+                                                                    ['escape' => false, 'class' => 'black-text']
+                                                                )?>
+                                                            </li>
+                                                            <li>
+                                                                <?= $this->Form->postLink('<i class="material-icons tiny">delete</i>削除', 
+                                                                    ['controller' => 'Comments', 'action' => 'delete', $comment->id],
+                                                                    ['escape' => false, 'class' => 'white red-text',
+                                                                    'confirm' => 'このコメントを削除します。本当によろしいですか？'],
+                                                                )?>
+                                                            </li>
+                                                        </ul>
+                                                    <?php endif ?>
+                                                <?php endif ?>
                                             </div>
                                             <div class="card-action">
                                                 <?= h($comment->body) ?>
@@ -181,6 +211,13 @@ new Vue({
         }
     },
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdownArticle = document.querySelector('.dropdown-trigger-article');
+    M.Dropdown.init(dropdownArticle);
+    const dropdownComment = document.querySelectorAll('.dropdown-trigger-comment');
+    M.Dropdown.init(dropdownComment);
+  });
 </script>
 <style>
     .btn-floating{
