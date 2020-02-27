@@ -35,7 +35,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <ul id="dropdown1" class="dropdown-content">
-        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show'])?></li>
+        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->id])?></li>
         <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
         <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
     </ul>
