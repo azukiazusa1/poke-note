@@ -43,6 +43,14 @@ class ArticlesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->addBehavior('CounterCache', [
+            'Users' => [
+                'article_count' => [
+                    'finder' => 'published'
+                ]
+            ]
+        ]);
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
@@ -61,6 +69,11 @@ class ArticlesTable extends Table
             'targetForeignKey' => 'tag_id',
             'joinTable' => 'articles_tags',
         ]);
+    }
+
+    public function findPublished(Query $query, array $options)
+    {
+        return $query->where(['published' => 0]);
     }
 
     /**
