@@ -16,6 +16,7 @@ class ArticlesController extends AppController
         parent::initialize();
         $this->Auth->allow(['index', 'show']);
         $this->loadModel('Comments');
+        $this->loadModel('Favorites');
     }
 
     /**
@@ -47,9 +48,12 @@ class ArticlesController extends AppController
     public function show(int $id = null)
     {
         $article = $this->Articles->get($id, ['contain' => ['Users', 'Comments' => ['Users'], 'Tags']]);
+        $isFavorite = !!$this->Favorites->find()
+            ->where(['article_id' => $id, 'user_id' => $this->Auth->user('id')])
+            ->first();
         $new_comment = $this->Comments->newEntity();
         $isAuthor = ($this->Auth->user('id') === $article->user_id);
-        $this->set(compact('article', 'new_comment', 'isAuthor'));
+        $this->set(compact('article', 'new_comment', 'isAuthor', 'isFavorite'));
     }
 
     public function edit($id = null)

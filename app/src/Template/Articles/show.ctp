@@ -1,10 +1,12 @@
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
+<?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <div class="container">
     <div class="hide-on-med-and-down fixed-btn">
             <p>
-                <a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a>
+                <a class="btn-floating btn-large waves-accent-2 z-depth-3 like-btn waves-effect
+                 <?= $isFavorite ? 'red' : 'grey' ?>"><i class="material-icons">thumb_up</i></a>
                 <span class="bold"><?= h($article->favorite_count) ?></span>
             </p>
             <p>
@@ -57,7 +59,7 @@
                                 <?= $this->Form->postLink('<i class="material-icons tiny">delete</i>削除', 
                                     ['controller' => 'Articles', 'action' => 'delete', $article->id],
                                     ['escape' => false, 'class' => 'white red-text',
-                                    'confirm' => 'この記事を削除します。本当によろしいですか？'],
+                                    'confirm' => 'この記事を削除します。本当によろしいですか？']
                                 )?>
                             </li>
                         </ul>
@@ -77,8 +79,11 @@
                     <?php endif ?>
                     <br>
                     <div class="hide-on-large-only">
-                        <a class="btn-floating red accent-2"><i class="material-icons">thumb_up</i></a>10
-                        <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a><?= h($article->comment_count) ?>
+                        <a class="btn-floating like-btn waves-effect
+                        <?= $isFavorite ? 'red' : 'grey' ?>"><i class="material-icons">thumb_up</i></a>
+                        <span class="bold"><?= h($article->favorite_count) ?></span>
+                        <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a>
+                        <span class="bold"><?= h($article->comment_count) ?></span>
                         <a class="btn-floating"><i class="fab fa-twitter twitter"></i></a>
                         <a class="btn-floating"><i class="fab fa-facebook-f facebook"></i></a>
                     </div>
@@ -197,6 +202,12 @@
         </div>
     </div>
 </div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+      <h4>いいねをするためには？</h4>
+      <p>A bunch of text</p>
+    </div>
+</div>
 <script>
 Vue.use(window['MavonEditor'])
 
@@ -219,7 +230,37 @@ document.addEventListener('DOMContentLoaded', function() {
     M.Dropdown.init(dropdownArticle);
     const dropdownComment = document.querySelectorAll('.dropdown-trigger-comment');
     M.Dropdown.init(dropdownComment);
-  });
+
+    const articleId = '<?= $article->id ?>'
+    const likeBtns = document.querySelectorAll('.like-btn')
+    likeBtns.forEach(likeBtn => {
+        likeBtn.addEventListener('click', async function() {
+            try {
+                const {data} = await axios.post(`/api/articles/${articleId}/favorites.json`)
+                    if (data.message === 'Save') {
+                        this.nextElementSibling.innerText++
+                        this.classList.remove('grey')
+                        this.classList.add('red')
+                    } else if (data.message === 'Delete'){
+                        this.nextElementSibling.innerText--
+                        this.classList.add('grey')
+                        this.classList.remove('red')
+                    }
+            } catch ({response}) {
+                const modal = document.getElementById('modal')
+                M.Modal.init(modal);
+                const instance = M.Modal.getInstance(modal);
+                if (response.status === 401) {
+                    instance.open()
+                } else {
+                    M.toast({html: '予期せぬエラーが発生しました。', classes: 'rounded red lighten-4 red-text darken-2-text'})
+                }
+            }
+        })
+    })
+});
+
+
 </script>
 <style>
     .btn-floating{
@@ -230,5 +271,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     .dropdown-content li>a>i {
         margin: 0!important;
+    }
+
+    .v-note-wrapper {
+        z-index: 100!important;
     }
 </style>

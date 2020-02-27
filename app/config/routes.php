@@ -105,6 +105,9 @@ Router::prefix('api', function (RouteBuilder $routes) {
     
     $routes->setExtensions(['json']);
     $routes->resources('Tags');
+    $routes->resources('Articles', function ($routes) {
+        $routes->resources('Favorites');
+    });
 
 });
 /**
