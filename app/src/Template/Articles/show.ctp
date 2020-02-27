@@ -2,7 +2,7 @@
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <div class="container">
-    <div class="hide-on-med-and-down fixed-action-btn" style="top:50px; left: 100px">
+    <div class="hide-on-med-and-down fixed-btn">
             <p>
                 <a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a>
                 <span class="bold"><?= h($article->favorite_count) ?></span>
@@ -25,7 +25,7 @@
                     ])?></span>
                     <span>
                         <?= $this->Html->link('@' . h($article->user->username), 
-                                ['controller' => 'Users', 'action' => 'show', $article->user->username],
+                                ['controller' => 'Users', 'action' => 'show', $article->user->username]
                             )?>
                     </span>
                     <span class="grey-text darken-1 hide-on-small-only">　<i class="tiny material-icons">date_range</i>
