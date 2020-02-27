@@ -5,7 +5,7 @@
                 <a href="#!" class="collection-item"><i class="material-icons tiny">trending_up</i> トレンド</a>
                 <a href="#!" class="collection-item"><i class="material-icons tiny">people</i> タイムライン</a>
                 <a href="#!" class="collection-item"><i class="material-icons tiny">done</i> 最新</a>
-                <a href="#!" class="collection-item">Alvin</a>
+                <a href="#!" class="collection-item"><i class="material-icons tiny">local_offer</i>タグ</a>
             </div>
         </div>
         <div class="col s12 m6">
@@ -35,7 +35,14 @@
                             <i class="tiny material-icons">date_range</i>
                             <?= h($article->created->format('Y/m/d')) ?>
                         </span>
-                        <span class="grey-text darken-1"> <i class="tiny material-icons red-text accent-2">thumb_up</i> 10</span>
+                        <span class="grey-text">
+                            <i class="tiny material-icons red-text text-accent-2">thumb_up</i>
+                            <?= h($article->favorite_count) ?>
+                        </span>
+                        <span class="grey-text">
+                            <i class="tiny material-icons teal-text text-lighten-2">comment</i>
+                            <?= h($article->comment_count) ?>
+                        </span>
                     </p>
                 <?php endforeach ?>
             </ul>

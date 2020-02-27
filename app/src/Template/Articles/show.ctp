@@ -96,20 +96,65 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title" id="comment"><h3>コメント</h3></span>
-                    <?= $this->Form->create($comment, ['url' => ['controller' => 'comments', 'action' => 'add']]) ?>
-                    <?= $this->Form->hidden('article_id', ['value' => $article->id]) ?>
-                    <?= $this->Form->control('body', ['label' => 'コメント']) ?>
-                </div>
-                <div class="card-action">
-                    <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?> 
-                    <?= $this->Form->end() ?>
+                    <h5 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h5>
+                    <?php if (count($article->comments) > 0) : ?>
+                        <?php foreach ($article->comments as $comment) :?>
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card horizontal light-blue lighten-5">
+                                        <div class="card-stacked">
+                                            <div class="card-content">
+                                            <span><?= $this->Html->image(h($comment->user->image), [
+                                                'alt' => 'user',
+                                                'class' => 'responsive-img circle icon-image',
+                                            ])?></span>
+                                            <span>@<?= h($comment->user->username) ?></span>
+                                            <span class="grey-text darken-1"><i class="tiny material-icons">date_range</i>
+                                            <?= h($comment->created->format('Y/m/d')) ?></span>
+                                            </div>
+                                            <div class="card-action">
+                                                <?= h($comment->body) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                    <?php else: ?>
+                        この記事にはまだコメントがありません。
+                    <?php endif ?>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <?php if (isset($login_user)) :?>
+                    <div class="card-content">
+                        <span class="card-title"><h5><i class="material-icons">near_me</i>コメントを投稿する</h5></span>
+                        <?= $this->Form->create($new_comment, ['url' => ['controller' => 'comments', 'action' => 'add']]) ?>
+                        <?= $this->Form->hidden('article_id', ['value' => $article->id]) ?>
+                        <?= $this->Form->control('body', ['label' => 'コメント', 'class' => 'materialize-textarea']) ?>
+                    </div>
+                    <div class="card-action">
+                        <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?> 
+                        <?= $this->Form->end() ?>
+                    </div>
+                <?php else: ?>
+                    <div class="card-content">
+                        <span class="card-title"><h5><i class="material-icons">near_me</i>コメントを投稿する</h5></span>
+                        <?= $this->Html->link('ログイン', ['controller' => 'Users', 'action' => 'login'])?>してコメントを投稿する
+                        <?= $this->Form->control('body', ['label' => 'コメント', 'disabled' => 'disabled']) ?>
+                    </div>
+                    <div class="card-action">
+                        <?= $this->Form->button('投稿', ['class' => 'btn btn-large disabled', ]) ?> 
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 Vue.use(window['MavonEditor'])
 

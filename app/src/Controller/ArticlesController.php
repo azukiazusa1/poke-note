@@ -46,10 +46,10 @@ class ArticlesController extends AppController
 
     public function show(int $id = null)
     {
-        $article = $this->Articles->get($id, ['contain' => ['Users', 'Comments', 'Tags']]);
-        $comment = $this->Comments->newEntity();
+        $article = $this->Articles->get($id, ['contain' => ['Users', 'Comments' => ['Users'], 'Tags']]);
+        $new_comment = $this->Comments->newEntity();
         $isAuthor = ($this->Auth->user('id') === $article->user_id);
-        $this->set(compact('article', 'comment', 'isAuthor'));
+        $this->set(compact('article', 'new_comment', 'isAuthor'));
     }
 
     public function edit($id = null)
