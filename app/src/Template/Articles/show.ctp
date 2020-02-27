@@ -3,10 +3,13 @@
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <div class="container">
     <div class="hide-on-med-and-down fixed-action-btn" style="top:50px; left: 100px">
-            <p><a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a>10</p>
+            <p>
+                <a class="btn-floating btn-large red accent-2 z-depth-3"><i class="material-icons">thumb_up</i></a>
+                <span class="bold"><?= h($article->favorite_count) ?></span>
+            </p>
             <p>
                 <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
-                <?= h($article->comment_count) ?>
+                <span class="bold"><?= h($article->comment_count) ?></span>
             </p>
             <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></p>
             <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></p>
