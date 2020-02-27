@@ -70,7 +70,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/signin', ['controller' => 'Users', 'action' => 'signin']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
-    $routes->connect('/tags/search/:title', ['controller' => 'Tags', 'action' => 'search']);
+    $routes->connect('/user/*', ['controller' => 'Users', 'action' => 'show']);
+    $routes->connect('/tags/*', ['controller' => 'Tags', 'action' => 'show']);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

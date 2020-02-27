@@ -16,7 +16,7 @@ class TagsController extends AppController
         $this->Auth->allow(['index','add']);
     }
 
-    public function search(string $title = null)
+    public function show(string $title = null)
     {
         $this->set(compact('title'));
     }

@@ -19,10 +19,15 @@
                     <span><?= $this->Html->image(h($article->user->image), [
                         'alt' => 'user',
                         'class' => 'responsive-img circle icon-image',
+                        'url' => ['controller' => 'Users', 'action' => 'show', h($article->user->username)]
                     ])?></span>
-                    <span>　@<?= h($article->user->username) ?></span>
+                    <span>
+                        <?= $this->Html->link('@' . h($article->user->username), 
+                                ['controller' => 'Users', 'action' => 'show', $article->user->username],
+                            )?>
+                    </span>
                     <span class="grey-text darken-1 hide-on-small-only">　<i class="tiny material-icons">date_range</i>
-                    <?= h($article->created->format('Y/m/d')) ?></span>
+                    <?= h($article->created->format('Y/m/d H:i:s')) ?></span>
                     <?php if($isAuthor): ?>
                         <?= $this->Form->postLink('削除<i class="material-icons left">delete</i>', 
                             ['controller' => 'Articles', 'action' => 'delete', $article->id],
@@ -61,7 +66,7 @@
                         <?php foreach($article->tags as $tag): ?>
                             <div class="chip">
                                 <?= $this->Html->link(h($tag->title), [
-                                    'controller' => 'tags', 'action' => 'search', h($tag->title)
+                                    'controller' => 'tags', 'action' => 'show', h($tag->title)
                                 ])?>
                             </div>
                         <?php endforeach ?>
@@ -107,8 +112,13 @@
                                             <span><?= $this->Html->image(h($comment->user->image), [
                                                 'alt' => 'user',
                                                 'class' => 'responsive-img circle icon-image',
+                                                'url' => ['controller' => 'User', 'action' => 'show', $comment->user->username]
                                             ])?></span>
-                                            <span>@<?= h($comment->user->username) ?></span>
+                                            <span>
+                                                <?= $this->Html->link('@' . h($comment->user->username), 
+                                                    ['controller' => 'Users', 'action' => 'show', $comment->user->username],
+                                                )?>
+                                            </span>
                                             <span class="grey-text darken-1"><i class="tiny material-icons">date_range</i>
                                             <?= h($comment->created->format('Y/m/d')) ?></span>
                                             </div>

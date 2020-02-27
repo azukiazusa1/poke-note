@@ -17,9 +17,9 @@ class UsersController extends AppController
 		$this->Auth->allow('signup');
 	}
 
-	public function show()
+	public function show($username)
 	{
-
+		$this->set(compact('username'));
 	}
 
 	public function edit()
