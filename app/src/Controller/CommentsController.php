@@ -30,7 +30,24 @@ class CommentsController extends AppController
             }
         }
         $this->set(compact('comment'));
-        $this->redirect(['controller' => 'Articles', 'action' => 'show', $comment->article_id]);
+        return $this->redirect($this->request->referer());
+    }
+
+    public function edit($id)
+    {
+        $this->request->allowMethod(['put']);
+        $comment = $this->Comments->get($id);
+        if ($this->Auth->user('id') !== $comment->user_id) {
+            throw new ForbiddenException();
+        }
+
+        $this->Comments->patchEntity($comment, $this->request->getData());
+        if ($this->Comments->save($comment)) {
+            $this->Flash->success('コメントを編集しました。');
+        } else {
+            $this->Flash->error('コメントの編集に失敗しました。');
+        }
+        return $this->redirect($this->request->referer());
     }
 
     public function delete($id)
@@ -42,9 +59,10 @@ class CommentsController extends AppController
         }
         if ($this->Comments->delete($comment)) {
             $this->Flash->success('コメントを削除しました。');
-            return $this->redirect($this->request->referer());
         } else {
             $this->Flash->success('コメントの削除に失敗しました。');
         }
+
+        return $this->redirect($this->request->referer());
     }
 }

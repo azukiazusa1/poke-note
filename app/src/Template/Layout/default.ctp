@@ -42,7 +42,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <ul id="dropdown2" class="dropdown-content">
     <form method="get" action="search">
         <div class="input-field">
-            <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
+            <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索">
         </div>
     </form>
     </ul>

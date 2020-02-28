@@ -32,7 +32,6 @@ class FavoritesController extends AppController
     public function add()
     {
         $article_id = $this->request->getParam('article_id');
-        $message = 'Saved';
 
         if (!$this->Auth->user('id')) {
             throw new UnauthorizedException(__('いいねをするためにはログインが必要です。'));
@@ -46,10 +45,12 @@ class FavoritesController extends AppController
             ->first();
         
         if ($favotite) {
+            $message = 'Deleted';
             if (!$this->Favorites->delete($favotite))  {
                 throw new InternalErrorException();
             }
         } else {
+            $message = 'Saved';
             $favorite = $this->Favorites->newEntity();
             $favorite->article_id = $article_id;
             $favorite->user_id = $this->Auth->user('id');

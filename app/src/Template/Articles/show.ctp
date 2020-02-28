@@ -111,7 +111,7 @@
                     <h5 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h5>
                     <?php if (count($article->comments) > 0) : ?>
                         <?php foreach ($article->comments as $comment) :?>
-                            <div class="row">
+                            <div class="row" id="<?= $comment->id ?>">
                                 <div class="col s12">
                                     <div class="card horizontal light-blue lighten-5">
                                         <div class="card-stacked">
@@ -135,18 +135,12 @@
                                                             ['escape' => false, 'class' => 'btn-flat white red-text btn-small right hide-on-small-only light-blue lighten-5',
                                                             'confirm' => 'このコメントを削除します。本当によろしいですか？']
                                                         )?>
-                                                        <?= $this->Html->link('編集する<i class="material-icons left">create</i>', 
-                                                            ['controller' => 'Comments', 'action' => 'edit', $comment->id],
-                                                            ['escape' => false, 'class' => 'btn red accent-2 btn-small right hide-on-small-only']
-                                                        )?>
+                                                        <a class="btn red accent-2 btn-small right hide-on-small-only edit-comment" data-target="<?= $comment->id ?>">編集する<i class="material-icons left">create</i></a> 
                                                         <i class='dropdown-trigger-comment material-icons right hide-on-med-and-up' data-target='dropdown-comment'>dehaze</i>
 
                                                         <ul id='dropdown-comment' class='dropdown-content'>
                                                             <li>
-                                                                <?= $this->Html->link('<i class="material-icons tiny">create</i>編集', 
-                                                                    ['controller' => 'Comments', 'action' => 'edit', $comment->id],
-                                                                    ['escape' => false, 'class' => 'black-text']
-                                                                )?>
+                                                                <a class="edit-comment" data-target="<?= $comment->id ?>"><i class="material-icons tiny">create</i>編集</a>
                                                             </li>
                                                             <li>
                                                                 <?= $this->Form->postLink('<i class="material-icons tiny">delete</i>削除', 
@@ -162,8 +156,32 @@
                                             <div class="card-action">
                                                 <?= h($comment->body) ?>
                                             </div>
+                                        <?php if (isset($login_user)): ?>
+                                            <?php if ($login_user->id === $comment->user_id) :?>
+                                                <div class="card-content hide">
+                                                    <span><?= $this->Html->image(h($comment->user->image), [
+                                                        'alt' => 'user',
+                                                        'class' => 'responsive-img circle icon-image',
+                                                        'url' => ['controller' => 'User', 'action' => 'show', $comment->user->username]
+                                                    ])?></span>
+                                                    <span>
+                                                        <?= $this->Html->link('@' . h($comment->user->username), 
+                                                            ['controller' => 'Users', 'action' => 'show', $comment->user->username],
+                                                        )?>
+                                                    </span>
+                                                    <span class="bold right">コメントを編集<span>
+                                                </div>
+                                                <div class="card-action hide">
+                                                    <?= $this->Form->create($comment, ['url' => ['controller' => 'comments', 'action' => 'edit']]) ?>
+                                                    <?= $this->Form->control('body', ['label' => 'コメント', 'class' => 'white materialize-textarea', 'id' => "comment{$comment->id}"]) ?>
+                                                    <?= $this->Form->button('編集', ['class' => 'btn blue right']) ?>
+                                                    <a class="btn white black-text right cancel-btn" data-target="<?= $comment->id ?>">キャンセル</a> 
+                                                    <?= $this->Form->end() ?>    
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif ?>
+                                <?php endif ?>
                                 </div>
                             </div>
                         <?php endforeach ?>
@@ -237,11 +255,11 @@ document.addEventListener('DOMContentLoaded', function() {
         likeBtn.addEventListener('click', async function() {
             try {
                 const {data} = await axios.post(`/api/articles/${articleId}/favorites.json`)
-                    if (data.message === 'Save') {
+                    if (data.message === 'Saved') {
                         this.nextElementSibling.innerText++
                         this.classList.remove('grey')
                         this.classList.add('red')
-                    } else if (data.message === 'Delete'){
+                    } else if (data.message === 'Deleted'){
                         this.nextElementSibling.innerText--
                         this.classList.add('grey')
                         this.classList.remove('red')
@@ -257,6 +275,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         })
+    })
+
+    function toggleHide() {
+        const targetId = this.dataset.target
+        const comment = document.getElementById(targetId)
+        const contents = [...comment.querySelectorAll('.card-content')];
+        const actions = [...comment.querySelectorAll('.card-action')];
+        contents.map(content => content.classList.toggle('hide'))
+        actions.map(action => action.classList.toggle('hide'))
+    }
+
+    const editBtns = document.querySelectorAll('.edit-comment')
+    editBtns.forEach(editBtn => {
+        editBtn.addEventListener('click', toggleHide)
+    })
+
+    const cancelBtns = document.querySelectorAll('.cancel-btn')
+    cancelBtns.forEach(cancelBtn => {
+        cancelBtn.addEventListener('click', toggleHide)
     })
 });
 
