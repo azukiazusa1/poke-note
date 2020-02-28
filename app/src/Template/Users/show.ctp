@@ -5,23 +5,25 @@
                 <div class="card-image">
                     <?= $this->Html->image($user->image, [
                         'alt' => 'Author',
-                        'class' => 'materialboxed responsive-img circle',
+                        'class' => 'materialboxed responsive-img circle mypage-img',
                     ])?>
                     <span class="card-title">@<?= h($user->username) ?></span>
                 </div>
                 <span class="card-title">
                     <?= h($user->nickname) ?>
-                    <?php if ($user->id === $login_user->id) : ?>
-                        <p><?= $this->Html->link('プロフィールを編集', ['controller' => 'Users', 'action' => 'edit'], ['class' => 'btn'])?></p>
-                    <?php else: ?>
-                        <a href="#" class="btn right rounded">フォロー</a>
+                    <?php if (isset($login_user->id)): ?>
+                        <?php if ($user->id === $login_user->id) : ?>
+                            <p><?= $this->Html->link('プロフィールを編集', ['controller' => 'Users', 'action' => 'edit'], ['class' => 'btn'])?></p>
+                        <?php else: ?>
+                            <a href="#" class="btn right rounded">フォロー</a>
+                        <?php endif ?>
                     <?php endif ?>
                 </span>
                 <div class="card-content">
                     <p><?= h($user->description) ?></p>
                 </div>
                 <div class="card-action">
-                    <i class="tiny material-icons red-text text-accent-2">thumb_up</i>100<br>
+                    <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($favorite_count) ?><br>
                     <span class="bold">フォロー</span><a class="modal-trigger" href="#modal-follow">100</a>
                     <div id="modal-follow" class="modal">
                         <div class="modal-content">

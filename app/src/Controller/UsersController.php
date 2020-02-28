@@ -5,6 +5,7 @@ namespace App\Controller;
 use RuntimeException;
 
 use Cake\Http\Exception\NotFoundException;
+use Cake\Collection\Collection;
 
 class UsersController extends AppController 
 {
@@ -21,11 +22,22 @@ class UsersController extends AppController
 
 	public function show($username)
 	{
-		$user = $this->Users->find()->where(['username' => $username])->first();
+		$user = $this->Users->find()
+			->where(['username' => $username])
+			->contain(['articles', 'favorites', 'comments'])
+			->first();
+		
+		$favorite_count = array_reduce($user->articles, function($total, $current) {
+			return $total += $current->favorite_count;
+		});
+
+		$articles = new Collection($user->articles);
+		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
+
 		if (!$user) {
 			throw new NotFoundException();
 		}
-		$this->set(compact('user'));
+		$this->set(compact('user', 'favorite_count', 'popular_articles'));
 	}
 
 	public function edit()
@@ -131,7 +143,7 @@ class UsersController extends AppController
 			if ($user->errors()) {
 				return $this->render();
 			}
-			$user->image = 'user/default.jpg';
+			$user->image = 'user/default.png';
 			if ($this->Users->save($user)) {
 				$this->Flash->success('ユーザー登録に成功しました。');
 				$this->Auth->setUser($user);

@@ -15,6 +15,11 @@ a.title{
   margin-top: 10px;
 }
 
+.mypage-img {
+  max-width: 150!important;
+  max-height: 150!important;
+}
+
 .hidden {
   display: none!important;
 }
