@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use RuntimeException;
 
+use Cake\Http\Exception\NotFoundException;
+
 class UsersController extends AppController 
 {
 	/**
@@ -14,12 +16,16 @@ class UsersController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow('signup');
+		$this->Auth->allow(['signup', 'show']);
 	}
 
 	public function show($username)
 	{
-		$this->set(compact('username'));
+		$user = $this->Users->find()->where(['username' => $username])->first();
+		if (!$user) {
+			throw new NotFoundException();
+		}
+		$this->set(compact('user'));
 	}
 
 	public function edit()

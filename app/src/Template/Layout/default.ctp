@@ -35,7 +35,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <ul id="dropdown1" class="dropdown-content">
-        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->id])?></li>
+        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->username])?></li>
         <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
         <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
     </ul>
@@ -76,7 +76,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </li> 
                     <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">
                         <?= $this->Html->image($login_user->image, [
-                            'alt' => 'Author',
+                            'alt' => 'User',
                             'class' => 'responsive-img circle icon-image',
                         ])?>
                         <i class="material-icons right">arrow_drop_down</i></a></li>

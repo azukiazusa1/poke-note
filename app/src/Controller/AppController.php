@@ -69,8 +69,10 @@ class AppController extends Controller
 
         if ($this->Auth->user('id')) {
             $login_user = $this->Users->get($this->Auth->user('id'));
-            $this->set(compact('login_user'));
+        } else {
+            $login_user = $this->Users->newEntity();
         }
+        $this->set(compact('login_user'));
 
         /*
          * Enable the following component for recommended CakePHP security settings.
