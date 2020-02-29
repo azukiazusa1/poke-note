@@ -17,26 +17,29 @@ class UsersController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-		$this->Auth->allow(['signup', 'show']);
+        $this->Auth->allow(['signup', 'show']);
+        $this->loadComponent('User');
 	}
 
 	public function show($username)
 	{
 		$user = $this->Users->find()
 			->where(['username' => $username])
-			->contain(['articles', 'favorites', 'comments'])
-			->first();
-		$favorite_count = array_reduce($user->articles, function($total, $current) {
-			return $total += $current->favorite_count;
-		});
+			->contain(['Articles'])
+            ->first();
+        
+        if (!$user) {
+            throw new NotFoundException();
+        }
+
+        $favorite_count = $this->User->countFavorite($user->articles);
 
 		$articles = new Collection($user->articles);
-		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
+        $popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
+        
+        $isFollowed = $this->User->isFollowed($user->id, $this->Auth->user('id'));
 
-		if (!$user) {
-			throw new NotFoundException();
-		}
-		$this->set(compact('user', 'favorite_count', 'popular_articles'));
+		$this->set(compact('user', 'favorite_count', 'popular_articles', 'isFollowed'));
 	}
 
 	public function edit()

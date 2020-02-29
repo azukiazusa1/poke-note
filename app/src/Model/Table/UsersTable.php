@@ -55,6 +55,18 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'dependent' => true
         ]);
+
+        $this->hasMany('Follows', [
+            'className' => 'Follows',
+            'foreignKey' => 'user_id',
+            'dependent' => true,
+        ]);
+
+        $this->hasMany('Followers', [
+            'className' => 'Follows',
+            'foreignKey' => 'follow_user_id',
+            'dependent' => true,
+        ]);
     }
 
     /**

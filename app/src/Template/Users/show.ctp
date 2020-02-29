@@ -14,7 +14,13 @@
                     <?php if (isset($login_user->id) && ($user->id === $login_user->id)): ?>
                         <p><?= $this->Html->link('プロフィールを編集', ['controller' => 'Users', 'action' => 'edit'], ['class' => 'btn'])?></p>
                     <?php else: ?>
-                        <a href="#" class="btn right rounded">フォロー</a>
+                        <span class="" id="follow-btn">
+                            <?php if ($isFollowed) : ?>
+                                <a href="#" class="btn right rounded red accent-2 waves-effect waves-light">フォロー中</a>
+                            <?php else: ?>
+                                <a href="#" class="btn right rounded red-text accent-2-text white waves-effect waves-red">フォロー</a>
+                            <?php endif ?>
+                        </span>
                     <?php endif ?>
                 </span>
                 <div class="card-content">
@@ -63,7 +69,8 @@
             <div class="card" id="app">
                 <div class="card-tabs">
                     <ul class="tabs tabs-fixed-width">
-                        <li class="tab" @click="changeArticles"><a class="active" href="#articles">投稿した記事</a></li>
+                        <li class="tab" @click="changeArticles"><a class="active" href="#articles">投稿した記事
+                            <span class="btn-floating btn-small red accent-2"><?= h($user->article_count)?></span></a></li>
                         <li class="tab" @click="changeFavorites"><a href="#favorites">いいねした記事</a></li>
                         <li class="tab" @click="changeComments"><a href="#comments">コメント</a></li>
                     </ul>
@@ -308,7 +315,7 @@
         data() {
             return {
                 userImg: `/img/${this.article.user.image}`,
-                userUrl: `/user/${this.article.user.username}`,
+                userUrl: `/users/${this.article.user.username}`,
                 articleUrl: `/articles/show/${this.article.id}`
             }
         },
@@ -333,7 +340,7 @@
         props: ['comment'],
         data() {
             return {
-                userUrl: `/user/${this.comment.user.username}`,
+                userUrl: `/users/${this.comment.user.username}`,
                 userImg: `/img/${this.comment.user.image}`,
                 articleUrl: `/articles/show/${this.comment.article.id}`
             }
