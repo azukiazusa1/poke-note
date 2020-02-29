@@ -80,10 +80,12 @@
                                     :article="article"
                                 />
                             </ul>
-                            <pagination
-                                :paging="articlesPaging"
-                                @paginate="articlesPage = $event"
-                            />
+                            <div class="center">
+                                <pagination
+                                    :paging="articlesPaging"
+                                    @paginate="articlesPage = $event"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div id="favorites">
@@ -97,10 +99,12 @@
                                     :article="article"
                                 />
                             </ul>
-                            <pagination
-                                :paging="favoritesPaging"
-                                @paginate="favoritesPage = $event"
-                            />
+                            <div class="center">
+                                <pagination
+                                    :paging="favoritesPaging"
+                                    @paginate="favoritesPage = $event"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div id="comments">
@@ -114,10 +118,12 @@
                                     :comment="comment"
                                 />
                             </ul>
-                            <pagination
-                                :paging="commentsPaging"
-                                @paginate="commentsPage = $event"
-                            />
+                            <div class="center">
+                                <pagination
+                                    :paging="commentsPaging"
+                                    @paginate="commentsPage = $event"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,7 +188,7 @@
 </script>
 <script type="text/x-template" id="pagination-template">
     <ul class="pagination">
-        <li class="waves-effect" v-if="paging.prevPage">
+        <li class="waves-effect" v-if="paging.prevPage" @click="$emit('paginate', paging.page - 1)">
             <a href="#!"><i class="material-icons">chevron_left</i></a>
         </li>
         <span v-for="n in paging.pageCount" :n="n">
@@ -190,7 +196,7 @@
                 <a href="#!" @click="$emit('paginate', n)">{{ n }}</a>
             </li>
         </span>
-        <li class="waves-effect" v-if="paging.nextPage">
+        <li class="waves-effect" v-if="paging.nextPage" @click="$emit('paginate', paging.page + 1)">
             <a href="#!"><i class="material-icons">chevron_right</i></a>
         </li>
     </ul>
