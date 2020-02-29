@@ -26,7 +26,6 @@ class UsersController extends AppController
 			->where(['username' => $username])
 			->contain(['articles', 'favorites', 'comments'])
 			->first();
-		
 		$favorite_count = array_reduce($user->articles, function($total, $current) {
 			return $total += $current->favorite_count;
 		});

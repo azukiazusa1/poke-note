@@ -36,4 +36,13 @@ class Comment extends Entity
         'article' => true,
         'user' => true,
     ];
+
+    protected $_virtual = ['formated_created'];
+
+    protected function _getFormatedCreated()
+    {
+        if (isset($this->_properties['created'])) {
+            return $this->_properties['created']->format('Y/m/d H:i:s');
+        }
+    }
 }

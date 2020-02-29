@@ -54,6 +54,20 @@ class CommentsTable extends Table
         ]);
     }
 
+    public function findByUserId(Query $query, array $options)
+    {
+        return $query
+            ->where(['Comments.user_id' => $options['user_id']])
+            ->contain([
+                'Users' => function($q) {
+                return $q->select(['id', 'username', 'image']);
+            },
+            'Articles' => function($q) {
+                return $q->select(['id', 'title', 'created']);
+                }        
+            ]);
+    }
+
     /**
      * Default validation rules.
      *

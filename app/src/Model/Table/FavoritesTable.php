@@ -55,6 +55,13 @@ class FavoritesTable extends Table
         ]);
     }
 
+    public function findByUserId(Query $query, array $options)
+    {
+        return $query
+            ->where(['Favorites.user_id' => $options['user_id']])
+            ->contain(['Articles' => ['Users', 'Tags']]);
+    }
+
     /**
      * Default validation rules.
      *

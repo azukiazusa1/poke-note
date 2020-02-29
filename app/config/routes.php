@@ -70,7 +70,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/signin', ['controller' => 'Users', 'action' => 'signin']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
-    $routes->connect('/user/*', ['controller' => 'Users', 'action' => 'show']);
+    $routes->connect('/users/*', ['controller' => 'Users', 'action' => 'show']);
     $routes->connect('/tags/*', ['controller' => 'Tags', 'action' => 'show']);
 
     /**
@@ -109,7 +109,15 @@ Router::prefix('api', function (RouteBuilder $routes) {
         $routes->resources('Favorites');
     });
 
+    $routes->resources('Users', function ($routes) {
+        $routes->resources('Articles', ['prefix' => 'users']);
+        $routes->resources('Favorites', ['prefix' => 'users']);
+        $routes->resources('Comments', ['prefix' => 'users']);
+    });
+
 });
+
+
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.

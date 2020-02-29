@@ -42,4 +42,11 @@ class Article extends Entity
         'favorites' => true,
         'tags' => true,
     ];
+
+    protected $_virtual = ['formated_created'];
+
+    protected function _getFormatedCreated()
+    {
+        return $this->_properties['created']->format('Y/m/d H:i:s');
+    }
 }

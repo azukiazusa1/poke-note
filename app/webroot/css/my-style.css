@@ -53,3 +53,34 @@ a.title{
   top:50px; 
   left: 100px;
 }
+.TagList {
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.tag {
+  display: flex;
+  padding: .2em .6em;
+  margin: 0 1em .5em .5em;
+  line-height: 1;
+  color: #444;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border-left-style: none;
+  border-radius: .2em;
+}
+
+.tag:before {
+  width: 1em;
+  height: 1em;
+  margin-left: -1em;
+  content: '';
+  background-color: #e0e0e0;
+  border-bottom-left-radius: .2em;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.tag-color {
+  color: #333!important;
+}

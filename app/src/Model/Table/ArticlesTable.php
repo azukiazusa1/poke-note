@@ -71,9 +71,34 @@ class ArticlesTable extends Table
         ]);
     }
 
-    public function findPublished(Query $query, array $options)
+    public function findPublished(Query $query)
     {
         return $query->where(['published' => 0]);
+    }
+
+    public function findTrend(Query $query)
+    {
+        return $query->find('published')
+            ->order(['favorite_count' => 'DESC'])
+            ->limit(20);
+    }
+
+    public function findByUserId(Query $query, array $options)
+    {
+        return $query->find('published')
+            ->where(['user_id' => $options['user_id']])
+            ->contain(['Users', 'Tags']);
+    }
+
+    public function findUserFavorites(Query $query, array $options)
+    {
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->matching(
+                'Favorites', function ($q) use($options) {
+                    return $q->where(['Favorites.user_id' => $options['user_id']]);
+                }
+            );
     }
 
     /**

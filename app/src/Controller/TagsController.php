@@ -13,7 +13,7 @@ class TagsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->Auth->allow(['index','add']);
+        $this->Auth->allow(['index','show']);
     }
 
     public function show(string $title = null)
