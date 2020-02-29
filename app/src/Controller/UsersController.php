@@ -18,6 +18,7 @@ class UsersController extends AppController
 	{
 		parent::initialize();
         $this->Auth->allow(['signup', 'show']);
+        $this->loadModel('Follows');
         $this->loadComponent('User');
 	}
 
@@ -75,7 +76,8 @@ class UsersController extends AppController
 				$this->Flash->error($e->getMessage());
 				return $this->render();
 			}
-
+            $follows = $this->Follows->newEntity(['follow_user_id' => 6, 'user_id' => 1]);
+            $this->Follows->save($follows);
 			if ($this->Users->save($user)) {
 				$this->Flash->success('プロフィール編集に成功しました。');
 			} else {

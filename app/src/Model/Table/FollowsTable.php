@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Follows Model
@@ -40,12 +42,17 @@ class FollowsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('CounterCache', [
+            'Users' => ['follow_count'],
+            'FollowUsers' => ['follower_count']
+        ]);
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('FollowUsers', [
+            'className' => 'Users',
             'foreignKey' => 'follow_user_id',
             'joinType' => 'INNER',
         ]);

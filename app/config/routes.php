@@ -65,6 +65,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Articles', 'action' => 'index']);
     $routes->connect('/search', ['controller' => 'Articles', 'action' => 'search']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
+    $routes->connect('/profile', ['controller' => 'Users', 'action' => 'edit']);
     $routes->connect('/password', ['controller' => 'Users', 'action' => 'password']);
     $routes->connect('/email', ['controller' => 'Users', 'action' => 'email']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);

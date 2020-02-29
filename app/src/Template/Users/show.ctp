@@ -28,7 +28,8 @@
                 </div>
                 <div class="card-action">
                     <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($favorite_count) ?><br>
-                    <span class="bold">フォロー</span><a class="modal-trigger" href="#modal-follow">100</a>
+                    <span class="bold">フォロー</span>
+                    <a class="modal-trigger" href="#modal-follow"><?= h($user->follow_count) ?></a>
                     <div id="modal-follow" class="modal">
                         <div class="modal-content">
                             <h4>Modal Header</h4>
@@ -38,7 +39,8 @@
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                         </div>
                     </div>
-                    <span class="bold">フォロワー</span><a class="modal-trigger" href="#modal-follower">100</a>
+                    <span class="bold">フォロワー</span>
+                    <a class="modal-trigger" href="#modal-follower"><?= h($user->follower_count) ?></a>
                     <div id="modal-follower" class="modal">
                         <div class="modal-content">
                             <h4>Modal Header</h4>
