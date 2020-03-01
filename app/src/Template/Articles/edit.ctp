@@ -31,7 +31,7 @@
     </div>
 </script>
 <div>
-    <span class="bold">＊記事はオートセーブされます</span>
+    <span class="bold">＊記事は自動で保存されます</span>
     <span class="right">
         <label>
             <input type="hidden" value="0" name="published" />
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'limit': 5,
             'onChipAdd': (e, chip) => {
                 const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
-                axios.post('/api/tags/.json', {'data': chipText})
+                axios.post('/api/tags.json', {'data': chipText})
                     .then(({data}) => {
                         const hidden = document.createElement('input')
                         hidden.type = 'hidden'
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         hidden.id = data.tag.title
                         hidden.class = 'tags'
                         chipsContainer.append(hidden)
+                        axios.post(`/api/articles/${articleId}/tags.json`, {'data': data.tag.id})
                     })
                     .catch(error => {
                         console.log(error)
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'onChipDelete': (e, chip) => {
                 const chipText = chip.innerHTML.substr(0, chip.innerHTML.indexOf("<i"))
                 const deleteTag = document.getElementById(chipText)
-                axios.delete(`/api/tags/${deleteTag.value}.json`, {'data': articleId})
+                axios.delete(`/api/articles/${articleId}/tags/${deleteTag.value}.json`)
                 deleteTag.remove()
             }
         });

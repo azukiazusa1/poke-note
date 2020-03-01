@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Articles;
 
 use App\Controller\AppController;
-use Cake\Http\Exception\UnauthorizedException;
-use Cake\Http\Exception\InternalErrorException;
 
 class FilesController extends AppController 
 {

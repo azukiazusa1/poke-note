@@ -41,25 +41,4 @@ class TagsController extends AppController
         ]);
     }
 
-    public function delete($tag_id)
-    {
-        $article_id = $this->request->input();
-
-        $message = 'Deleted';
-
-        $article_tags = $this->ArticlesTags->find()
-            ->where(['tag_id' => $tag_id])
-            ->where(['article_id' => $article_id])
-            ->first();
-        if ($article_tags) {
-            if (!$this->ArticlesTags->Delete($article_tags)) {
-                $message = 'Error';
-            }
-        }
-        $this->set([
-            'message' => $message,
-            '_serialize' => ['message']
-        ]);
-    }
-   
 }

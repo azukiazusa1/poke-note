@@ -110,8 +110,9 @@ Router::prefix('api', function (RouteBuilder $routes) {
     $routes->resources('Tags');
     $routes->resources('Articles');
     $routes->resources('Articles', function ($routes) {
-        $routes->resources('Favorites');
-        $routes->resources('Files');
+        $routes->resources('Favorites', ['prefix' => 'Articles']);
+        $routes->resources('Files', ['prefix' => 'Articles']);
+        $routes->resources('Tags', ['prefix' => 'Articles']);
     });
 
     $routes->resources('Users', function ($routes) {

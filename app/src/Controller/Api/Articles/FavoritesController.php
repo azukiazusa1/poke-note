@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Articles;
 
 use App\Controller\AppController;
 use Cake\Http\Exception\UnauthorizedException;
