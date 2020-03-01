@@ -17,7 +17,9 @@
                         <span class="" id="follow-btn">
                             <?php if ($isFollowed) : ?>
                                 <a href="#" class="btn right rounded red accent-2 waves-effect waves-light">フォロー中</a>
+                                <a href="#" class="btn right rounded red-text accent-2-text white waves-effect waves-red hide">フォロー</a>
                             <?php else: ?>
+                                <a href="#" class="btn right rounded red accent-2 waves-effect waves-light hide">フォロー中</a>
                                 <a href="#" class="btn right rounded red-text accent-2-text white waves-effect waves-red">フォロー</a>
                             <?php endif ?>
                         </span>
@@ -140,11 +142,31 @@
         </div>
     </div>
 </div>
+<?= $this->element('modalUnlogin', ['do' => 'フォロー']) ?>
 <script>
+    const userId = '<?= $user->id ?>'
     document.addEventListener('DOMContentLoaded', function() {
         M.Materialbox.init(document.querySelector('.materialboxed'));
         M.Tabs.init(document.querySelectorAll('.tabs'));
         M.Modal.init(document.querySelectorAll('.modal'));
+
+        const followBtn =  document.getElementById('follow-btn')
+        followBtn.addEventListener('click', async function() {
+            try {
+                const {data} = await axios.post(`/api/users/${userId}/follows.json`)
+                const children = [...this.children];
+                children.map(child => child.classList.toggle('hide'))
+            } catch ({response}) {
+                const modal = document.getElementById('modal-unlogin')
+                M.Modal.init(modal);
+                const instance = M.Modal.getInstance(modal);
+                if (response.status === 401) {
+                    instance.open()
+                } else {
+                    M.toast({html: response.message, classes: 'rounded red lighten-4 red-text darken-2-text'})
+                }
+            }
+       })
   });
 </script>
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
@@ -225,7 +247,7 @@
                 commentsPage: 1,
                 commentsPaging: '',
                 loading: true,
-                userId: '<?= $user->id ?>'
+                userId: userId
             }
         },
         created() { this.fetchArticles() },

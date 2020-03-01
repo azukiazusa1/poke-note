@@ -47,6 +47,8 @@ class Article extends Entity
 
     protected function _getFormatedCreated()
     {
-        return $this->_properties['created']->format('Y/m/d H:i:s');
+        if (isset($this->_properties['created'])) {
+            return $this->_properties['created']->format('Y/m/d H:i:s');
+        }
     }
 }

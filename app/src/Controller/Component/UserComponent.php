@@ -9,9 +9,7 @@ class UserComponent extends Component
 {
     public function countFavorite(array $articles)
     {
-        return array_reduce($articles, function($total, $current) {
-			return $total += $current->favorite_count;
-		});
+        return array_reduce($articles, fn($total, $current) => $total += $current->favorite_count);
     }
 
     public function isFollowed(int $follow_user_id, ?int $user_id)

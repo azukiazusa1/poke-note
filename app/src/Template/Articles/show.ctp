@@ -220,12 +220,7 @@
         </div>
     </div>
 </div>
-<div id="modal" class="modal">
-    <div class="modal-content">
-      <h4>いいねをするためには？</h4>
-      <p>A bunch of text</p>
-    </div>
-</div>
+<?= $this->element('modalUnlogin', ['do' => 'いいね']) ?>
 <script>
 Vue.use(window['MavonEditor'])
 
@@ -265,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         this.classList.remove('red')
                     }
             } catch ({response}) {
-                const modal = document.getElementById('modal')
+                const modal = document.getElementById('modal-unlogin')
                 M.Modal.init(modal);
                 const instance = M.Modal.getInstance(modal);
                 if (response.status === 401) {

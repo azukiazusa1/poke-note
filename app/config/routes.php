@@ -114,6 +114,7 @@ Router::prefix('api', function (RouteBuilder $routes) {
         $routes->resources('Articles', ['prefix' => 'users']);
         $routes->resources('Favorites', ['prefix' => 'users']);
         $routes->resources('Comments', ['prefix' => 'users']);
+        $routes->resources('Follows', ['prefix' => 'users']);
     });
 
 });
