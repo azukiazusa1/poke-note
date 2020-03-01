@@ -14,7 +14,7 @@ class ArticlesController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['index', 'latest', 'show']);
+        $this->Auth->allow(['index', 'latest', 'show', 'search']);
         $this->loadModel('Comments');
         $this->loadModel('Favorites');
     }
@@ -105,6 +105,7 @@ class ArticlesController extends AppController
     public function search()
     {
         $q = $this->request->getQuery('q');
-        $this->set(compact('q'));
+        $articles = $this->Articles->find('search', ['q' => $q]);
+        $this->set(compact('q', 'articles'));
     }
 }

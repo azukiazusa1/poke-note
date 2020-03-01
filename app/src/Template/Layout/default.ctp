@@ -40,9 +40,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
     </ul>
     <ul id="dropdown2" class="dropdown-content">
-    <form method="get" action="search">
+    <form method="get" action="/search">
         <div class="input-field">
-            <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索">
+            <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索" value="<?= $q ?? ''?>">
         </div>
     </form>
     </ul>

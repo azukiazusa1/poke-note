@@ -2,9 +2,12 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
+use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+
 
 /**
  * Articles Model
@@ -84,7 +87,7 @@ class ArticlesTable extends Table
             ->limit(20);
     }
 
-    public function findLatest(Query $query)
+    public function findLatest(Query $query): Query
     {
         return $query->find('published')
             ->contain(['Users', 'Tags'])
@@ -92,13 +95,33 @@ class ArticlesTable extends Table
             ->limit(20);
     }
 
-    public function findTimeLine(Query $query, array $options)
+    public function findTimeLine(Query $query, array $options): Query
     {
         return $query->find('published')
             ->contain(['Users', 'Tags'])
             ->order(['Articles.created' => 'DESC'])
             ->matching('Users.Followers', fn($q) => $q->where(['Followers.user_id' => $options['user_id']]))
             ->limit(20);
+    }
+
+    public function findSearch(Query $query, array $options): Query
+    {
+        $q = $options['q'];
+        $Articles_Tags_table = TableRegistry::getTableLocator()->get('ArticlesTags');
+        $subquery = $Articles_Tags_table->find()
+            ->contain(['Tags'])
+            // ->select(['id'])
+            ->where(fn (QueryExpression $exp) => $exp->equalFields('ArticlesTags.article_id', 'Articles.id'))
+            ->where(['Tags.title LIKE' => '%' . $q . '%']);
+
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->order(['Articles.created' => 'DESC'])
+            ->where(['OR' => [
+                ['title LIKE' => '%' . $q . '%'],
+                ['title LIKE' => '%' . $q . '%'],
+                fn (QueryExpression $exp) => $exp->exists($subquery)
+            ]]);
     }
 
     public function findByUserId(Query $query, array $options): Query

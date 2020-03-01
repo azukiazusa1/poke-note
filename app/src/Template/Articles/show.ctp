@@ -17,7 +17,7 @@
             <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></p>
     </div>
     <div class="row">
-        <div class="col s12 m12">
+        <div class="col s12 m11">
             <div class="card">
                 <div class="card-content">
                     <span><?= $this->Html->image(h($article->user->image), [
@@ -98,6 +98,7 @@
                             :subfield="subfield"
                             :box-shadow=false
                             :preview-background="previewBackground"
+                            :navigation=true
                         />
                     </div>
                 </div>
@@ -105,7 +106,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12 m12">
+        <div class="col s12 m11">
             <div class="card">
                 <div class="card-content">
                     <h5 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h5>
@@ -193,7 +194,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s12 m12">
+        <div class="col s12 m11">
             <div class="card">
                 <?php if (isset($login_user)) :?>
                     <div class="card-content">

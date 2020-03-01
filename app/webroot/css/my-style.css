@@ -84,3 +84,14 @@ a.title{
 .tag-color {
   color: #333!important;
 }
+
+@media only screen and (max-width: 992px) {
+  .v-note-navigation-wrapper {
+    display: none!important;
+  }
+}
+.v-note-navigation-wrapper {
+  position: fixed!important;
+  top: 70px!important;
+  right: 10px!important;
+}

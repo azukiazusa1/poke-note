@@ -43,38 +43,52 @@
                 </li>
                 <?php foreach ($articles as $article): ?>
                     <li class="collection-item avatar">
-                    <?= $this->Html->image(h($article->user->image), [
-                        'alt' => 'Author',
-                        'class' => 'circle responsive-img',
-                        'url' => ['controller' => 'Users', 'action' => 'show', h($article->user->username)]
-                    ])?>
-                    <?= $this->Html->link(h($article->title), 
-                        ['controller' => 'articles', 'action' => 'show', $article->id],
-                        ['class' => 'title']
-                    )?>
-                    <p><br>
-                        <span>
-                            <?= $this->Html->link('@' . h($article->user->username), 
-                                ['controller' => 'Users', 'action' => 'show', $article->user->username]
+                        <div>
+                            <?= $this->Html->image(h($article->user->image), [
+                                'alt' => 'Author',
+                                'class' => 'circle responsive-img',
+                                'url' => ['controller' => 'Users', 'action' => 'show', h($article->user->username)]
+                            ])?>
+                            <?= $this->Html->link(h($article->title), 
+                                ['controller' => 'articles', 'action' => 'show', $article->id],
+                                ['class' => 'title']
                             )?>
-                        </span>
-                        <span class="grey-text">
-                            <i class="tiny material-icons red-text text-accent-2">thumb_up</i>
-                            <?= h($article->favorite_count) ?>
-                        </span>
-                        <span class="grey-text">
-                            <i class="tiny material-icons teal-text text-lighten-2">comment</i>
-                            <?= h($article->comment_count) ?>
-                        </span>
-                        <span class="grey-text darken-1 hide-on-small-only">
-                            <i class="tiny material-icons">date_range</i>
-                            <?= h($article->created->format('Y/m/d H:i:s')) ?>
-                        </span>
-                        <p class="grey-text darken-1 hide-on-med-and-up">
-                            <i class="tiny material-icons">date_range</i>
-                            <?= h($article->created->format('Y/m/d H:i:s')) ?>
-                        </p>
-                    </p>
+                        </div>
+                        <div class="grey-text TagList">
+                            <i class="tiny material-icons grey-text">local_offer</i>
+                            <?php foreach ($article->tags as $tag): ?>
+                                <span class="tag">
+                                    <?= $this->Html->link(h($tag->title), 
+                                        ['controller' => 'Tags', 'action' => 'show', h($tag->title)],
+                                        ['class' => 'tag-color']
+                                    ) ?>
+                                </span>
+                            <?php endforeach ?>
+                        </div>
+                        <div>
+                            <span>
+                                <?= $this->Html->link('@' . h($article->user->username), 
+                                    ['controller' => 'Users', 'action' => 'show', $article->user->username]
+                                )?>
+                            </span>
+                            <span class="grey-text">
+                                <i class="tiny material-icons red-text text-accent-2">thumb_up</i>
+                                <?= h($article->favorite_count) ?>
+                            </span>
+                            <span class="grey-text">
+                                <i class="tiny material-icons teal-text text-lighten-2">comment</i>
+                                <?= h($article->comment_count) ?>
+                            </span>
+                            <span class="grey-text darken-1 hide-on-small-only">
+                                <i class="tiny material-icons">date_range</i>
+                                <?= h($article->created->format('Y/m/d H:i:s')) ?>
+                            </span>
+                            <p class="grey-text darken-1 hide-on-med-and-up">
+                                <i class="tiny material-icons">date_range</i>
+                                <?= h($article->created->format('Y/m/d H:i:s')) ?>
+                            </p>
+                        </div>
+                    </li>
                 <?php endforeach ?>
             </ul>
         </div>
