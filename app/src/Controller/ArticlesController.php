@@ -14,7 +14,7 @@ class ArticlesController extends AppController
     public function initialize()
     {
         parent::initialize();
-        $this->Auth->allow(['index', 'show']);
+        $this->Auth->allow(['index', 'latest', 'show']);
         $this->loadModel('Comments');
         $this->loadModel('Favorites');
     }
@@ -26,8 +26,22 @@ class ArticlesController extends AppController
      */
     public function index()
     {
-        $articles = $this->Articles->find('trend')->contain(['Users']);
+        $articles = $this->Articles->find('trend');
         $this->set(compact('articles'));
+    }
+
+    public function latest()
+    {
+        $articles = $this->Articles->find('latest');
+        $this->set(compact('articles'));
+        $this->render('index');
+    }
+
+    public function timeline()
+    {
+        $articles = $this->Articles->find('timeline', ['user_id' => $this->Auth->user('id')]);
+        $this->set(compact('articles'));
+        $this->render('index');
     }
 
     public function new()

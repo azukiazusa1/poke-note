@@ -2,17 +2,43 @@
     <div class="row">
         <div class="col s3 hide-on-med-and-down">
             <div class="collection">
-                <a href="#!" class="collection-item"><i class="material-icons tiny">trending_up</i> トレンド</a>
-                <a href="#!" class="collection-item"><i class="material-icons tiny">people</i> タイムライン</a>
-                <a href="#!" class="collection-item"><i class="material-icons tiny">done</i> 最新</a>
-                <a href="#!" class="collection-item"><i class="material-icons tiny">local_offer</i>タグ</a>
+                <?= $this->Html->link('<i class="material-icons tiny">trending_up</i> トレンド',
+                    ['controller' => 'Articles', 'action' => 'index'],
+                    ['class' => 'collection-item', 'escape' => false]
+                )?>
+                <?= $this->Html->link('<i class="material-icons tiny">done</i>最新',
+                    ['controller' => 'Articles', 'action' => 'latest'],
+                    ['class' => 'collection-item', 'escape' => false]
+                )?>
+                <?php if (isset($login_user)): ?>
+                    <?= $this->Html->link('<i class="material-icons tiny">people</i>タイムライン',
+                        ['controller' => 'Articles', 'action' => 'timeline'],
+                        ['class' => 'collection-item', 'escape' => false]
+                    )?>
+                    <a href="#!" class="collection-item"><i class="material-icons tiny">local_offer</i>タグ</a>
+                <? endif ?>
             </div>
         </div>
         <div class="col s12 m6">
             <ul class="collection with-header">
                 <li class="collection-header">
                     <h4 class="light-blue-text accent-1">
-                        <i class="material-icons">trending_up</i> トレンド
+                        <?php switch ($this->request->action):
+                        case 'index': ?>
+                            <i class="material-icons">trending_up</i>トレンド
+                        <?php break; ?>
+                        <?php case 'latest': ?>
+                            <i class="material-icons">done</i> 最新
+                        <?php break; ?>
+                        <?php case 'timeline': ?>
+                            <i class="material-icons">people</i> タイムライン</a>
+                        <?php break; ?>
+                        <?php case 'tag': ?>
+                            <i class="material-icons">local_offer</i>タグ</a>
+                        <?php break; ?>
+                        <?php default:
+                                break;
+                        endswitch ?>
                     </h4>
                 </li>
                 <?php foreach ($articles as $article): ?>
@@ -29,7 +55,7 @@
                     <p><br>
                         <span>
                             <?= $this->Html->link('@' . h($article->user->username), 
-                                ['controller' => 'Users', 'action' => 'show', $article->user->username],
+                                ['controller' => 'Users', 'action' => 'show', $article->user->username]
                             )?>
                         </span>
                         <span class="grey-text">

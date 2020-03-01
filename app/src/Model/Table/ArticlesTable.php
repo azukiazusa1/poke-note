@@ -71,32 +71,48 @@ class ArticlesTable extends Table
         ]);
     }
 
-    public function findPublished(Query $query)
+    public function findPublished(Query $query): Query
     {
         return $query->where(['published' => 0]);
     }
 
-    public function findTrend(Query $query)
+    public function findTrend(Query $query): Query
     {
         return $query->find('published')
+            ->contain(['Users', 'Tags'])
             ->order(['favorite_count' => 'DESC'])
             ->limit(20);
     }
 
-    public function findByUserId(Query $query, array $options)
+    public function findLatest(Query $query)
+    {
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->order(['Articles.created' => 'DESC'])
+            ->limit(20);
+    }
+
+    public function findTimeLine(Query $query, array $options)
+    {
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->order(['Articles.created' => 'DESC'])
+            ->matching('Users.Followers', fn($q) => $q->where(['Followers.user_id' => $options['user_id']]))
+            ->limit(20);
+    }
+
+    public function findByUserId(Query $query, array $options): Query
     {
         return $query->find('published')
             ->where(['user_id' => $options['user_id']])
             ->contain(['Users', 'Tags']);
     }
 
-    public function findUserFavorites(Query $query, array $options)
+    public function findUserFavorites(Query $query, array $options): Query
     {
         return $query->find('published')
             ->contain(['Users', 'Tags'])
-            ->matching(
-                'Favorites', fn ($q) => $q->where(['Favorites.user_id' => $options['user_id']])
-            );
+            ->matching('Favorites', fn ($q) => $q->where(['Favorites.user_id' => $options['user_id']]));
     }
 
     /**
