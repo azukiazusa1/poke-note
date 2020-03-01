@@ -47,16 +47,9 @@ class ArticlesController extends AppController
     public function new()
     {
         $article = $this->Articles->newEntity();
-        if ($this->request->is('post')) {
-            $article = $this->Articles->patchEntity($article, $this->request->getData(), ['associated' => ['Tags']]);
-            $article->user_id = $this->Auth->user('id');
-            if ($this->Articles->save($article)) {
-                $this->Flash->success('投稿に成功しました。');
-                $this->redirect(['controller' => 'Articles', 'action' => 'show', $article->id]);
-            }
-        }
-        $this->set(compact('article'));
-        $this->render('edit');
+        $article->user_id = $this->Auth->user('id');
+        $this->Articles->save($article);
+        return $this->redirect(['controller' => 'Articles', 'action' => 'edit', $article->id]);
     }
 
     public function edit($id = null)

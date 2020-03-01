@@ -5,7 +5,7 @@
 <?= $this->Form->create($article, [
     'v-on:submit' => 'onSubmit'
 ]) ?>
-<?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate']) ?>
+<?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate', 'id' => 'title']) ?>
 <div class="chips chips-autocomplete"></div>
 <div id="chips-container">
     <?php if (isset($article->tags) && count($article->tags) > 0): ?>
@@ -25,21 +25,26 @@
         v-model="value"
         ref=md
         @imgAdd="$imgAdd"
+        @change="$save"
+        @save="$save"
         />
     </div>
 </script>
-<div class="right">
-    <label>
-        <input type="hidden" value="0" name="published" />
-        <?php $checked = (($this->request->getData('published')) ? 'checked' : false) ?>
-        <input type="checkbox" class="filled-in" name="published" <?= $checked ?> value="1" />
-        <span class="tooltipped" data-position="top" data-tooltip="下書きにチェックを付けた場合、公開されません。">下書き</span>
-    </label>
-    <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?>
+<div>
+    <span class="bold">＊記事はオートセーブされます</span>
+    <span class="right">
+        <label>
+            <input type="hidden" value="0" name="published" />
+            <?php $checked = (($this->request->getData('published')) ? 'checked' : false) ?>
+            <input type="checkbox" class="filled-in" name="published" <?= $checked ?> value="1" />
+            <span class="tooltipped" data-position="top" data-tooltip="下書きにチェックを付けた場合、公開されません。">下書き</span>
+        </label>
+        <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?>
+    </span>
 </div>
 <?= $this->Form->end() ?>
 <script>
-
+const articleId = '<?= $article->id?>';
 Vue.use(window['MavonEditor'])
 
 new Vue({
@@ -54,24 +59,29 @@ new Vue({
         $imgAdd(pos, $file) {
             const formdata = new FormData()
             formdata.append('image', $file)
-            console.log(pos)
-            console.log($file)
             axios({
-                url: `/api/articles/1/files.json`,
+                url: `/api/articles/${articleId}/files.json`,
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'multipart/form-data' },
-            }).then(({data}) => {
-                console.log(data)
+            }).then(({data}) => {                
                 this.$refs.md.$img2Url(pos, data.filename);
+            }).then(err => {
+                console.log(err)
             })
         },
+        $save(body) {
+            const data = {
+                body: body,
+                title: document.getElementById('title').value
+            }
+            axios.put(`/api/articles/${articleId}.json`, data)
+        }
     },
     template: '#my-component'
 })
 
 document.addEventListener('DOMContentLoaded', function() {
-    const articleId = '<?= $article->id?>';
     const tootip = document.querySelectorAll('.tooltipped')
     M.Tooltip.init(tootip)
 
