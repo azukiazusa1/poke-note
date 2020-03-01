@@ -16,12 +16,18 @@
 </div>
 <?= $this->Form->control('body', ['class' => 'hide', 'label' => false, 'id' => 'body']) ?>
 <div id="app">
-    <textarea name="body" class='hide'>{{ value }}</textarea>
-    <mavon-editor 
-    language="ja" 
-    v-model="value"
-    />
 </div>
+<script type="text/x-template" id="my-component">
+    <div>
+        <textarea name="body" class='hide'>{{ value }}</textarea>
+        <mavon-editor 
+        language="ja" 
+        v-model="value"
+        ref=md
+        @imgAdd="$imgAdd"
+        />
+    </div>
+</script>
 <div class="right">
     <label>
         <input type="hidden" value="0" name="published" />
@@ -44,6 +50,24 @@ new Vue({
             message: '',
         }
     },
+    methods: {
+        $imgAdd(pos, $file) {
+            const formdata = new FormData()
+            formdata.append('image', $file)
+            console.log(pos)
+            console.log($file)
+            axios({
+                url: `/api/articles/1/files.json`,
+                method: 'post',
+                data: formdata,
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).then(({data}) => {
+                console.log(data)
+                this.$refs.md.$img2Url(pos, data.filename);
+            })
+        },
+    },
+    template: '#my-component'
 })
 
 document.addEventListener('DOMContentLoaded', function() {

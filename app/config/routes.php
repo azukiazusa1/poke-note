@@ -110,6 +110,7 @@ Router::prefix('api', function (RouteBuilder $routes) {
     $routes->resources('Tags');
     $routes->resources('Articles', function ($routes) {
         $routes->resources('Favorites');
+        $routes->resources('Files');
     });
 
     $routes->resources('Users', function ($routes) {
