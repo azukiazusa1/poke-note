@@ -1,3 +1,5 @@
+<?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
+<?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <div class="container">
     <div class="row">
         <div class="col m4 s12">
@@ -30,28 +32,11 @@
                 </div>
                 <div class="card-action">
                     <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($favorite_count) ?><br>
-                    <span class="bold">フォロー</span>
-                    <a class="modal-trigger" href="#modal-follow"><?= h($user->follow_count) ?></a>
-                    <div id="modal-follow" class="modal">
-                        <div class="modal-content">
-                            <h4>Modal Header</h4>
-                            <p>A bunch of text</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                        </div>
-                    </div>
-                    <span class="bold">フォロワー</span>
-                    <a class="modal-trigger" href="#modal-follower"><?= h($user->follower_count) ?></a>
-                    <div id="modal-follower" class="modal">
-                        <div class="modal-content">
-                            <h4>Modal Header</h4>
-                            <p>A bunch of text</p>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                        </div>
-                    </div>
+                    <a class="modal-trigger" href="#follows">
+                        <span class="bold black-text">フォロー</span><?= h($user->follow_count) ?></a>
+                    <a class="modal-trigger" href="#followers">
+                        <span class="bold black-text">フォロワー</span><?= h($user->follower_count) ?></a>
+                    <?= $this->element('modalFollow', ['type' => 'followers', 'title' => 'フォロワー']) ?>
                 </div>
             </div>
             <div class="row">
@@ -169,8 +154,6 @@
        })
   });
 </script>
-<?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
-<?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <script type="text/x-template" id="article-template">
     <li class="collection-item avatar">
         <a :href="userUrl"><img class="circle responsive-img" :src="userImg" /></a>

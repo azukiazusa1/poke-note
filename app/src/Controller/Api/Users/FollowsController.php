@@ -17,15 +17,20 @@ class FollowsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('RequestHandler');
-        $this->Auth->allow(['add']);
+        $this->Auth->allow(['index','add']);
     }
 
     public function index()
     {
+        $user_id = $this->request->getParam('user_id');
+
+        $follows = $this->Follows->find('follow', ['user_id' => $user_id]);
+        $followers = $this->Follows->find('follower', ['user_id' => $user_id]);
+
         $this->set([
-            'message' => 'aaa',
-            'tag' => 'bbb',
-            '_serialize' => ['message', 'tag']
+            'follows' => $follows,
+            'followers' => $followers,
+            '_serialize' => ['follows', 'followers']
         ]);
     }
 

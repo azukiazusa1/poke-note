@@ -58,6 +58,16 @@ class FollowsTable extends Table
         ]);
     }
 
+    public function findFollow(Query $query, array $options)
+    {
+        return $query->where(['user_id' => $options['user_id']])->contain(['FollowUsers']);
+    }
+    
+    public function findFollower(Query $query, array $options)
+    {
+        return $query->where(['follow_user_id' => $options['user_id']])->contain(['Users']);
+    }
+
     /**
      * Default validation rules.
      *

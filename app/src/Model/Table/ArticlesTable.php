@@ -95,9 +95,7 @@ class ArticlesTable extends Table
         return $query->find('published')
             ->contain(['Users', 'Tags'])
             ->matching(
-                'Favorites', function ($q) use($options) {
-                    return $q->where(['Favorites.user_id' => $options['user_id']]);
-                }
+                'Favorites', fn ($q) => $q->where(['Favorites.user_id' => $options['user_id']])
             );
     }
 
