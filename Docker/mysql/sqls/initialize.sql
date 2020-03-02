@@ -8,11 +8,15 @@ CREATE TABLE `users` (
   `nickname` varchar(32),
   `email` varchar(255) NOT NULL,
   `image` varchar(255),
-  'description' varchar(255),
+  `description` varchar(255),
+  `link` varchar(255),
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `article_count` int NOT NULL DEFAULT 0, 
+  `follow_count` int NOT NULL DEFAULT 0,
+  `follower_count` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -24,6 +28,8 @@ CREATE TABLE `articles` (
   `published` BOOLEAN DEFAULT FALSE,
   `created` DATETIME,
   `modified` DATETIME,
+  `comment_count` int NOT NULL DEFAULT 0,
+  `favorite_count` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   FOREIGN KEY user_key (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
