@@ -16,6 +16,6 @@ class ArticlesControllerTest extends TestCase
         $this->get('/');
 
         $this->assertResponseOk();
-        // 他のアサート
+        $this->assertResponseContains('トレンド');
     }
 }
