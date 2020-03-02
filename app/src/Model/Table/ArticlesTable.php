@@ -76,7 +76,7 @@ class ArticlesTable extends Table
 
     public function findPublished(Query $query): Query
     {
-        return $query->where(['published' => 0]);
+        return $query->where(['published' => 1]);
     }
 
     public function findTrend(Query $query): Query

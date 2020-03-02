@@ -55,6 +55,30 @@ class UsersFixture extends TestFixture
                 'follow_count' => 0,
                 'follower_count' => 0
             ],
+            [
+                'id' => 2,
+                'username' => 'a',
+                'password' => 'Lorem ipsum dolor sit amet',
+                'nickname' => 'Lorem ipsum dolor sit amet',
+                'email' => 'a',
+                'created' => '2020-02-23 16:23:10',
+                'modified' => '2020-02-23 16:23:10',
+                'article_count' => 0,
+                'follow_count' => 0,
+                'follower_count' => 0
+            ],
+            [
+                'id' => 3,
+                'username' => 'b',
+                'password' => 'Lorem ipsum dolor sit amet',
+                'nickname' => 'Lorem ipsum dolor sit amet',
+                'email' => 'b',
+                'created' => '2020-02-23 16:23:10',
+                'modified' => '2020-02-23 16:23:10',
+                'article_count' => 0,
+                'follow_count' => 0,
+                'follower_count' => 0
+            ],
         ];
         parent::init();
     }
