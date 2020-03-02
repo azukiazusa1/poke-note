@@ -110,7 +110,6 @@ class ArticlesTable extends Table
         $Articles_Tags_table = TableRegistry::getTableLocator()->get('ArticlesTags');
         $subquery = $Articles_Tags_table->find()
             ->contain(['Tags'])
-            // ->select(['id'])
             ->where(fn (QueryExpression $exp) => $exp->equalFields('ArticlesTags.article_id', 'Articles.id'))
             ->where(['Tags.title LIKE' => '%' . $q . '%']);
 
@@ -152,16 +151,23 @@ class ArticlesTable extends Table
 
         $validator
             ->scalar('title')
-            ->maxLength('title', 255)
-            ->allowEmptyString('title');
+            ->maxLength('title', 255, 'タイトルは255文字までです。')
+            ->allowEmptyString('title')
+            ->notEmptyString('title', '記事を公開する場合にはタイトルは必須項目です。', fn($context) => 
+                $context['data']['published'] === 1
+            );
 
         $validator
             ->scalar('body')
-            ->allowEmptyString('body');
+            ->allowEmptyString('body')
+            ->notEmptyString('body', '記事を公開する場合には本文は必須項目です。', fn($context) => 
+            $context['data']['published'] === 1
+        );
+
 
         $validator
             ->boolean('published')
-            ->allowEmptyString('published');
+            ->notEmptyString('published', '下書きか公開かは必ず指定する必要があります。');
 
         return $validator;
     }
