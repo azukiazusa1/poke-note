@@ -23,7 +23,7 @@
             <ul class="collection with-header">
                 <li class="collection-header">
                     <h4 class="light-blue-text accent-1">
-                        <?php switch ($this->request->action):
+                        <?php switch ($this->request->getParam('action')):
                         case 'index': ?>
                             <i class="material-icons">trending_up</i>トレンド
                         <?php break; ?>

@@ -34,11 +34,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <ul id="dropdown1" class="dropdown-content">
-        <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->username])?></li>
-        <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
-        <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
-    </ul>
+    <?php if (isset($login_user)) :?>
+        <ul id="dropdown1" class="dropdown-content">
+            <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->username])?></li>
+            <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
+            <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
+        </ul>
+    <?php endif ?>
     <ul id="dropdown2" class="dropdown-content">
     <form method="get" action="/search">
         <div class="input-field">
