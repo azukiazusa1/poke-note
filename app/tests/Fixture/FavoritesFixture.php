@@ -45,7 +45,7 @@ class FavoritesFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'article_id' => 1,
+                'article_id' => 3,
                 'user_id' => 1,
                 'created' => '2020-02-23 16:23:33',
                 'modified' => '2020-02-23 16:23:33',

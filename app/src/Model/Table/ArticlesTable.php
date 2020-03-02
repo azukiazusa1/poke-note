@@ -79,6 +79,11 @@ class ArticlesTable extends Table
         return $query->where(['published' => 1]);
     }
 
+    public function findDraft(Query $query): Query
+    {
+        return $query->where(['published' => 0]);
+    }
+
     public function findTrend(Query $query): Query
     {
         return $query->find('published')
@@ -126,6 +131,13 @@ class ArticlesTable extends Table
     public function findByUserId(Query $query, array $options): Query
     {
         return $query->find('published')
+            ->where(['user_id' => $options['user_id']])
+            ->contain(['Users', 'Tags']);
+    }
+
+    public function findDraftByUserId(Query $query, array $options): Query
+    {
+        return $query->find('draft')
             ->where(['user_id' => $options['user_id']])
             ->contain(['Users', 'Tags']);
     }

@@ -39,7 +39,7 @@ class TagsFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'title' => 'Lorem ipsum dolor sit amet',
+                'title' => 'タグ1',
                 'created' => '2020-02-23 16:23:05',
                 'modified' => '2020-02-23 16:23:05',
             ],

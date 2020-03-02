@@ -46,6 +46,20 @@ class FollowsFixture extends TestFixture
             [
                 'id' => 1,
                 'user_id' => 1,
+                'follow_user_id' => 2,
+                'created' => '2020-02-29 22:09:42',
+                'modified' => '2020-02-29 22:09:42',
+            ],
+            [
+                'id' => 2,
+                'user_id' => 2,
+                'follow_user_id' => 2,
+                'created' => '2020-02-29 22:09:42',
+                'modified' => '2020-02-29 22:09:42',
+            ],
+            [
+                'id' => 3,
+                'user_id' => 3,
                 'follow_user_id' => 1,
                 'created' => '2020-02-29 22:09:42',
                 'modified' => '2020-02-29 22:09:42',

@@ -45,38 +45,38 @@ class UsersFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'username' => 'Lorem ipsum dolor sit amet',
-                'password' => 'Lorem ipsum dolor sit amet',
-                'nickname' => 'Lorem ipsum dolor sit amet',
-                'email' => 'Lorem ipsum dolor sit amet',
+                'username' => 'user1',
+                'password' => 'user1',
+                'nickname' => 'user1',
+                'email' => 'user1',
                 'created' => '2020-02-23 16:23:10',
                 'modified' => '2020-02-23 16:23:10',
-                'article_count' => 0,
-                'follow_count' => 0,
-                'follower_count' => 0
+                'article_count' => 3,
+                'follow_count' => 1,
+                'follower_count' => 2
             ],
             [
                 'id' => 2,
-                'username' => 'a',
-                'password' => 'Lorem ipsum dolor sit amet',
-                'nickname' => 'Lorem ipsum dolor sit amet',
-                'email' => 'a',
+                'username' => 'user2',
+                'password' => 'user2',
+                'nickname' => 'user2',
+                'email' => 'user2',
                 'created' => '2020-02-23 16:23:10',
                 'modified' => '2020-02-23 16:23:10',
-                'article_count' => 0,
-                'follow_count' => 0,
-                'follower_count' => 0
+                'article_count' => 2,
+                'follow_count' => 1,
+                'follower_count' => 1
             ],
             [
                 'id' => 3,
                 'username' => 'b',
-                'password' => 'Lorem ipsum dolor sit amet',
-                'nickname' => 'Lorem ipsum dolor sit amet',
-                'email' => 'b',
+                'password' => 'user3',
+                'nickname' => 'user3',
+                'email' => 'user3',
                 'created' => '2020-02-23 16:23:10',
                 'modified' => '2020-02-23 16:23:10',
-                'article_count' => 0,
-                'follow_count' => 0,
+                'article_count' => 1,
+                'follow_count' => 1,
                 'follower_count' => 0
             ],
         ];
