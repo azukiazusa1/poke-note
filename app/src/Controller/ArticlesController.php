@@ -80,8 +80,8 @@ class ArticlesController extends AppController
             ->where(['article_id' => $id, 'user_id' => $this->Auth->user('id')])
             ->first();
         $new_comment = $this->Comments->newEntity();
-        $isAuthor = ($this->Auth->user('id') === $article->user_id);
-        $this->set(compact('article', 'new_comment', 'isAuthor', 'isFavorite'));
+        $this->set('isAuthor', $article->isAuthor($this->Auth->user('id')));
+        $this->set(compact('article', 'new_comment', 'isFavorite'));
     }
 
     public function delete($id)

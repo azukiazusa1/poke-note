@@ -56,4 +56,9 @@ class Article extends Entity
     {
         return $this->_properties['published'] === false;
     }
+
+    public function isAuthor(?int $id): bool
+    {
+        return $id === $this->_properties['user_id'];
+    }
 }
