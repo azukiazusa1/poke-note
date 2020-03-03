@@ -166,14 +166,14 @@ class ArticlesTable extends Table
             ->maxLength('title', 255, 'タイトルは255文字までです。')
             ->allowEmptyString('title')
             ->notEmptyString('title', '記事を公開する場合にはタイトルは必須項目です。', fn($context) => 
-                $context['data']['published'] === 1
+                !empty($context['data']['published'])
             );
 
         $validator
             ->scalar('body')
             ->allowEmptyString('body')
             ->notEmptyString('body', '記事を公開する場合には本文は必須項目です。', fn($context) => 
-            $context['data']['published'] === 1
+                !empty($context['data']['published'])
         );
 
 

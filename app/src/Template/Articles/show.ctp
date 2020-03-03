@@ -65,7 +65,12 @@
                         </ul>
                     <?php endif ?>
                     <hr class="list-divider">
-                    <span class="card-title"><h1><?= h($article->title) ?></h1></span>
+                    <span class="card-title">
+                        <?php if ($article->isDraft()) :?>
+                            <h4 class="text-red">この記事はまだ公開されていません。</h4>
+                        <?php endif ?>
+                        <h1><?= h($article->title) ?></h1>
+                    </span>
                     <?php if (count($article->tags) > 0): ?>
                         <?php foreach($article->tags as $tag): ?>
                             <div class="chip">
