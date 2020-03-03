@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\NotFoundException;
 
 class ArticlesController extends AppController 
 {
@@ -52,7 +53,7 @@ class ArticlesController extends AppController
         return $this->redirect(['controller' => 'Articles', 'action' => 'edit', $article->id]);
     }
 
-    public function edit($id = null)
+    public function edit($id)
     {
         $article = $this->Articles->get($id, ['contain' => 'Tags']);
         if ($this->Auth->user('id') !== $article->user_id) {
@@ -69,9 +70,12 @@ class ArticlesController extends AppController
         $this->set(compact('article'));
     }
 
-    public function show(int $id = null)
+    public function show(int $id)
     {
         $article = $this->Articles->get($id, ['contain' => ['Users', 'Comments' => ['Users'], 'Tags']]);
+        if ($article->isDraft() && ($article->user_id !== $this->Auth->user('id'))) {
+            throw new NotFoundException();
+        }
         $isFavorite = !!$this->Favorites->find()
             ->where(['article_id' => $id, 'user_id' => $this->Auth->user('id')])
             ->first();
@@ -80,7 +84,7 @@ class ArticlesController extends AppController
         $this->set(compact('article', 'new_comment', 'isAuthor', 'isFavorite'));
     }
 
-    public function delete($id = null)
+    public function delete($id)
     {
         $this->request->allowMethod(['post']);
         $article = $this->Articles->get($id);

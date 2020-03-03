@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col s3 hide-on-med-and-down">
             <div class="collection">
-                <?= $this->Html->link('<i class="material-icons tiny">trending_up</i> トレンド',
+                <?= $this->Html->link('<i class="material-icons tiny">trending_up</i>トレンド',
                     ['controller' => 'Articles', 'action' => 'index'],
                     ['class' => 'collection-item', 'escape' => false]
                 )?>
@@ -28,13 +28,13 @@
                             <i class="material-icons">trending_up</i>トレンド
                         <?php break; ?>
                         <?php case 'latest': ?>
-                            <i class="material-icons">done</i> 最新
+                            <i class="material-icons">done</i>最新
                         <?php break; ?>
                         <?php case 'timeline': ?>
-                            <i class="material-icons">people</i> タイムライン</a>
+                            <i class="material-icons">people</i> タイムライン
                         <?php break; ?>
                         <?php case 'tag': ?>
-                            <i class="material-icons">local_offer</i>タグ</a>
+                            <i class="material-icons">local_offer</i>タグ
                         <?php break; ?>
                         <?php default:
                                 break;
