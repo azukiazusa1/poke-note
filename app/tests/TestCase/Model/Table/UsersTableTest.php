@@ -73,6 +73,19 @@ class UsersTableTest extends TestCase
         $expected = [];
         $this->assertSame($expected, $user->getErrors());
 
+        // ニックネーム、プロフィール、リンクは空でもok
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'nickname' => '',
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => '',
+            'link' => ''
+        ]);
+
+        $expected = [];
+        $this->assertSame($expected, $user->getErrors());
+
          // urlの形式じゃない時
          $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
