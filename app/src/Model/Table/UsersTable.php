@@ -117,6 +117,12 @@ class UsersTable extends Table
             ->maxLength('description', 255)
             ->allowEmptyString('description');
 
+        $validator
+            ->scalar('link')
+            ->urlWithProtocol('link', 'リンクはURLの形式である必要があります。')
+            ->maxLength('link', 255, 'リンクは255文字までです。')
+            ->allowEmptyString('link');
+
         return $validator;
     }
 

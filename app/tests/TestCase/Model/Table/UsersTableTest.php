@@ -66,10 +66,41 @@ class UsersTableTest extends TestCase
             'nickname' => str_repeat('a', 32),
             'password' => 'A1234567',
             'email' => 'aaa@example.com',
-            'desctiption' => str_repeat('a', 255)
+            'desctiption' => str_repeat('a', 255),
+            'link' => 'https://google.com'
         ]);
 
         $expected = [];
+        $this->assertSame($expected, $user->getErrors());
+
+         // urlの形式じゃない時
+         $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'nickname' => str_repeat('a', 32),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => str_repeat('a', 255),
+            'link' => 'htt://google.com'
+        ]);
+
+        $expected = ['link' => [
+            'urlWithProtocol' => 'リンクはURLの形式である必要があります。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+         // urlの形式じゃない時
+
+         $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'nickname' => str_repeat('a', 32),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => str_repeat('a', 255),
+            'link' => 'https://google.com' . str_repeat('a', 238)
+        ]);
+
+        $expected = ['link' => [
+            'maxLength' => 'リンクは255文字までです。'
+        ]];
         $this->assertSame($expected, $user->getErrors());
 
     }
