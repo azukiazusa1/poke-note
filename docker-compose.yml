@@ -7,7 +7,7 @@ services:
       dockerfile: ./Docker/php/Dockerfile
     volumes: 
       - .:/var/www/html:cached
-      - DATABASE_NAME=qa_app
+      - DATABASE_NAME=poke_note
     command: bash -c "sh docker-init-setup.sh && apache2-foreground"
     environment: 
       - APP_DEFAULT_LOCALE=ja_JP
