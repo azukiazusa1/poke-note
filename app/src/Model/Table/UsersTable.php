@@ -90,9 +90,16 @@ class UsersTable extends Table
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 255)
+            ->lengthBetween('password', [6, 20], 'パスワードは6文字以上20文字以下にする必要があります。')
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->notEmptyString('password')
+            ->alphaNumeric('mb_loginpass', 'パスワードには半角英数字のみ使用できます。')
+            ->add('mb_loginpass', 'numberAndAlpha',[
+                'rule' => function($data, $context) {
+                        $valid = preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i', $data);
+                        return $valid ? true : 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。';
+                    }
+            ]);
 
         $validator
             ->scalar('nickname')
@@ -101,8 +108,14 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
+            ->maxLength('email', 255)
             ->requirePresence('email', 'create')
             ->notEmptyString('email');
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 255)
+            ->allowEmptyString('description');
 
         return $validator;
     }

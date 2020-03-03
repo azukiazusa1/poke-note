@@ -54,32 +54,23 @@ class UsersTableTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test validationDefault method
      *
      * @return void
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        // エラーが無いとき
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'nickname' => str_repeat('a', 32),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => str_repeat('a', 255)
+        ]);
 
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [];
+        $this->assertSame($expected, $user->getErrors());
+
     }
 }

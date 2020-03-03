@@ -70,6 +70,8 @@ class ArticlesTableTest extends TestCase
             'body' => str_repeat('b', 255),
             'published' => 0,
         ]);
+        $expected = [];
+        $this->assertSame($expected, $article->getErrors());
 
         // タイトルと本文を空を許容する
         $article = $this->Articles->newEntity([
@@ -626,7 +628,6 @@ class ArticlesTableTest extends TestCase
         $query = $this->Articles->find('userFavorites', ['user_id' => 1]);
         $this->assertInstanceOf(Query::class, $query);
         $result = $query->enableHydration(false)->toArray();
-        debug($result);
         $expected = [
             [
                 'id' => 3,
