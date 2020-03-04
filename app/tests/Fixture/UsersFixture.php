@@ -50,7 +50,7 @@ class UsersFixture extends TestFixture
                 'username' => 'user1',
                 'password' => 'user1',
                 'nickname' => 'user1',
-                'email' => 'user1',
+                'email' => 'user1@example.com',
                 'created' => '2020-02-23 16:23:10',
                 'modified' => '2020-02-23 16:23:10',
                 'article_count' => 3,

@@ -117,4 +117,28 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());
 
     }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
+    {
+        $user = $this->Users->newEntity([
+            'username' => 'user1',
+            'email' => 'user1@example.com',
+            'password' => 'password1'
+        ]);
+        $this->Users->save($user);
+        $expected = [
+            'username' => [
+                '_isUnique' => 'このユーザー名はすでに使われています。'
+            ],
+            'email' => [
+                '_isUnique' => 'このメールアドレスはすでに使われています。'
+            ],
+        ];
+        $this->assertSame($expected, $user->getErrors());
+    }
 }

@@ -67,7 +67,7 @@ new Vue({
                 method: 'post',
                 data: formdata,
                 headers: { 'Content-Type': 'multipart/form-data' },
-            }).then(({data}) => {                
+            }).then(({data}) => {      
                 this.$refs.md.$img2Url(pos, data.filename);
             }).then(err => {
                 console.log(err)

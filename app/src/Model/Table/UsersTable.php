@@ -85,8 +85,7 @@ class UsersTable extends Table
             ->scalar('username')
             ->maxLength('username', 32)
             ->requirePresence('username', 'create')
-            ->notEmptyString('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('username');
 
         $validator
             ->scalar('password')
@@ -135,8 +134,8 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['username']));
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['username'], 'このユーザー名はすでに使われています。'));
+        $rules->add($rules->isUnique(['email'], 'このメールアドレスはすでに使われています。'));
 
         return $rules;
     }
