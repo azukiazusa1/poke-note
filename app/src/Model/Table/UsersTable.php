@@ -92,12 +92,13 @@ class UsersTable extends Table
             ->lengthBetween('password', [6, 20], 'パスワードは6文字以上20文字以下にする必要があります。')
             ->requirePresence('password', 'create')
             ->notEmptyString('password')
-            ->alphaNumeric('mb_loginpass', 'パスワードには半角英数字のみ使用できます。')
-            ->add('mb_loginpass', 'numberAndAlpha',[
-                'rule' => function($data, $context) {
-                        $valid = preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i', $data);
-                        return $valid ? true : 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。';
-                    }
+            ->add('password', 'alphaNumeric', [
+                'rule' => fn($data) => (bool)preg_match('/^[a-zA-Z0-9]+$/', $data),
+                'message' => 'パスワードには半角英数字のみ使用できます。'
+            ])
+            ->add('password', 'requreAlphaNumeric',[
+                'rule' => fn($data) => (bool)preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i', $data),
+                'message' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
             ]);
 
         $validator

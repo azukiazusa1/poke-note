@@ -58,9 +58,8 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testバリデーションエラーがないとき()
     {
-        // エラーが無いとき
         $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
             'nickname' => str_repeat('a', 32),
@@ -72,8 +71,10 @@ class UsersTableTest extends TestCase
 
         $expected = [];
         $this->assertSame($expected, $user->getErrors());
+    }
 
-        // ニックネーム、プロフィール、リンクは空でもok
+    public function testニックネーム、プロフィール、リンクは空でもok()
+    {
         $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
             'nickname' => '',
@@ -85,7 +86,95 @@ class UsersTableTest extends TestCase
 
         $expected = [];
         $this->assertSame($expected, $user->getErrors());
+    }
 
+    public function testパスワードは6文字以上()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A1234',
+        ]);
+
+        $expected = ['password' => [
+            'lengthBetween' => 'パスワードは6文字以上20文字以下にする必要があります。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A12345',
+        ]);
+
+        $expected = [];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testパスワードは20文字以下()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A' . str_repeat('1', 20),
+        ]);
+
+        $expected = ['password' => [
+            'lengthBetween' => 'パスワードは6文字以上20文字以下にする必要があります。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A' . str_repeat('1', 19),
+        ]);
+
+        $expected = [];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testパスワードは英数字のみ()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A11あいうえお'
+        ]);
+
+        $expected = ['password' => [
+            'alphaNumeric' => 'パスワードには半角英数字のみ使用できます。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testパスワードは英文字数字それぞれ一文字以上()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'password'
+        ]);
+
+        $expected = ['password' => [
+            'requreAlphaNumeric' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => '123456'
+        ]);
+
+        $expected = ['password' => [
+            'requreAlphaNumeric' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testリンクがURLNo形式じゃないとき()
+    {
          // urlの形式じゃない時
          $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
@@ -100,9 +189,11 @@ class UsersTableTest extends TestCase
             'urlWithProtocol' => 'リンクはURLの形式である必要があります。'
         ]];
         $this->assertSame($expected, $user->getErrors());
-         // urlの形式じゃない時
-
-         $user = $this->Users->newEntity([
+    }
+    
+    public function testリンクが255文字以上()
+    {
+        $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
             'nickname' => str_repeat('a', 32),
             'password' => 'A1234567',
@@ -115,7 +206,6 @@ class UsersTableTest extends TestCase
             'maxLength' => 'リンクは255文字までです。'
         ]];
         $this->assertSame($expected, $user->getErrors());
-
     }
 
     /**

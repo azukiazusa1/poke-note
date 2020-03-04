@@ -131,14 +131,21 @@ class ArticlesTableTest extends TestCase
             'user_id' => 1,
             'published' => 0
         ]);
-        $article = $this->Articles->save($article);
-        $this->assertFalse($article->hasErrors());
+        $this->Articles->save($article);
+        $expected = [];
+        $this->assertSame($expected, $article->getErrors());
 
         $article = $this->Articles->newEntity([
             'user_id' => 999,
             'published' => 0
         ]);
-        $this->assertFalse($this->Articles->save($article));
+        $this->Articles->save($article);
+        $expected = [
+            'user_id' => [
+                '_existsIn' => '存在しないユーザーIDです。'
+            ]
+        ];
+        $this->assertSame($expected, $article->getErrors());
     }
 
     /**
