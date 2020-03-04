@@ -237,4 +237,12 @@ class ArticlesControllerTest extends TestCase
         $this->assertInstanceOf(Article::class,$article);
         $this->assertContains('first', $article->title);
     }
+
+    public function test検索パラメータが渡されなかったとき()
+    {
+        $this->get('/search/');
+        $this->assertResponseok();
+        $this->assertResponseNotContains('articles');
+        $this->assertTemplate('search_start');
+    }
 }
