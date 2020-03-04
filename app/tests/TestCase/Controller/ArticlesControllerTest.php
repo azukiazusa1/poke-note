@@ -199,9 +199,17 @@ class ArticlesControllerTest extends TestCase
     public function 他人の記事は削除できない()
     {
         $this->session(['Auth.User.id' => 2]);
-        $this->post('/articles/delete/1');
 
         $this->post('/articles/delete/1');
         $this->assertResponseCode(403);
+    }
+
+    public function 存在しない記事を削除しようとしたとき()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->post('/articles/delete/999');
+
+
+        $this->assertResponseCode(404);
     }
 }
