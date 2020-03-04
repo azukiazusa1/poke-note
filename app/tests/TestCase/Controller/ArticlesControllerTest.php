@@ -10,7 +10,6 @@ use App\Test\TestSuite\LoginTrait;
 class ArticlesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
-    use LoginTrait;
 
     public $fixtures = [
         'app.Articles', 

@@ -33,12 +33,15 @@
 <div>
     <span class="bold">＊記事は自動で保存されます</span>
     <span class="right">
-        <label>
             <input type="hidden" value="0" name="published" />
-            <?php $checked = (($this->request->getData('published')) ? 'checked' : false) ?>
-            <input type="checkbox" class="filled-in" name="published" <?= $checked ?> value="1" />
-            <span class="tooltipped" data-position="top" data-tooltip="下書きにチェックを付けた場合、公開されません。">下書き</span>
-        </label>
+            <?php $checked = (($article->published) ? 'checked' : false) ?>
+            <span class="switch">
+                <label>
+                    <input type="checkbox" name="published" <?= $checked ?> value="1" />
+                    <span class="lever"></span>
+                    記事を公開する
+                </label>
+            </span>
         <?= $this->Form->button('投稿', ['class' => 'btn blue btn-large']) ?>
     </span>
 </div>
@@ -82,9 +85,6 @@ new Vue({
 })
 
 document.addEventListener('DOMContentLoaded', function() {
-    const tootip = document.querySelectorAll('.tooltipped')
-    M.Tooltip.init(tootip)
-
     const chip = document.querySelectorAll('.chips')
     const chipsContainer = document.getElementById('chips-container')
     const tags = chipsContainer.querySelectorAll('.tags')

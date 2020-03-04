@@ -23,7 +23,7 @@ CREATE TABLE `users` (
 CREATE TABLE `articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
-  `title` VARCHAR(255) NOT NULL,
+  `title` VARCHAR(255),
   `body` TEXT,
   `published` BOOLEAN DEFAULT FALSE,
   `created` DATETIME,
