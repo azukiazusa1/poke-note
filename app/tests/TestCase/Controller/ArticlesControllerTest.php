@@ -224,7 +224,17 @@ class ArticlesControllerTest extends TestCase
         $this->session(['Auth.User.id' => 1]);
         $this->post('/articles/delete/999');
 
-
         $this->assertResponseCode(404);
+    }
+
+    public function test検索画面()
+    {
+        $this->get('/search/?q=first');
+        $this->assertResponseok();
+
+        $articles = $this->viewVariable('articles');
+        $article = $articles->sample(1)->first();
+        $this->assertInstanceOf(Article::class,$article);
+        $this->assertContains('first', $article->title);
     }
 }
