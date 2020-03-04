@@ -187,11 +187,21 @@ class ArticlesControllerTest extends TestCase
         $this->enableCsrfToken();
 
         $this->post('/articles/delete/1');
+        
 
         $article = $this->Articles->find()->where(['id' => 1])->first();
         $this->assertEmpty($article);
         $this->assertFlashMessage('記事を削除しました。');
         $this->assertFlashElement('Flash/success');
 
+    }
+
+    public function 他人の記事は削除できない()
+    {
+        $this->session(['Auth.User.id' => 2]);
+        $this->post('/articles/delete/1');
+
+        $this->post('/articles/delete/1');
+        $this->assertResponseCode(403);
     }
 }
