@@ -52,24 +52,24 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="nav-wrapper">
             <?= $this->Html->link('Note!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
             <ul class="right">
+                <li class="hide-on-small-only">
+                    <form method="get" action="search">
+                        <div class="input-field">
+                            <i class="material-icons prefix white-text">search</i>
+                            <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
+                        </div>
+                    </form>
+                </li>
+                <li class="hide-on-med-and-up">
+                    <a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons">search</i></a>
+                </li>
                 <?php if (isset($login_user)): ?>
-                    <li class="hide-on-small-only">
-                        <form method="get" action="search">
-                            <div class="input-field">
-                                <i class="material-icons prefix white-text">search</i>
-                                <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
-                            </div>
-                        </form>
-                    </li>
                     <li class="hide-on-small-only">
                         <?= $this->Html->link('投稿する<i class="material-icons left">create</i>', 
                         ['controller' => 'Articles', 'action' => 'new'],
                         ['escape' => false, 'class' => 'btn red darken-3']
                         )?>
-                    </li> 
-                    <li class="hide-on-med-and-up">
-                    <a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons">search</i></a>
-                    </li> 
+                    </li>  
                     <li class="hide-on-med-and-up">
                         <?= $this->Html->link('<i class="material-icons">create</i>', 
                         ['controller' => 'Articles', 'action' => 'new'],
