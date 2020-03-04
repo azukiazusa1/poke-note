@@ -139,9 +139,6 @@ class UsersController extends AppController
 		$user = $this->Users->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			if ($user->errors()) {
-				return $this->render();
-			}
 			$user->image = 'user/default.png';
 			if ($this->Users->save($user)) {
 				$this->Flash->success('ユーザー登録に成功しました。');
@@ -151,7 +148,7 @@ class UsersController extends AppController
 				$this->Flash->error('ユーザー登録に失敗しました。');
 			}
 		}
-		$this->set(compact($user));
+		$this->set(compact('user'));
 	}
 
 	public function login()

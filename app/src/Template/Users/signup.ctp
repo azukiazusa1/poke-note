@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-content">
           <span class="card-title"><h3>ユーザー登録</h3></span>
-            <?= $this->Form->create() ?>
+            <?= $this->Form->create($user) ?>
             <?= $this->Form->control('username', ['label' => 'ユーザー名', 'maxLength' => 50, 'class'=>'validate']) ?>
             <?= $this->Form->control('email', ['label' => 'メールアドレス', 'maxLength' => 255, 'class'=>'validate']) ?>
             <?= $this->Form->control('password', ['label' => 'パスワード', 'maxLength' => 50, 'class'=>'validate']) ?>
