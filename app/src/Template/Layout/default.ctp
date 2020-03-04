@@ -102,6 +102,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 constrainWidth: false,
                 closeOnClick: false,
             });
+            M.FormSelect.init(document.querySelectorAll('select'));
         });
     </script>
 </body>

@@ -1,5 +1,16 @@
 <div class="container">
     <div class="row">
+        <div class="input-field col s12 hide-on-large-only">
+            <select id="top-select" onchange="location.href=value">
+                <option value="/" <?= $this->request->getParam('action') === 'index' ? 'selected' : '' ?>>トレンド</option>
+                <option value="/latest" <?= $this->request->getParam('action') === 'latest' ? 'selected' : '' ?>>最新</option>
+                <?php if (isset($login_user)): ?>
+                    <option value="/timeline" <?= $this->request->getParam('action') === 'timeline' ? 'selected' : '' ?>>タイムライン</option>
+                    <option value="/tag" <?= $this->request->getParam('action') === 'tag' ? 'selected' : '' ?>>タグ</option>
+                <?php endif ?>
+            </select>
+        </div>
+    <div class="row">
         <div class="col s3 hide-on-med-and-down">
             <div class="collection">
                 <?= $this->Html->link('<i class="material-icons tiny">trending_up</i>トレンド',
@@ -19,7 +30,7 @@
                 <? endif ?>
             </div>
         </div>
-        <div class="col s12 m6">
+        <div class="col m12 l6">
             <ul class="collection with-header">
                 <li class="collection-header">
                     <h4 class="light-blue-text accent-1">
