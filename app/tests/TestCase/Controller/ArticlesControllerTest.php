@@ -5,7 +5,6 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use App\Model\Entity\Article;
-use App\Test\TestSuite\LoginTrait;
 
 class ArticlesControllerTest extends TestCase
 {
@@ -121,7 +120,6 @@ class ArticlesControllerTest extends TestCase
     {
         $this->session(['Auth.User.id' => 1]);
         $this->enableCsrfToken();
-        $this->enableRetainFlashMessages();
 
         $data = [
             'published' => 1,
@@ -134,13 +132,13 @@ class ArticlesControllerTest extends TestCase
         $this->assertEquals(1, $query->count());
         $this->assertResponseSuccess();
         $this->assertFlashMessage('更新に成功しました。');
+        $this->assertFlashElement('Flash/success');
     }
 
     public function test記事編集失敗()
     {
         $this->session(['Auth.User.id' => 1]);
         $this->enableCsrfToken();
-        $this->enableRetainFlashMessages();
 
         $data = [
             'published' => 1,
@@ -182,5 +180,18 @@ class ArticlesControllerTest extends TestCase
         $this->assertResponseContains('この記事はまだ公開されていません。');
     }
 
-    
+    public function test記事削除成功()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->post('/articles/delete/1');
+        $this->enableCsrfToken();
+
+        $this->post('/articles/delete/1');
+
+        $article = $this->Articles->find()->where(['id' => 1])->first();
+        $this->assertEmpty($article);
+        $this->assertFlashMessage('記事を削除しました。');
+        $this->assertFlashElement('Flash/success');
+
+    }
 }
