@@ -116,6 +116,15 @@ class ArticlesControllerTest extends TestCase
         $this->assertResponseok();
     }
 
+    public function test存在しない記事の編集画面()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->get('/articles/edit/999');
+
+        $this->assertResponseCode(404);
+
+    }
+
     public function test記事編集()
     {
         $this->session(['Auth.User.id' => 1]);
@@ -162,6 +171,12 @@ class ArticlesControllerTest extends TestCase
         $article = $this->viewVariable('article');
 
         $this->assertInstanceOf(Article::class,$article);
+    }
+
+    public function test存在しない記事詳細()
+    {
+        $this->get('/articles/show/999');
+        $this->assertResponseCode(404);
     }
 
     public function test記事詳細下書きの場合他のユーザーは404()
