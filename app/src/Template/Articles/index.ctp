@@ -30,7 +30,7 @@
                 <? endif ?>
             </div>
         </div>
-        <div class="col m12 l6">
+        <div class="col s12 m12 l6">
             <ul class="collection with-header">
                 <li class="collection-header">
                     <h4 class="light-blue-text accent-1">
