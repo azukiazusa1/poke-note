@@ -111,7 +111,7 @@ class UsersTable extends Table
             ->allowEmptyString('nickname');
 
         $validator
-            ->email('email')
+            ->email('email', 'メールの形式が正しくありません。')
             ->maxLength('email', 255)
             ->requirePresence('email', 'create')
             ->notEmptyString('email');

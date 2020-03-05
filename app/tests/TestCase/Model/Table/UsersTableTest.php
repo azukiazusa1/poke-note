@@ -246,7 +246,7 @@ class UsersTableTest extends TestCase
         $user = $this->Users->newEntity([
             'username' => str_repeat('a', 32),
             'email' => 'aaaexample.com',
-            'password' => '123456'
+            'password' => 'A123456'
         ]);
 
         $expected = ['email' => [
