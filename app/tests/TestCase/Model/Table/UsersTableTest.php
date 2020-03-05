@@ -88,6 +88,37 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());
     }
 
+    public function testユーザー名は32文字以内()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 33),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+        ]);
+
+        $expected = ['username' => [
+            'maxLength' => 'ユーザー名は32文字までです。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testユーザー名未入力()
+    {
+        $user = $this->Users->newEntity([
+            'username' => '',
+            'nickname' => str_repeat('a', 32),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => str_repeat('a', 255),
+            'link' => 'https://google.com'
+        ]);
+
+        $expected = ['username' => [
+            '_empty' => 'ユーザー名が入力されていません。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());   
+    }
+
     public function testパスワードは6文字以上()
     {
         $user = $this->Users->newEntity([

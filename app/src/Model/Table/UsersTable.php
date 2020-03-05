@@ -83,9 +83,9 @@ class UsersTable extends Table
 
         $validator
             ->scalar('username')
-            ->maxLength('username', 32)
-            ->requirePresence('username', 'create')
-            ->notEmptyString('username');
+            ->maxLength('username', 32, 'ユーザー名は32文字までです。')
+            ->requirePresence('username', 'create', 'ユーザー名が入力されていません。')
+            ->notEmptyString('username', 'ユーザー名が入力されていません。');
 
         $validator
             ->scalar('password')
