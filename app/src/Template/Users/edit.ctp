@@ -31,6 +31,8 @@
                     </div>
                     </div>
                     <?= $this->Form->control('nickname', ['label' => '名前', 'maxlength' => 32, 'data-length' => "32", "class" => "text"]) ?>
+                    <?= $this->Form->control('link', ['maxlength' => 255, 'escape' => false,
+                        'label' => '<i class="fas fa-link"></i>リンク']) ?>
                     <label for="desctiption">自己紹介</label>
                     <?= $this->Form->textarea('description', ['maxlength' => 255, 'class' => 'materialize-textarea text', 'data-length' => "255", 'id' => 'description']) ?>
                     <?= $this->Form->button('更新する', ['class' => 'btn blue btn-large']) ?>

@@ -28,7 +28,10 @@
                     <?php endif ?>
                 </span>
                 <div class="card-content">
-                    <p><?= h($user->description) ?></p>
+                    <?php if ($user->link): ?>
+                        <div><i class="fas fa-link"></i><?= $this->Html->link(h($user->link), $user->link) ?></div>
+                    <?php endif ?>
+                    <div><?= h($user->description) ?></div>
                 </div>
                 <div class="card-action">
                     <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($favorite_count) ?><br>

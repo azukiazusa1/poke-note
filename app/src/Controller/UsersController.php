@@ -26,18 +26,18 @@ class UsersController extends AppController
 		$user = $this->Users->find()
 			->where(['username' => $username])
 			->contain(['Articles'])
-            ->first();
+      		->first();
         
-        if (!$user) {
-            throw new NotFoundException();
-        }
+		if (!$user) {
+				throw new NotFoundException();
+		}
 
-        $favorite_count = $this->User->countFavorite($user->articles);
+		$favorite_count = $this->User->countFavorite($user->articles);
 
 		$articles = new Collection($user->articles);
-        $popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
-        
-        $isFollowed = $this->User->isFollowed($user->id, $this->Auth->user('id'));
+		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
+		
+		$isFollowed = $this->User->isFollowed($user->id, $this->Auth->user('id'));
 
 		$this->set(compact('user', 'favorite_count', 'popular_articles', 'isFollowed'));
 	}
@@ -48,13 +48,10 @@ class UsersController extends AppController
 		$user = $this->Users->get($id);
 		if ($this->request->is('put')) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-            $filename = $this->File->upload($this->request->getData('image_file'), 'user');
-            if($filename) {
-                $user->image = $filename;
-            } else {
-                return $this->render();
-            }
-
+			$filename = $this->File->upload($this->request->getData('image_file'), 'user');
+			if(isset($filename)) {
+				$user->image = $filename;
+			}
 			if ($this->Users->save($user)) {
 				$this->Flash->success('プロフィール編集に成功しました。');
 			} else {
