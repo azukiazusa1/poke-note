@@ -224,7 +224,38 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());
     }
 
-    public function testリンクがURLNo形式じゃないとき()
+    public function test名前は32文字まで()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'nickname' => str_repeat('a', 33),
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+            'desctiption' => str_repeat('a', 255),
+            'link' => 'http://google.com'
+        ]);
+
+        $expected = ['nickname' => [
+            'maxLength' => '名前は32文字までです。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testメールの形式じゃない時()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaaexample.com',
+            'password' => '123456'
+        ]);
+
+        $expected = ['email' => [
+            'email' => 'メールの形式が正しくありません。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testリンクがURLの形式じゃないとき()
     {
          // urlの形式じゃない時
          $user = $this->Users->newEntity([

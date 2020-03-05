@@ -107,7 +107,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('nickname')
-            ->maxLength('nickname', 32)
+            ->maxLength('nickname', 32, '名前は32文字までです。')
             ->allowEmptyString('nickname');
 
         $validator
