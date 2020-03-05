@@ -284,6 +284,21 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());
     }
 
+    public function test自己紹介は255文字まで()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => 'aaa@example.com',
+            'password' => 'A123456',
+            'description' => str_repeat('a', 256)
+        ]);
+
+        $expected = ['description' => [
+            'maxLength' => '自己紹介は255文字までです。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
     public function testリンクがURLの形式じゃないとき()
     {
          // urlの形式じゃない時

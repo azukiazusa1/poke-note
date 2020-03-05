@@ -118,7 +118,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('description')
-            ->maxLength('description', 255)
+            ->maxLength('description', 255, '自己紹介は255文字までです。')
             ->allowEmptyString('description');
 
         $validator
