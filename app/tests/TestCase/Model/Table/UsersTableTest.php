@@ -106,16 +106,36 @@ class UsersTableTest extends TestCase
     {
         $user = $this->Users->newEntity([
             'username' => '',
-            'nickname' => str_repeat('a', 32),
             'password' => 'A1234567',
             'email' => 'aaa@example.com',
-            'desctiption' => str_repeat('a', 255),
-            'link' => 'https://google.com'
         ]);
 
         $expected = ['username' => [
             '_empty' => 'ユーザー名が入力されていません。'
         ]];
+        $this->assertSame($expected, $user->getErrors());   
+    }
+
+    public function testユーザー名は英数字ハイフンのみ()
+    {
+        $user = $this->Users->newEntity([
+            'username' => 'あああ',
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+        ]);
+
+        $expected = ['username' => [
+            'username' => 'ユーザー名は英数字-_のみ使用できます。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());   
+
+        $user = $this->Users->newEntity([
+            'username' => '_-Az19',
+            'password' => 'A1234567',
+            'email' => 'aaa@example.com',
+        ]);
+
+        $expected = [];
         $this->assertSame($expected, $user->getErrors());   
     }
 
