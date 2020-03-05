@@ -255,6 +255,35 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());
     }
 
+
+    public function testメールが入力されていない時()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => '',
+            'password' => 'A123456'
+        ]);
+
+        $expected = ['email' => [
+            '_empty' => 'メールアドレスが入力されていません。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
+    public function testメールは255文字まで()
+    {
+        $user = $this->Users->newEntity([
+            'username' => str_repeat('a', 32),
+            'email' => str_repeat('a', 244) . '@example.com',
+            'password' => 'A123456'
+        ]);
+
+        $expected = ['email' => [
+            'maxLength' => 'メールアドレスは255文字までです。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());
+    }
+
     public function testリンクがURLの形式じゃないとき()
     {
          // urlの形式じゃない時
