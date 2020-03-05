@@ -97,10 +97,7 @@ class UsersTable extends Table
                 'rule' => fn($data) => (bool)preg_match('/^[a-zA-Z0-9]+$/', $data),
                 'message' => 'パスワードには半角英数字のみ使用できます。'
             ])
-            ->add('password', 'requreAlphaNumeric',[
-                'rule' => fn($data) => (bool)preg_match('/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i', $data),
-                'message' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
-            ]);
+            ->regex('password', '/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]/i', 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。');
 
         $validator
             ->scalar('nickname')

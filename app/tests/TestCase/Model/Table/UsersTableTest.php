@@ -208,7 +208,7 @@ class UsersTableTest extends TestCase
         ]);
 
         $expected = ['password' => [
-            'requreAlphaNumeric' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
+            'regex' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
         ]];
         $this->assertSame($expected, $user->getErrors());
 
@@ -219,7 +219,7 @@ class UsersTableTest extends TestCase
         ]);
 
         $expected = ['password' => [
-            'requreAlphaNumeric' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
+            'regex' => 'パスワードは英文字、数字それぞれ1文字以上含める必要があります。'
         ]];
         $this->assertSame($expected, $user->getErrors());
     }
