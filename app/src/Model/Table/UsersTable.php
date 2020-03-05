@@ -86,10 +86,7 @@ class UsersTable extends Table
             ->maxLength('username', 32, 'ユーザー名は32文字までです。')
             ->requirePresence('username', 'create', 'ユーザー名が入力されていません。')
             ->notEmptyString('username', 'ユーザー名が入力されていません。')
-            ->add('username', 'username', [
-                'rule' => fn($data) => (bool)preg_match('/[a-z0-9_-]/', $data),
-                'message' => 'ユーザー名は英数字-_のみ使用できます。'
-            ]);
+            ->regex('username', '/[a-z0-9_-]/', 'ユーザー名は英数字-_のみ使用できます。');
 
         $validator
             ->scalar('password')

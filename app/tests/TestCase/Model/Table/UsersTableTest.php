@@ -125,7 +125,7 @@ class UsersTableTest extends TestCase
         ]);
 
         $expected = ['username' => [
-            'username' => 'ユーザー名は英数字-_のみ使用できます。'
+            'regex' => 'ユーザー名は英数字-_のみ使用できます。'
         ]];
         $this->assertSame($expected, $user->getErrors());   
 
