@@ -3,6 +3,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -65,5 +66,24 @@ class User extends Entity
             $hasher = new DefaultPasswordHasher();
             return $hasher->hash($value);
         }
+    }
+
+    /**
+     * このユーザーが引数のユーザーをフォローしているか
+     *
+     * @param integer $user_id
+     * @return boolean
+     */
+    public function isFollowed(int $user_id): bool
+    {
+        $follows_table = TableRegistry::getTableLocator()->get('Follows');
+        return (bool)$follows_table->find()
+            ->where(['follow_user_id' => $this->id, 'user_id' => $user_id])
+            ->first();
+    }
+
+    public function countFavorite(): int
+    {
+        return array_reduce($this->articles, fn($total, $current) => $total += $current->favorite_count);
     }
 }

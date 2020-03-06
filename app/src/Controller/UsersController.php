@@ -17,7 +17,6 @@ class UsersController extends AppController
 		parent::initialize();
         $this->Auth->allow(['signup', 'show']);
         $this->loadModel('Follows');
-        $this->loadComponent('User');
         $this->loadComponent('File');
 	}
 
@@ -32,12 +31,12 @@ class UsersController extends AppController
 				throw new NotFoundException();
 		}
 
-		$favorite_count = $this->User->countFavorite($user->articles);
+		$favorite_count = $user->countFavorite();
 
 		$articles = new Collection($user->articles);
 		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
 		
-		$isFollowed = $this->User->isFollowed($user->id, $this->Auth->user('id'));
+		$isFollowed = $user->isFollowed($this->Auth->user('id'));
 
 		$this->set(compact('user', 'favorite_count', 'popular_articles', 'isFollowed'));
 	}
