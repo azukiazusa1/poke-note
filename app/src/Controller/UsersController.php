@@ -28,7 +28,7 @@ class UsersController extends AppController
       		->first();
         
 		if (!$user) {
-				throw new NotFoundException();
+			throw new NotFoundException();
 		}
 
 		$favorite_count = $user->countFavorite();
