@@ -76,7 +76,7 @@ class User extends Entity
      */
     public function isFollowed(?int $user_id): bool
     {
-        if (isset($user_id)) return false;
+        if (!isset($user_id)) return false;
         $follows_table = TableRegistry::getTableLocator()->get('Follows');
         return (bool)$follows_table->find()
             ->where(['follow_user_id' => $this->id, 'user_id' => $user_id])
