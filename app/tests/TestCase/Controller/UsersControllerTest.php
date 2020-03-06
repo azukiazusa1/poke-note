@@ -52,7 +52,7 @@ class UsersControllerTest extends TestCase
         $this->get('/profile');
         $this->assertResponseOk();
 
-        $this->assertResponseContains('@user1');
+        $this->assertResponseContains('<h4>プロフィール編集');
 
         $user = $this->viewVariable('user');
 
@@ -72,6 +72,7 @@ class UsersControllerTest extends TestCase
     {
         $this->session(['Auth.User.id' => 1]);
         $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
 
         $file = [
             'error' => 0,
@@ -93,10 +94,58 @@ class UsersControllerTest extends TestCase
 
         $this->put('/profile', $data);
         $this->assertResponseOk();
+        $this->assertFlashMessage('プロフィール編集に成功しました。');
+        $this->assertFlashElement('Flash/success');
         $user = $this->viewVariable('user');
         $this->assertSame('nickname', $user->nickname);
         $this->assertSame('https://google.com', $user->link);
         $this->assertSame('lorem ipsm', $user->description);
+    }
+
+    public function testプロフィール編集失敗()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $file = [
+            'error' => 0,
+            'name' => '',
+            'size' => '',
+            'tmp_name' => '',
+            'type' => '',
+        ];
+        $this->configRequest([
+            'Content-Type' => 'multipart/form-data',
+        ]);
+
+        $data = [
+            'nickname' => 'nickname',
+            'link' => 'htt://google.com',
+            'description' => 'lorem ipsm',
+            'image_file' => $file
+        ];
+
+        $this->put('/profile', $data);
+
+        $this->assertFlashMessage('プロフィール編集に失敗しました。');
+        $this->assertFlashElement('Flash/error');
+    }
+
+    public function パスワード変更画面()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->get('/password');
+
+        $this->assertResponseContains('<h4>パスワード');
+    }
+
+    public function パスワード変更画面はログイン時のみ()
+    {
+        $this->get('/password');
+
+        $this->assertResponseCode(302);
+        $this->assertRedirect('/login?redirect=%2Fpassword');
     }
 
 }
