@@ -74,15 +74,16 @@ class User extends Entity
      * @param integer $user_id
      * @return boolean
      */
-    public function isFollowed(int $user_id): bool
+    public function isFollowed(?int $user_id): bool
     {
+        if (isset($user_id)) return false;
         $follows_table = TableRegistry::getTableLocator()->get('Follows');
         return (bool)$follows_table->find()
             ->where(['follow_user_id' => $this->id, 'user_id' => $user_id])
             ->first();
     }
 
-    public function countFavorite(): int
+    public function countFavorite(): ?int
     {
         return array_reduce($this->articles, fn($total, $current) => $total += $current->favorite_count);
     }
