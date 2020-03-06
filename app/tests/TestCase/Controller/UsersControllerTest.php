@@ -50,6 +50,7 @@ class UsersControllerTest extends TestCase
     {
         $this->session(['Auth.User.id' => 1]);
         $this->get('/profile');
+        $this->assertResponseOk();
 
         $this->assertResponseContains('@user1');
 
@@ -59,11 +60,43 @@ class UsersControllerTest extends TestCase
         $this->assertSame('user1', $user->username);
     }
 
-    public function プロフィール編集画面はログインが必要()
+    public function testプロフィール編集画面はログインが必要()
     {
         $this->get('/profile');
 
         $this->assertResponseCode(302);
-        $this->assertRedirect('/login?redirect=%profile');
+        $this->assertRedirect('/login?redirect=%2Fprofile');
     }
+
+    public function testプロフィール編集ができる()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+
+        $file = [
+            'error' => 0,
+            'name' => '',
+            'size' => '',
+            'tmp_name' => '',
+            'type' => '',
+        ];
+        $this->configRequest([
+            'Content-Type' => 'multipart/form-data',
+        ]);
+
+        $data = [
+            'nickname' => 'nickname',
+            'link' => 'https://google.com',
+            'description' => 'lorem ipsm',
+            'image_file' => $file
+        ];
+
+        $this->put('/profile', $data);
+        $this->assertResponseOk();
+        $user = $this->viewVariable('user');
+        $this->assertSame('nickname', $user->nickname);
+        $this->assertSame('https://google.com', $user->link);
+        $this->assertSame('lorem ipsm', $user->description);
+    }
+
 }
