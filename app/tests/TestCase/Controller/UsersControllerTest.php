@@ -132,7 +132,7 @@ class UsersControllerTest extends TestCase
         $this->assertFlashElement('Flash/error');
     }
 
-    public function パスワード変更画面()
+    public function testパスワード変更画面()
     {
         $this->session(['Auth.User.id' => 1]);
         $this->get('/password');
@@ -140,12 +140,30 @@ class UsersControllerTest extends TestCase
         $this->assertResponseContains('<h4>パスワード');
     }
 
-    public function パスワード変更画面はログイン時のみ()
+    public function testパスワード変更画面はログイン時のみ()
     {
         $this->get('/password');
 
         $this->assertResponseCode(302);
         $this->assertRedirect('/login?redirect=%2Fpassword');
+    }
+
+    public function testパスワード変更成功()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'old_password' => 'password1',
+            'password' => 'password2',
+        ];
+        $this->post('/password', $data);
+        $this->assertResponseok();
+
+        $this->assertFlashMessage('パスワードの変更に成功しました。');
+        $this->assertFlashElement('Flash/success');
+
     }
 
 }

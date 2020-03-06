@@ -73,9 +73,6 @@ class UsersController extends AppController
 			} 
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			if ($user->errors()) {
-				return $this->render();
-			}
 
 			if ($this->Users->save($user)) {
 				$this->Flash->success('パスワードの変更に成功しました。');
