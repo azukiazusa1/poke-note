@@ -39,4 +39,10 @@ class UsersControllerTest extends TestCase
         $this->assertInstanceOf(User::class,$user);
         $this->assertSame('user1', $user->username);
     }
+
+    public function test存在しないユーザー名()
+    {
+        $this->get('/users/notExsitsUser');
+        $this->assertResponseCode(404);
+    }
 }
