@@ -16,7 +16,7 @@
 			<div class="card">
 				<div class="card-content">
 					<span class="card-title"><h4>パスワード / @<?= h($user->username) ?></p></h4></span>
-					<?= $this->Form->create() ?>
+					<?= $this->Form->create($user) ?>
 					<?= $this->Form->control('old_password', ['label' => '現在のパスワード', 'maxlength' => 32, 'type' => 'password', 'value' => '']) ?>
 					<?= $this->Form->control('password', ['label' => '新しいパスワード', 'maxlength' => 32, 'value' => '']) ?>
 					<?= $this->Form->button('更新する', ['class' => 'btn blue btn-large']) ?>
