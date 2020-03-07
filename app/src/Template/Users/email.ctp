@@ -19,7 +19,7 @@
                     <div>現在のメールアドレス：<?= h($user->email) ?></div>
 					<?= $this->Form->create($user) ?>
 					<?= $this->Form->control('password', ['label' => '確認用パスワード', 'maxlength' => 32, 'type' => 'password', 'value' => '']) ?>
-					<?= $this->Form->control('emali', ['label' => '新しいメールアドレス', 'maxlength' => 32, 'value' => '']) ?>
+					<?= $this->Form->control('email', ['label' => '新しいメールアドレス', 'maxlength' => 32, 'value' => '']) ?>
 					<?= $this->Form->button('更新する', ['class' => 'btn blue btn-large']) ?>
                     <?= $this->Form->end() ?>
 				</div>

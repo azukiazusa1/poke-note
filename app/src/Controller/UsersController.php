@@ -66,7 +66,7 @@ class UsersController extends AppController
 		$user = $this->Users->get($id);
 		$this->set(compact('user'));
 
-		if ($this->request->is('post')) {
+		if ($this->request->is('put')) {
 			if (!password_verify($this->request->getData('old_password'), $user->password)) {
 				$this->Flash->error('現在のパスワードと一致しません。');
 				return $this->render();
@@ -95,9 +95,6 @@ class UsersController extends AppController
 			} 
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			if ($user->errors()) {
-				return $this->render();
-			}
 
 			if ($this->Users->save($user)) {
 				$this->Flash->success('メールアドレスの変更に成功しました。');

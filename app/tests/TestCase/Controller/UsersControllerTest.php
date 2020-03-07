@@ -158,7 +158,7 @@ class UsersControllerTest extends TestCase
             'old_password' => 'password1',
             'password' => 'password2',
         ];
-        $this->post('/password', $data);
+        $this->put('/password', $data);
         $this->assertResponseok();
 
         $this->assertFlashMessage('パスワードの変更に成功しました。');
@@ -175,7 +175,7 @@ class UsersControllerTest extends TestCase
             'old_password' => 'password',
             'password' => 'password2',
         ];
-        $this->post('/password', $data);
+        $this->put('/password', $data);
         $this->assertFlashMessage('現在のパスワードと一致しません。');
         $this->assertFlashElement('Flash/error');
     }
@@ -190,10 +190,75 @@ class UsersControllerTest extends TestCase
             'old_password' => 'password1',
             'password' => 'password',
         ];
-        $this->post('/password', $data);
+        $this->put('/password', $data);
         $this->assertFlashMessage('パスワードの変更に失敗しました。');
         $this->assertFlashElement('Flash/error');
         $this->assertResponseContains('パスワードは英文字、数字それぞれ1文字以上含める必要があります。');
+    }
+
+    public function testメールアドレス変更画面()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->get('/email');
+
+        $this->assertResponseOk();
+        $this->assertResponseContains('<h4>メールアドレス');
+    }
+
+    public function testメールアドレス変更画面はログインが必要()
+    {
+        $this->get('/email');
+
+        $this->assertResponseCode(302);
+        $this->assertRedirect('/login?redirect=%2Femail');
+    }
+
+    public function testメールアドレス変更成功()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'password' => 'password1',
+            'email' => 'new@gmail.com',
+        ];
+        $this->put('/email', $data);
+        $user = $this->viewVariable('user');
+        $this->assertSame('new@gmail.com', $user->email);
+        $this->assertFlashMessage('メールアドレスの変更に成功しました。');
+        $this->assertFlashElement('Flash/success');
+    }
+
+    public function testメールアドレス変更画面もとのパスワードが間違っている()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'password' => 'password',
+            'email' => 'aaa@gmail.com',
+        ];
+        $this->put('/email', $data);
+        $this->assertFlashMessage('現在のパスワードと一致しません。');
+        $this->assertFlashElement('Flash/error');
+    }
+
+    public function testメールアドレス変更画面メールアドレスの変更に失敗()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'password' => 'password1',
+            'email' => 'aaagmail.com',
+        ];
+        $this->put('/email', $data);
+        $this->assertFlashMessage('メールアドレスの変更に失敗しました。');
+        $this->assertFlashElement('Flash/error');
+        $this->assertResponseContains('メールの形式が正しくありません。');
     }
 
 }
