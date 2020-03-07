@@ -11,13 +11,11 @@ class UsersControllerTest extends TestCase
     use IntegrationTestTrait;
 
     public $fixtures = [
-        'app.Articles', 
-        'app.Users', 
-        'app.Tags', 
-        'app.ArticlesTags', 
-        'app.Follows',
+        'app.Users',
+        'app.Articles',
         'app.Comments',
-        'app.Favorites'
+        'app.Favorites',
+        'app.Follows'
     ];
 
     public function setUp(): void
@@ -313,7 +311,7 @@ class UsersControllerTest extends TestCase
         $this->assertNotEmpty($this->Users->get(4));
     }
 
-    public function testログインページ()
+    public function testログインページが表示される()
     {
         $this->get('/login');
         $this->assertResponseOk();
@@ -357,6 +355,51 @@ class UsersControllerTest extends TestCase
 
         $this->assertSession([], 'Auth');
         $this->assertRedirect('/');
+    }
+
+    public function testユーザー登録ページが表示される()
+    {
+        $this->get('/signup');
+        $this->assertResponseOk();
+        $this->assertResponseContains('<h3>ユーザー登録');
+    }
+
+    public function testユーザー登録成功()
+    {
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'username' => 'newUser', 
+            'email' => 'example@gmail.com',
+            'password' => 'password1',
+        ];
+
+        $this->post('/signup', $data);
+        $this->assertRedirect('/');
+        $this->assertSession(5, 'Auth.User.id');
+        $this->assertNotEmpty($this->Users->get(5));
+        $this->assertFlashMessage('ユーザー登録に成功しました。');
+        $this->assertFlashElement('Flash/success');
+    }
+
+    public function testユーザー登録失敗()
+    {
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'username' => '', 
+            'email' => '',
+            'password' => '',
+        ];
+
+        $this->post('/signup', $data);
+        $this->assertFlashMessage('ユーザー登録に失敗しました。');
+        $this->assertFlashElement('Flash/error');
+        $this->assertResponseContains('ユーザー名が入力されていません。');
+        $this->assertResponseContains('メールアドレスが入力されていません。');
+        $this->assertResponseContains('パスワードが入力されていません。');
     }
 
 }

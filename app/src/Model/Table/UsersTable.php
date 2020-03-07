@@ -91,8 +91,8 @@ class UsersTable extends Table
         $validator
             ->scalar('password')
             ->lengthBetween('password', [6, 20], 'パスワードは6文字以上20文字以下にする必要があります。')
-            ->requirePresence('password', 'create')
-            ->notEmptyString('password')
+            ->requirePresence('password', 'create', 'パスワードが入力されていません。')
+            ->notEmptyString('password', 'パスワードが入力されていません。')
             ->add('password', 'alphaNumeric', [
                 'rule' => fn($data) => (bool)preg_match('/^[a-zA-Z0-9]+$/', $data),
                 'message' => 'パスワードには半角英数字のみ使用できます。'
