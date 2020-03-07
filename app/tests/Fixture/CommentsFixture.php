@@ -46,9 +46,25 @@ class CommentsFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'body' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-                'article_id' => 1,
+                'body' => '素晴らしい記事ですね!',
+                'article_id' => 2,
                 'user_id' => 1,
+                'created' => '2020-02-23 16:23:24',
+                'modified' => '2020-02-23 16:23:24',
+            ],
+            [
+                'id' => 2,
+                'body' => '参考になりました!',
+                'article_id' => 3,
+                'user_id' => 1,
+                'created' => '2020-02-23 16:23:24',
+                'modified' => '2020-02-23 16:23:24',
+            ],
+            [
+                'id' => 3,
+                'body' => 'すごい!',
+                'article_id' => 2,
+                'user_id' => 3,
                 'created' => '2020-02-23 16:23:24',
                 'modified' => '2020-02-23 16:23:24',
             ],
