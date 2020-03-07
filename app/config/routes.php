@@ -71,7 +71,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/password', ['controller' => 'Users', 'action' => 'password']);
     $routes->connect('/email', ['controller' => 'Users', 'action' => 'email']);
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
-    $routes->connect('/signin', ['controller' => 'Users', 'action' => 'signin']);
+    $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
     $routes->connect('/users/delete', ['controller' => 'Users', 'action' => 'delete']);
     $routes->connect('/users/*', ['controller' => 'Users', 'action' => 'show']);

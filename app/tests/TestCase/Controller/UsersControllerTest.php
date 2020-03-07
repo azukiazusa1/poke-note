@@ -313,4 +313,41 @@ class UsersControllerTest extends TestCase
         $this->assertNotEmpty($this->Users->get(4));
     }
 
+    public function testログインページ()
+    {
+        $this->get('/login');
+        $this->assertResponseOk();
+        $this->assertResponseContains('<h3>ログイン');
+    }
+
+    public function testログイン成功()
+    {
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'username' => 'hashedPassUser', 
+            'password' => 'password1',
+        ];
+        $this->post('/login', $data);
+        $this->assertRedirect('/');
+        $this->assertSession(4, 'Auth.User.id');
+    }
+
+    public function testログイン失敗()
+    {
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'username' => 'hashedPassUser', 
+            'password' => 'password1',
+        ];
+
+        $this->post('/login', $data);
+        $this->assertSession([], 'Auth');
+        $this->assertFlashMessage('ユーザー名またはパスワードが間違っています。');
+        $this->assertFlashElement('Flash/error');
+    }
+
 }
