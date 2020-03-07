@@ -341,13 +341,22 @@ class UsersControllerTest extends TestCase
 
         $data = [
             'username' => 'hashedPassUser', 
-            'password' => 'password1',
+            'password' => 'password',
         ];
 
         $this->post('/login', $data);
-        $this->assertSession([], 'Auth');
         $this->assertFlashMessage('ユーザー名またはパスワードが間違っています。');
         $this->assertFlashElement('Flash/error');
+    }
+
+    public function testログアウト()
+    {
+        $this->session(['Auth.User.id' => 4]);
+
+        $this->get('/logout');
+
+        $this->assertSession([], 'Auth');
+        $this->assertRedirect('/');
     }
 
 }
