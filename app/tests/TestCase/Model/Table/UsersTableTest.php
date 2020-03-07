@@ -139,6 +139,20 @@ class UsersTableTest extends TestCase
         $this->assertSame($expected, $user->getErrors());   
     }
 
+    public function testパスワード未入力()
+    {
+        $user = $this->Users->newEntity([
+            'username' => 'user1',
+            'password' => '',
+            'email' => 'aaa@example.com',
+        ]);
+
+        $expected = ['password' => [
+            '_empty' => 'パスワードが入力されていません。'
+        ]];
+        $this->assertSame($expected, $user->getErrors());   
+    }
+
     public function testパスワードは6文字以上()
     {
         $user = $this->Users->newEntity([
