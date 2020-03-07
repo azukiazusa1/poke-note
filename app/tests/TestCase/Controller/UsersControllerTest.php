@@ -24,7 +24,7 @@ class UsersControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->Articles = TableRegistry::getTableLocator()->get('Users');
+        $this->Users = TableRegistry::getTableLocator()->get('Users');
     }
 
     public function testユーザー詳細画面が表示される()
@@ -259,6 +259,58 @@ class UsersControllerTest extends TestCase
         $this->assertFlashMessage('メールアドレスの変更に失敗しました。');
         $this->assertFlashElement('Flash/error');
         $this->assertResponseContains('メールの形式が正しくありません。');
+    }
+
+    public function testユーザー削除画面()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->get('/users/delete');
+        $this->assertResponseOk();
+
+        $this->assertResponseContains('<h4 class="red-text">アカウントを削除');
+    }
+
+    public function testユーザー削除画面はログインが必要()
+    {
+        $this->get('/users/delete');
+
+        $this->assertResponseCode(302);
+        $this->assertRedirect('/login?redirect=%2Fusers%2Fdelete');
+    }
+
+    public function testユーザー削除成功()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'password' => 'password1',
+        ];
+        $this->post('/users/delete', $data);
+
+        $this->assertRedirect('/');
+        // ログアウトされている
+        $this->assertSession([], 'Auth');
+        $this->assertEmpty($this->Users->findById(4)->first());
+        $this->assertFlashMessage('アカウントを削除いたしました。今までのご利用ありがとうございました。');
+        $this->assertFlashElement('Flash/success');
+    }
+
+    public function testユーザー削除画面現在のパスワードと一致しない()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+        $this->enableRetainFlashMessages();
+
+        $data = [
+            'password' => 'password',
+        ];
+        $this->post('/users/delete', $data);
+        $this->assertFlashMessage('現在のパスワードと一致しません。');
+        $this->assertFlashElement('Flash/error');
+        // 削除は実行されていない
+        $this->assertNotEmpty($this->Users->get(4));
     }
 
 }
