@@ -85,8 +85,9 @@ class User extends Entity
             ->first();
     }
 
-    public function countFavorite(): ?int
+    public function countFavorite(): int
     {
+        if (!$this->articles) return 0;
         return array_reduce($this->articles, fn($total, $current) => $total += $current->favorite_count);
     }
 }
