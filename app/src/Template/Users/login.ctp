@@ -8,7 +8,8 @@
                     <?= $this->Form->control('username', ['label' => 'ユーザー名', 'maxLength' => 50, 'class' => 'validate']) ?>
                     <?= $this->Form->control('password', ['label' => 'パスワード', 'maxLength' => 50, 'class' => 'validate']) ?>
                     <div class="card-action">
-                        <?= $this->Form->button('ログイン', ['class' => 'btn blue btn-large']) ?> 
+                        <?= $this->Form->button('ログイン', ['class' => 'btn blue btn-large']) ?>
+                        <?= $this->Html->link('パスワードを忘れた場合', ['controller' => 'PasswordForgot', 'action' => 'index'], ['class' => 'right']) ?>
                     </div>
                 <?= $this->Form->end() ?>
                 </div>
