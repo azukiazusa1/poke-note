@@ -13,7 +13,12 @@
                 <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
                 <span class="bold"><?= h($article->comment_count) ?></span>
             </p>
-            <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-twitter twitter"></i></a></p>
+            <p>
+                <a class="btn-floating btn-large z-depth-3" 
+                href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
+                ><i class="fab fa-twitter twitter"></i>
+                </a>
+            </p>
             <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></p>
     </div>
     <div class="row">
@@ -54,7 +59,9 @@
                         <span class="bold"><?= h($article->favorite_count) ?></span>
                         <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a>
                         <span class="bold"><?= h($article->comment_count) ?></span>
-                        <a class="btn-floating"><i class="fab fa-twitter twitter"></i></a>
+                        <a class="btn-floating"
+                        href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
+                        ><i class="fab fa-twitter twitter"></i></a>
                         <a class="btn-floating"><i class="fab fa-facebook-f facebook"></i></a>
                     </div>
                     <hr class="list-divider">
@@ -192,6 +199,7 @@
     </div>
 </div>
 <?= $this->element('modalUnlogin', ['do' => 'いいね']) ?>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script>
 Vue.use(window['MavonEditor'])
 
