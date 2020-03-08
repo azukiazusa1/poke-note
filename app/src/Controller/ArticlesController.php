@@ -93,6 +93,10 @@ class ArticlesController extends AppController
         }
         if ($this->Articles->delete($article)) {
             $this->Flash->success('記事を削除しました。');
+            // 下書き一覧で記事を削除したとき
+            if ($this->referer(null, true) === '/articles/draft') {
+                return $this->redirect(['controller' => 'Articles', 'action' => 'draft']);
+            }
             return $this->redirect(['controller' => 'Articles', 'action' => 'index']);
         } else {
             $this->Flash->success('記事の削除に失敗しました。');
@@ -107,5 +111,11 @@ class ArticlesController extends AppController
         }
         $articles = $this->Articles->find('search', ['q' => $q]);
         $this->set(compact('q', 'articles'));
+    }
+
+    public function draft()
+    {
+        $articles = $this->Articles->find('draftByUserId', ['user_id' => $this->Auth->user('id')]);
+        $this->set(compact('articles'));
     }
 }

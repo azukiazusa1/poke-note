@@ -33,37 +33,12 @@
                     <span class="grey-text darken-1 hide-on-small-only">　<i class="tiny material-icons">date_range</i>
                     <?= h($article->created->format('Y/m/d H:i:s')) ?></span>
                     <?php if($isAuthor): ?>
-                        <?= $this->Form->postLink('削除<i class="material-icons left">delete</i>', 
-                            ['controller' => 'Articles', 'action' => 'delete', $article->id],
-                            ['escape' => false, 'class' => 'btn-flat white red-text btn-small right hide-on-small-only',
-                            'confirm' => 'この記事を削除します。本当によろしいですか？']
-                        )?>
-                        <?= $this->Html->link('編集する<i class="material-icons left">create</i>', 
-                            ['controller' => 'Articles', 'action' => 'edit', $article->id],
-                            ['escape' => false, 'class' => 'btn red accent-2 btn-small right hide-on-small-only']
-                        )?>
-                        <p class="grey-text darken-1 hide-on-med-and-up">　
+                        <?= $this->element('edit-delete-btn', ['id' => $article->id]) ?>
+                    <?php endif ?>
+                    <p class="grey-text darken-1 hide-on-med-and-up">　
                             <i class="tiny material-icons">date_range</i>
                             <?= h($article->created->format('Y/m/d')) ?>
-                            <i class='dropdown-trigger-article material-icons right' data-target='dropdown-article'>dehaze</i>
-                        </p>
-
-                        <ul id='dropdown-article' class='dropdown-content'>
-                            <li>
-                                <?= $this->Html->link('<i class="material-icons tiny">create</i>編集', 
-                                    ['controller' => 'Articles', 'action' => 'edit', $article->id],
-                                    ['escape' => false, 'class' => 'black-text']
-                                )?>
-                            </li>
-                            <li>
-                                <?= $this->Form->postLink('<i class="material-icons tiny">delete</i>削除', 
-                                    ['controller' => 'Articles', 'action' => 'delete', $article->id],
-                                    ['escape' => false, 'class' => 'white red-text',
-                                    'confirm' => 'この記事を削除します。本当によろしいですか？']
-                                )?>
-                            </li>
-                        </ul>
-                    <?php endif ?>
+                    </p>
                     <hr class="list-divider">
                     <span class="card-title">
                         <?php if ($article->isDraft()) :?>
@@ -71,17 +46,7 @@
                         <?php endif ?>
                         <h1><?= h($article->title) ?></h1>
                     </span>
-                    <?php if (count($article->tags) > 0): ?>
-                        <?php foreach($article->tags as $tag): ?>
-                            <div class="chip">
-                                <?= $this->Html->link(h($tag->title), [
-                                    'controller' => 'tags', 'action' => 'show', h($tag->title)
-                                ])?>
-                            </div>
-                        <?php endforeach ?>
-                    <?php else: ?>
-                        <span class="small-text">この記事にタグはありません。</span>
-                    <?php endif ?>
+                    <?= $this->element('tags', ['article' => $article]) ?>
                     <br>
                     <div class="hide-on-large-only">
                         <a class="btn-floating like-btn waves-effect

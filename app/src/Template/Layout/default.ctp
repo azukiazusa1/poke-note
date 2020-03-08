@@ -34,20 +34,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <?php if (isset($login_user)) :?>
-        <ul id="dropdown1" class="dropdown-content">
-            <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->username])?></li>
-            <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
-            <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
-        </ul>
-    <?php endif ?>
-    <ul id="dropdown2" class="dropdown-content">
-    <form method="get" action="/search">
-        <div class="input-field">
-            <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索" value="<?= $q ?? ''?>">
-        </div>
-    </form>
-    </ul>
     <nav class="red accent-2">
         <div class="nav-wrapper">
             <?= $this->Html->link('Note!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
@@ -62,6 +48,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 </li>
                 <li class="hide-on-med-and-up">
                     <a class="dropdown-trigger" href="#!" data-target="dropdown2"><i class="material-icons">search</i></a>
+                    <ul id="dropdown2" class="dropdown-content">
+                        <form method="get" action="/search">
+                            <div class="input-field">
+                                <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索" value="<?= $q ?? ''?>">
+                            </div>
+                        </form>
+                    </ul>
                 </li>
                 <?php if (isset($login_user)): ?>
                     <li class="hide-on-small-only">
@@ -82,6 +75,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             'class' => 'responsive-img circle icon-image',
                         ])?>
                         <i class="material-icons right">arrow_drop_down</i></a></li>
+                        <ul id="dropdown1" class="dropdown-content">
+                            <li><?= $this->Html->link('マイページ', ['controller' => 'Users', 'action' => 'show', $login_user->username])?></li>
+                            <li><?= $this->Html->link('下書き一覧', ['controller' => 'Articles', 'action' => 'draft'])?></li>
+                            <li><?= $this->Html->link('設定', ['controller' => 'Users', 'action' => 'edit'])?></li>
+                            <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])?></li>
+                        </ul>
                 <?php else: ?>
                     <li><?= $this->Html->link('ログイン', ['controller' => 'Users', 'action' => 'login'])?></li>
                     <li><?= $this->Html->link('ユーザー登録',['controller' => 'Users', 'action' => 'signup'])?></li>
