@@ -24,7 +24,7 @@ class UsersController extends AppController
 	{
 		$user = $this->Users->find()
 			->where(['username' => $username])
-			->contain(['Articles'])
+			->contain('Articles', fn($q) => $q->find('published'))
       		->first();
         
 		if (!$user) {
