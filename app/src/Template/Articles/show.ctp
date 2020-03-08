@@ -17,6 +17,7 @@
                 <a 
                     class="btn-floating btn-large z-depth-3" 
                     href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
+                    target="_blank"
                 ><i class="fab fa-twitter twitter"></i>
                 </a>
             </p>
