@@ -2,9 +2,7 @@
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
-<?= $this->Form->create($article, [
-    'v-on:submit' => 'onSubmit'
-]) ?>
+<?= $this->Form->create($article) ?>
 <?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate', 'id' => 'title']) ?>
 <div class="chips chips-autocomplete"></div>
 <div id="chips-container">
