@@ -11,6 +11,10 @@
                             <?php else: ?>
                                 <span class="grey-text lighten-1-text">タイトル未設定</span>
                             <?php endif ?>
+                            <span class="grey-text lighten-1-text">
+                                <i class="tiny material-icons">date_range</i>
+                                <?= h($article->created->format('Y/m/d H:i:s')) ?>
+                            </span>
                         </div>
                         <div class="collapsible-body">
                             <div>
