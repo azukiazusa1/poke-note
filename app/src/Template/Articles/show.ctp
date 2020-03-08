@@ -14,12 +14,17 @@
                 <span class="bold"><?= h($article->comment_count) ?></span>
             </p>
             <p>
-                <a class="btn-floating btn-large z-depth-3" 
-                href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
+                <a 
+                    class="btn-floating btn-large z-depth-3" 
+                    href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
                 ><i class="fab fa-twitter twitter"></i>
                 </a>
             </p>
-            <p><a class="btn-floating btn-large z-depth-3"><i class="fab fa-facebook-f facebook"></i></a></p>
+            <p><a 
+                class="btn-floating btn-large z-depth-3"
+                href="http://www.facebook.com/share.php?u=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>" 
+                rel="nofollow" target="_blank"
+            ><i class="fab fa-facebook-f facebook"></i></a></p>
     </div>
     <div class="row">
         <div class="col s12 m11">
@@ -62,7 +67,10 @@
                         <a class="btn-floating"
                         href="http://twitter.com/share?url=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>&text=<?= $article->title ?>"
                         ><i class="fab fa-twitter twitter"></i></a>
-                        <a class="btn-floating"><i class="fab fa-facebook-f facebook"></i></a>
+                        <a class="btn-floating"
+                            href="http://www.facebook.com/share.php?u=<?= $this->Url->build(['controller' => 'Articles', 'action' => 'show', $article->id], true) ?>" 
+                            rel="nofollow" target="_blank">
+                        <i class="fab fa-facebook-f facebook"></i></a>
                     </div>
                     <hr class="list-divider">
                     <input type="hidden" id="body" value="<?= $article->body ?>" />
