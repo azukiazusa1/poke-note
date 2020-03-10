@@ -57,6 +57,21 @@ class CommentsControllerTest extends TestCase
         $this->assertFlashElement('Flash/success');
     }
 
+    public function testコメント投稿失敗()
+    {
+        $this->session(['Auth.User.id' => 4]);
+        $this->enableCsrfToken();
+
+        $data = [
+            'article_id' => 1,
+            'body' => '',
+        ];
+        $this->post('/comments/add/', $data);
+
+        $this->assertFlashMessage('コメントの投稿に失敗しました。');
+        $this->assertFlashElement('Flash/error');
+    }
+
     /**
      * Test edit method
      *
