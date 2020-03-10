@@ -245,4 +245,36 @@ class ArticlesControllerTest extends TestCase
         $this->assertResponseNotContains('articles');
         $this->assertTemplate('search_start');
     }
+
+    public function test下書き一覧画面()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->get('/articles/draft');
+        $this->assertResponseok();
+
+        $articles = $this->viewVariable('articles');
+        $article = $articles->sample(1)->first();
+        $this->assertInstanceOf(Article::class,$article);
+        $this->assertSame(1, $articles->count());
+
+    }
+
+    public function test下書きが一つもないとき()
+    {
+        $this->session(['Auth.User.id' => 3]);
+        $this->get('/articles/draft');
+        $this->assertResponseok();
+
+        $articles = $this->viewVariable('articles');
+        $article = $articles->sample(1)->first();
+        $this->assertEmpty($article);
+        $this->assertResponseContains('下書きはありません。');
+    }
+
+    public function test下書き一覧はログインが必要()
+    {
+        $this->get('/articles/draft');
+        $this->assertResponseCode(302);
+        $this->assertRedirect('/login?redirect=%2Farticles%2Fdraft');
+    }
 }

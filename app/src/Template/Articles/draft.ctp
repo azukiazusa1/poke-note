@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col s12" id="app">
             <h4>下書き一覧</h4>
+            <?php if ($articles->count() < 1): ?>
+                <div>下書きはありません。</div>
+            <?php endif ?>
             <ul class="collapsible">
                 <?php foreach ($articles as $article): ?>
                     <li>
