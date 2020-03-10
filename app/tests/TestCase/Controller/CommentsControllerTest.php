@@ -38,7 +38,7 @@ class CommentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testコメントが投稿できる()
     {
         $this->session(['Auth.User.id' => 4]);
         $this->enableCsrfToken();
