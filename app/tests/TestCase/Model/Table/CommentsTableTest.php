@@ -54,6 +54,68 @@ class CommentsTableTest extends TestCase
         parent::tearDown();
     }
 
+    public function testコメント本文は必須項目()
+    {
+        $comment = $this->Comments->newEntity([
+            'user_id' => 1,
+            'article_id' => 1,
+            'body' => ''
+        ]);
+
+        $expected = ['body' => [
+            '_empty' => 'コメントが入力されていません。'
+        ]];
+        $this->assertSame($expected, $comment->getErrors());
+    }
+
+    public function test存在しないユーザーIDのコメント()
+    {
+        $comment = $this->Comments->newEntity([
+            'user_id' => 999,
+            'article_id' => 1,
+            'body' => 'コメントテスト'
+        ], [
+            'assosiated' => ['Articles']
+        ]);
+        $this->Comments->save($comment);
+        $expected = [
+            'user_id' => [
+                '_existsIn' => '存在しないユーザーです。'
+            ]
+        ];
+        $this->assertSame($expected, $comment->getErrors());
+    }
+
+    public function test存在しない記事へのコメント()
+    {
+        $comment = $this->Comments->newEntity([
+            'user_id' => 1,
+            'article_id' => 999,
+            'body' => 'コメントテスト'
+        ]);
+        $this->Comments->save($comment);
+        $expected = [
+            'article_id' => [
+                '_existsIn' => '存在しない記事です。'
+            ]
+        ];
+        $this->assertSame($expected, $comment->getErrors());
+    }
+
+    public function test下書きの記事へのコメント()
+    {
+        $comment = $this->Comments->newEntity([
+            'user_id' => 1,
+            'article_id' => 6,
+            'body' => 'コメントテスト'
+        ]);
+        $this->Comments->save($comment);
+        $expected = ['existsPublished' => [
+            'existsPublished' => '存在しない記事です。'
+        ]];
+        $this->assertSame($expected, $comment->getErrors());
+    }
+
     public function testユーザー名からコメントが検索できる()
     {
         $query = $this->Comments->find('byUserId', ['user_id' => 1]);

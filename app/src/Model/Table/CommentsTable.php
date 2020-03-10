@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * Comments Model
@@ -82,7 +83,8 @@ class CommentsTable extends Table
 
         $validator
             ->scalar('body')
-            ->allowEmptyString('body');
+            ->requirePresence('body', 'コメントが入力されていません。')
+            ->notEmptyString('body', 'コメントが入力されていません。');
 
         return $validator;
     }
@@ -96,8 +98,16 @@ class CommentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['article_id'], 'Articles'));
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['article_id'], 'Articles', '存在しない記事です。'));
+        $rules->add($rules->existsIn(['user_id'], 'Users', '存在しないユーザーです。'));
+        $rules->add(function($entity) {
+            $articles = TableRegistry::getTableLocator()->get('Articles');
+            return $articles->find('published')->where(['id' => $entity->article_id])->count() > 0;
+        }, 'existsPublished', [
+            'message' => '存在しない記事です。',
+            'errorField' => 'existsPublished'
+            ]
+        );
 
         return $rules;
     }
