@@ -121,6 +121,19 @@ class CommentsControllerTest extends TestCase
         $this->assertResponseCode(404);
     }
 
+    public function test別のユーザーのコメントの編集はできない()
+    {
+        $this->session(['Auth.User.id' => 2]);
+        $this->enableCsrfToken();
+
+        $data = [
+            'body' => 'コメントを編集しました。',
+        ];
+        $this->put('/comments/edit/1', $data);
+
+        $this->assertResponseCode(403);
+    }
+
     /**
      * Test delete method
      *
