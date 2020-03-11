@@ -94,6 +94,19 @@ class CommentsControllerTest extends TestCase
         $this->assertFlashElement('Flash/success');
     }
 
+    public function test存在しないコメントの編集()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+
+        $data = [
+            'body' => 'コメントを編集しました。',
+        ];
+        $this->put('/comments/edit/999', $data);
+
+        $this->assertResponseCode(404);
+    }
+
     /**
      * Test delete method
      *
