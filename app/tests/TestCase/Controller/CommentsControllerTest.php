@@ -77,9 +77,21 @@ class CommentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testコメントの編集ができる()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+
+        $data = [
+            'body' => 'コメントを編集しました。',
+        ];
+        $this->put('/comments/edit/1', $data);
+
+        $comment = $this->Comments->get(1);
+        $this->assertSame($data['body'], $comment->body);
+
+        $this->assertFlashMessage('コメントを編集しました。');
+        $this->assertFlashElement('Flash/success');
     }
 
     /**
