@@ -51,7 +51,7 @@ class ArticlesTable extends Table
                 'article_count' => [
                     'finder' => 'published'
                 ]
-            ]
+            ],
         ]);
 
         $this->belongsTo('Users', [

@@ -37,6 +37,10 @@ class ArticlesTagsTable extends Table
         $this->setDisplayField('article_id');
         $this->setPrimaryKey(['article_id', 'tag_id']);
 
+        $this->addBehavior('CounterCache', [
+            'Tags' => ['article_count']
+        ]);
+
         $this->belongsTo('Articles', [
             'foreignKey' => 'article_id',
             'joinType' => 'INNER',

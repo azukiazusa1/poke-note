@@ -43,6 +43,18 @@ class TagsFixture extends TestFixture
                 'created' => '2020-02-23 16:23:05',
                 'modified' => '2020-02-23 16:23:05',
             ],
+            [
+                'id' => 2,
+                'title' => 'タグ2',
+                'created' => '2020-02-23 16:23:05',
+                'modified' => '2020-02-23 16:23:05',
+            ],
+            [
+                'id' => 1,
+                'title' => 'タグ3',
+                'created' => '2020-02-23 16:23:05',
+                'modified' => '2020-02-23 16:23:05',
+            ],
         ];
         parent::init();
     }

@@ -39,6 +39,7 @@ CREATE TABLE `tags` (
   `title` VARCHAR(255),
   `created` DATETIME,
   `modified` DATETIME,
+  `article_count` int NOT NULL DEFAULT 0, 
   PRIMARY KEY (`id`),
   UNIQUE KEY (title)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
