@@ -139,8 +139,17 @@ class CommentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testコメント削除()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+
+        $this->post('/comments/delete/1');
+
+        $comment = $this->Comments->findById(1)->first();
+        $this->assertEmpty($comment);
+
+        $this->assertFlashMessage('コメントを削除しました。');
+        $this->assertFlashElement('Flash/success');
     }
 }
