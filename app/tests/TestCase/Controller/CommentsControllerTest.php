@@ -139,7 +139,7 @@ class CommentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testコメント削除()
+    public function testコメントの削除ができる()
     {
         $this->session(['Auth.User.id' => 1]);
         $this->enableCsrfToken();
@@ -151,5 +151,14 @@ class CommentsControllerTest extends TestCase
 
         $this->assertFlashMessage('コメントを削除しました。');
         $this->assertFlashElement('Flash/success');
+    }
+
+    public function test他人のユーザーのコメントは削除できない()
+    {
+        $this->session(['Auth.User.id' => 2]);
+        $this->enableCsrfToken();
+        $this->post('/comments/delete/1');
+
+        $this->assertResponseCode(403);
     }
 }
