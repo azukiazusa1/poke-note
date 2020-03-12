@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Token\Util\Token;
 
 /**
  * Application Controller
@@ -67,15 +68,28 @@ class AppController extends Controller
             'authError' => 'ログインが必要です'
         ]);
 
-        if ($this->Auth->user('id')) {
-            $login_user = $this->Users->get($this->Auth->user('id'));
-            $this->set(compact('login_user'));
-        }
+        $this->loadComponent('LoginCookie');
 
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+    }
+
+    public function beforeFilter($event)
+    {
+        // セッションなし、クッキーあり
+        if (!$this->Auth->user('id') && $this->LoginCookie->get()) {
+            $token = $this->LoginCookie->get();
+            $user = $this->Users->get(Token::getId($token));
+            if ($user->tokenVerify($token)) {
+                $this->Auth->setUser($user->toArray());
+            }
+        }
+        if ($this->Auth->user('id')) {
+            $login_user = $this->Users->get($this->Auth->user('id'));
+            $this->set(compact('login_user'));
+        }
     }
 }

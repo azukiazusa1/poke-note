@@ -44,7 +44,7 @@ class TagsControllerTest extends TestCase
         $this->assertResponseOk();
 
         $data = new  \Datetime();
-        $data = $data->format(DATE_ATOM);
+        $data = $data->format(\DateTime::ATOM);
         $expected = [
             'message' => 'Saved',
             'tag' => [

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\Http\Exception\NotFoundException;
 use Cake\Collection\Collection;
+use Cake\Http\Cookie\Cookie;
 
 class UsersController extends AppController 
 {
@@ -18,6 +19,7 @@ class UsersController extends AppController
         $this->Auth->allow(['signup', 'show']);
         $this->loadModel('Follows');
         $this->loadComponent('File');
+        $this->loadComponent('LoginCookie');
 	}
 
 	public function show($username)
@@ -132,7 +134,8 @@ class UsersController extends AppController
 			$user->image = 'user/default.png';
 			if ($this->Users->save($user)) {
 				$this->Flash->success('ユーザー登録に成功しました。');
-				$this->Auth->setUser($user);
+                $this->Auth->setUser($user);
+                $this->LoginCookie->generate($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Flash->error('ユーザー登録に失敗しました。');
@@ -146,7 +149,9 @@ class UsersController extends AppController
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
-				$this->Auth->setUser($user);
+                $this->Auth->setUser($user);
+                $user = $this->Users->get($user['id']);
+                $this->LoginCookie->generate($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Flash->error(__('ユーザー名またはパスワードが間違っています。'));
@@ -156,6 +161,7 @@ class UsersController extends AppController
 
 	public function logout()
 	{
+        $this->LoginCookie->delete();
 		return $this->redirect($this->Auth->logout());
 	}
 }
