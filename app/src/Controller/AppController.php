@@ -77,7 +77,7 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
 
-    public function beforeFilter($event)
+    public function beforeFilter(Event $event)
     {
         // セッションなし、クッキーあり
         if (!$this->Auth->user('id') && $this->LoginCookie->get()) {
