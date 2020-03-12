@@ -17,11 +17,6 @@ class ArticlesControllerTest extends TestCase
     public $fixtures = [
         'app.Articles', 
         'app.Users', 
-        // 'app.Tags', 
-        // 'app.ArticlesTags', 
-        // 'app.Follows',
-        // 'app.Comments',
-        // 'app.Favorites'
     ];
 
     public function test記事の編集ができる()
@@ -56,6 +51,87 @@ class ArticlesControllerTest extends TestCase
                 "favorite_count" => 0,
                 "formated_created" => $created_date->format('Y/m/d H:i:s')
             ],
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+    }
+
+    public function test存在しない記事()
+    {
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+
+        $data = [
+            'title' => '新しいタイトル',
+            'body' => '新しい本文'
+        ];
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+        $this->put('/api/articles/999.json', $data);
+
+        $this->assertResponseCode(404);
+
+        $expected = [
+            'message' => '記事が存在しません。',
+            'url' => '/api/articles/999.json',
+            'code' => 404,
+            'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
+            'line' => 38
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+    }
+
+    public function test他人の記事()
+    {
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+
+        $data = [
+            'title' => '新しいタイトル',
+            'body' => '新しい本文'
+        ];
+        $this->session(['Auth.User.id' => 2]);
+        $this->enableCsrfToken();
+        $this->put('/api/articles/1.json', $data);
+
+        $this->assertResponseCode(401);
+
+        $expected = [
+            'message' => '記事を更新する権限がありません。',
+            'url' => '/api/articles/1.json',
+            'code' => 401,
+            'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
+            'line' => 42
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+    }
+
+    public function test記事更新失敗()
+    {
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+
+        $data = [
+            'title' => str_repeat('a', 256),
+            'body' => '新しい本文'
+        ];
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+        $this->put('/api/articles/1.json', $data);
+
+        $this->assertResponseCode(500);
+
+        $expected = [
+            'message' => '予期せぬエラーが発生しました。',
+            'url' => '/api/articles/1.json',
+            'code' => 500,
+            'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
+            'line' => 47
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, (string)$this->_response->getBody());

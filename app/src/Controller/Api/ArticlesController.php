@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use Cake\Http\Exception\UnauthorizedException;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\Http\Exception\NotFoundException;
 
 class ArticlesController extends AppController 
 {
@@ -31,10 +32,16 @@ class ArticlesController extends AppController
 
     public function edit($id)
     {
-        $article = $this->Articles->get($id);
+        $article = $this->Articles->findById($id)->first();
+
+        if (!$article) {
+            throw new NotFoundException(__('記事が存在しません。'));
+        }
+
         if ($article->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException('記事を更新する権限がありません。');
         }
+
         $this->Articles->patchEntity($article, $this->request->getData());
         if (!$this->Articles->save($article)) {
             throw new InternalErrorException('予期せぬエラーが発生しました。');
