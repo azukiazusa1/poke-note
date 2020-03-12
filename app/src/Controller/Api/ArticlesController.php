@@ -22,7 +22,7 @@ class ArticlesController extends AppController
 
     public function index()
     {
-      $articles = $this->Articles->find('all');
+      $articles = $this->Articles->find('published');
       $this->set([
           'articles' => $articles,
           '_serialize' => ['articles']
@@ -32,7 +32,6 @@ class ArticlesController extends AppController
     public function edit($id)
     {
         $article = $this->Articles->get($id);
-
         if ($article->user_id !== $this->Auth->user('id')) {
             throw new UnauthorizedException('記事を更新する権限がありません。');
         }
