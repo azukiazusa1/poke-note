@@ -10,8 +10,8 @@ class UserMailer extends Mailer
     {
         $url = Router::url(['controller' => 'PasswordForgot', 'action' => 'reset',  $user->tokenGenerate()], true);
         $this
-            ->to($user->email)
-            ->subject('パスワードリセット')
+            ->setTo($user->email)
+            ->setSubject('パスワードリセット')
             ->set([
                 'url' => $url,
                 'username' => $user->username
