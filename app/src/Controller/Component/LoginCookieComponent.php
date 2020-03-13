@@ -10,15 +10,15 @@ class LoginCookieComponent extends Component
 {
 	private const KEY = 'SyP34aTYFRgraz92bSdU4jHJjSaPwU37';
 	
-    public function generate(User $user): void
+    public function generate(User $user): bool
     {
 		$cookie = (new Cookie(self::KEY))
 			->withValue($user->tokenGenerate()) 
 			->withExpiry(new \Datetime('+1 year')) 
 			->withSecure(false)
 			->withHttpOnly(true);
-		
 		Component::getController()->response = Component::getController()->response->withCookie($cookie);
+		return true;
 	}
 
 	public function get(): ?string
@@ -26,8 +26,9 @@ class LoginCookieComponent extends Component
 		return Component::getController()->request->getCookie(self::KEY);
 	}
 
-	public function delete(): void
+	public function delete(): bool
 	{
 		Component::getController()->response = Component::getController()->response->withExpiredCookie(new Cookie(self::KEY));
+		return true;
 	}
 }
