@@ -83,9 +83,7 @@ class AppController extends Controller
         if (!$this->Auth->user('id') && $this->LoginCookie->get()) {
             $token = $this->LoginCookie->get();
             $user = $this->Users->get(Token::getId($token));
-            if ($user->tokenVerify($token)) {
-                $this->Auth->setUser($user->toArray());
-            }
+            $this->Auth->setUser($user->toArray());
         }
         if ($this->Auth->user('id')) {
             $login_user = $this->Users->get($this->Auth->user('id'));
