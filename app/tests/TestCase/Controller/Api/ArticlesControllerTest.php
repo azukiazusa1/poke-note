@@ -18,12 +18,16 @@ class ArticlesControllerTest extends TestCase
         'app.Users', 
     ];
 
-    public function test記事の編集ができる()
+    public function setUp()
     {
+        parent::setUp();
         $this->configRequest([
             'headers' => ['Accept' => 'application/json']
         ]);
+    }
 
+    public function test記事の編集ができる()
+    {
         $data = [
             'title' => '新しいタイトル',
             'body' => '新しい本文'
@@ -57,10 +61,6 @@ class ArticlesControllerTest extends TestCase
 
     public function test存在しない記事()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
-
         $data = [
             'title' => '新しいタイトル',
             'body' => '新しい本文'
@@ -84,10 +84,6 @@ class ArticlesControllerTest extends TestCase
 
     public function test他人の記事()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
-
         $data = [
             'title' => '新しいタイトル',
             'body' => '新しい本文'
@@ -111,10 +107,6 @@ class ArticlesControllerTest extends TestCase
 
     public function test記事更新失敗()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
-
         $data = [
             'title' => str_repeat('a', 256),
             'body' => '新しい本文'

@@ -27,15 +27,19 @@ class TagsControllerTest extends TestCase
     {
         parent::setUp();
 
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
         $this->Tags = TableRegistry::getTableLocator()->get('Tags');
+    }
+
+    public function tearDown(): void
+    {
+        unset($this->Tags);
     }
 
     public function testタグが追加できる()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
-
         $data = [
             'title' => '新しいタグ'
         ];

@@ -316,6 +316,7 @@ class ArticlesTableTest extends TestCase
                         'title' => 'タグ1',
                         'created' => new FrozenTime('2020-02-23 16:23:05'),
                         'modified' => new FrozenTime('2020-02-23 16:23:05'),
+                        'article_count' => 1,
                         '_joinData' => [
                             'article_id' => 1,
                             'tag_id' => 1
@@ -450,6 +451,7 @@ class ArticlesTableTest extends TestCase
                         'title' => 'タグ1',
                         'created' => new FrozenTime('2020-02-23 16:23:05'),
                         'modified' => new FrozenTime('2020-02-23 16:23:05'),
+                        'article_count' => 1,
                         '_joinData' => [
                             'article_id' => 1,
                             'tag_id' => 1
