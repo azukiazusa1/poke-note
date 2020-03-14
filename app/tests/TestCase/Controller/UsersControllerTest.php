@@ -25,6 +25,11 @@ class UsersControllerTest extends TestCase
         $this->Users = TableRegistry::getTableLocator()->get('Users');
     }
 
+    public function tearDown(): void
+    {
+        unset($this->Users);
+    }
+
     public function testユーザー詳細画面が表示される()
     {
         $this->get('/users/user1');

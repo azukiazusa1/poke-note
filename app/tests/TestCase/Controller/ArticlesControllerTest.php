@@ -27,6 +27,11 @@ class ArticlesControllerTest extends TestCase
         $this->Articles = TableRegistry::getTableLocator()->get('Articles');
     }
 
+    public function tearDown(): void
+    {
+        unset($this->Articles);
+    }
+
     public function test記事一覧トレンド画面が表示される()
     {
         $this->get('/');

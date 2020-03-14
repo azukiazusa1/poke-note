@@ -29,6 +29,11 @@ class FavoritesController extends AppController
         ]);
     }
 
+    /**
+     * すでにいいねが存在する場合、いいねを取り消し
+     * いいねが存在しない場合新たにいいねを追加する。
+     *
+     */
     public function add()
     {
         $article_id = $this->request->getParam('article_id');
@@ -60,8 +65,7 @@ class FavoritesController extends AppController
         }
         $this->set([
             'message' => $message,
-            'favotite' => $favotite,
-            '_serialize' => ['message', 'favotite']
+            '_serialize' => ['message']
         ]);
     }
    
