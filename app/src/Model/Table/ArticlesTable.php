@@ -111,21 +111,25 @@ class ArticlesTable extends Table
 
     public function findSearch(Query $query, array $options): Query
     {
-        $q = $options['q'];
-        $Articles_Tags_table = TableRegistry::getTableLocator()->get('ArticlesTags');
-        $subquery = $Articles_Tags_table->find()
-            ->contain(['Tags'])
-            ->where(fn (QueryExpression $exp) => $exp->equalFields('ArticlesTags.article_id', 'Articles.id'))
-            ->where(['Tags.title LIKE' => '%' . $q . '%']);
+        $params = $options['params'];
+        $query->find('published')
+            ->contain(['Users', 'Tags']);
+        if (!empty($params['q'])) {
+            $Articles_Tags_table = TableRegistry::getTableLocator()->get('ArticlesTags');
+            $subquery = $Articles_Tags_table->find()
+                ->contain(['Tags'])
+                ->where(fn (QueryExpression $exp) => $exp->equalFields('ArticlesTags.article_id', 'Articles.id'))
+                ->where(['Tags.title LIKE' => '%' . $params['q'] . '%']);
 
-        return $query->find('published')
-            ->contain(['Users', 'Tags'])
-            ->order(['Articles.created' => 'DESC'])
-            ->where(['OR' => [
-                ['title LIKE' => '%' . $q . '%'],
-                ['title LIKE' => '%' . $q . '%'],
-                fn (QueryExpression $exp) => $exp->exists($subquery)
-            ]]);
+            $query
+                ->where(['OR' => [
+                    ['title LIKE' => '%' . $params['q'] . '%'],
+                    ['title LIKE' => '%' . $params['q'] . '%'],
+                    fn (QueryExpression $exp) => $exp->exists($subquery)
+                ]]);
+        }
+
+        return $query;
     }
 
     public function findByUserId(Query $query, array $options): Query

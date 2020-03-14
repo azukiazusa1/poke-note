@@ -105,9 +105,7 @@ class ArticlesController extends AppController
 
     public function search()
     {
-        $q = $this->request->getQuery('q');
-        $articles = $this->Articles->find('search', ['q' => $q]);
-        $this->set(compact('q', 'articles'));
+        $this->set('q', $this->request->getQuery('q'));
     }
 
     public function draft()

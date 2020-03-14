@@ -23,11 +23,16 @@ class ArticlesController extends AppController
 
     public function index()
     {
-      $articles = $this->Articles->find('published');
-      $this->set([
-          'articles' => $articles,
-          '_serialize' => ['articles']
-      ]);
+        $this->paginate = [
+            'finder' => [
+                'search' => ['params' => $this->request->getQueryParams()]
+            ]
+        ];
+        $articles = $this->paginate($this->Articles);
+        $this->set([
+            'articles' => $articles,
+            '_serialize' => ['articles']
+        ]);
     }
 
     public function edit($id)
