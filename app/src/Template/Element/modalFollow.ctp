@@ -11,8 +11,8 @@
                     :follow="follow"
                     >
                         <li class="collection-item avatar">
-                            <img :src=`/img/${follow.follow_user.image}` :alt="follow.follow_user.username" class="circle">
-                            <span class="title">{{ follow.follow_user.username }}</span>
+                            <a :href=`/users/${follow.follow_user.username}`><img :src=`/img/${follow.follow_user.image}` :alt="follow.follow_user.username" class="circle"></a>
+                            <a class="title" :href=`/users/${follow.follow_user.username}`>{{ follow.follow_user.username }}</a>
                             <div>{{ follow.follow_user.description }}</div>
                         </li>   
                     </span>
@@ -31,8 +31,8 @@
                     :follow="follower"
                     >
                         <li class="collection-item avatar">
-                            <img :src=`/img/${follower.user.image}` :alt="follower.user.username" class="circle">
-                            <span class="title">{{ follower.user.username }}</span>
+                            <a :href=`/users/${follower.user.username}`><img :src=`/img/${follower.user.image}` :alt="follower.user.username" class="circle"></a>
+                            <a class="title" :href=`/users/${follower.user.username}`>{{ follower.user.username }}</a>
                             <div>{{ follower.user.description }}</div>
                         </li>
                     </span>
@@ -58,7 +58,6 @@
             fetchFollows: async function() {
                 try {
                     const {data} = await axios.get(`/api/users/${this.userId}/follows.json`)
-                    console.log(data)
                     this.follows = data.follows
                     this.followers = data.followers
                 } catch (err) {
