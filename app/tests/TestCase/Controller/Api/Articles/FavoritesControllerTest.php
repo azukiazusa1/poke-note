@@ -36,6 +36,32 @@ class FavoritesControllerTest extends TestCase
         unset($this->Favorites);
     }
 
+    public function test記事にいいねしたユーザー一覧()
+    {
+        $this->get('api/articles/3/favorites.json');
+        $this->assertResponseOk();
+        $date = new \DateTime('2020-02-23 16:23:33');
+        $expected = [
+            'favorites'  => [[
+                'id' => 1,
+                'article_id' => 3,
+                'user_id' => 1,
+                'created' => $date->format(DATE_ATOM),
+                'modified' => $date->format(DATE_ATOM),
+                'user' => [
+                    'id' => 1,
+                    'username' => 'user1',
+                    'nickname' => 'user1',
+                    'description' => null,
+                    'image' => 'user/default.png'
+                ]
+            ]]
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+
+    }
+
     public function test記事にいいねをすることができる()
     {
         $this->session(['Auth.User.id' => 2]);

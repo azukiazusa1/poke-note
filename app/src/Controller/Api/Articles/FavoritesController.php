@@ -22,10 +22,14 @@ class FavoritesController extends AppController
 
     public function index()
     {
+        $article_id = $this->request->getParam('article_id');
+        $favorites = $this->Favorites->findByArticleId($article_id)
+            ->contain('Users', fn($q) => $q->select([
+                'id', 'username', 'nickname', 'description', 'image'
+            ]));
         $this->set([
-            'message' => 'aaa',
-            'tag' => 'bbb',
-            '_serialize' => ['message', 'tag']
+            'favorites' => $favorites,
+            '_serialize' => ['favorites']
         ]);
     }
 

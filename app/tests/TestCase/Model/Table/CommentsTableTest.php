@@ -132,7 +132,7 @@ class CommentsTableTest extends TestCase
                 'user' => [
                     'id' => 1,
                     'username' => 'user1',
-                    'image' => ' user/default.png',
+                    'image' => 'user/default.png',
                 ],
                 'article' => [
                     'id' => 2,
@@ -150,7 +150,7 @@ class CommentsTableTest extends TestCase
                 'user' => [
                     'id' => 1,
                     'username' => 'user1',
-                    'image' => ' user/default.png',
+                    'image' => 'user/default.png',
                 ],
                 'article' => [
                     'id' => 3,
