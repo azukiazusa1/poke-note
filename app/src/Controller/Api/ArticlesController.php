@@ -29,9 +29,11 @@ class ArticlesController extends AppController
             ]
         ];
         $articles = $this->paginate($this->Articles);
+        $paging = $this->request->getParam('paging')['Articles'];
         $this->set([
             'articles' => $articles,
-            '_serialize' => ['articles']
+            'paging' => $paging,
+            '_serialize' => ['articles', 'paging']
         ]);
     }
 

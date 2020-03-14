@@ -14,6 +14,11 @@
                     />
                 </ul>
             </div>
+            <div id="scroll-trigger" ref="infinitescrolltrigger">
+                <div class="center" v-if="paging.nextPage">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+            </div>
         </div>
         <div class="col m2">
             <div class="pinned">
@@ -24,14 +29,17 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="input-field col s12">
-                    <select v-model="params.sort">
-                        <option value="created">新着順</option>
-                        <option value="favorite_count">いいね数順</option>
-                        <option value="comment_count">コメント数順</option>
-                    </select>
-                    <label>並び順</label>
+                    <div class="input-field col s12">
+                        <select v-model="params.sort">
+                            <option value="created">新着順</option>
+                            <option value="favorite_count">いいね数順</option>
+                            <option value="comment_count">コメント数順</option>
+                        </select>
+                        <label>並び順</label>
+                    </div>
                 </div>
+                <div class="row">
+                    {{ paging.count }}記事
                 </div>
             </div>
         </div>
@@ -44,38 +52,65 @@
         el: '#app',
         data() {
             return {
-                articles: '',
+                articles: [],
+                paging: {
+                    nextPage: null,
+                    count: 0,
+                },
                 params: {
                     q: '<?= $q ?>',
                     sort: 'created',
-                    direction: 'desc'
+                    direction: 'desc',
                 },
+                page: 1,
                 loading: true,
             }
         },
-        created() { this.fetchArticles() },
+        created() { 
+            this.fetchArticles()
+        },
+        mounted() {
+            this.scrollTrigger()
+        },
         methods: {
             fetchArticles: async function() {
                 try {
-                    this.loading = true
                     const {data} = await axios.get('/api/articles.json', {
-                        params: this.params
+                        params: {
+                            page: this.page,
+                            ...this.params,
+                        }
                     })
-                    this.articles = data.articles
+                    this.articles.push(...data.articles)
+                    this.paging = data.paging
                 } catch (err) {
                     console.log(err)
                 } finally {
                     this.loading = false
                 }
             },
+            scrollTrigger() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.intersectionRatio > 0 && this.paging.nextPage) {
+                            this.page++
+                            this.fetchArticles()
+                        }
+                    });
+                });
+            observer.observe(this.$refs.infinitescrolltrigger);
+            },
         },
         watch: {
             params: {
                 handler: function () {
+                    this.page = 1
+                    this.articles.splice(0)
+                    this.loading = true
                     this.fetchArticles()
+                },
+                deep: true
             },
-            deep: true
-        },
         },
         computed: {
             isEmptyArticles: function() {
@@ -83,4 +118,5 @@
             },
         }
     })
+
 </script>
