@@ -39,7 +39,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?= $this->Html->link('Note!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
             <ul class="right">
                 <li class="hide-on-small-only">
-                    <form method="get" action="search">
+                    <form method="get" action="/search">
                         <div class="input-field">
                             <i class="material-icons prefix white-text">search</i>
                             <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
