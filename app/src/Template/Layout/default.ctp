@@ -90,7 +90,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </nav>
     <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
     <?= $this->Flash->render() ?>
-    <?= $this->fetch('content') ?>
+    <main>
+        <?= $this->fetch('content') ?>
+    </main>
     <footer class="page-footer blue-grey darken-3">
         <div class="container">
             <div class="row">

@@ -1,3 +1,14 @@
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 .error-message {
   display: block;
   padding: 0.375rem 0.5625rem 0.5625rem;
