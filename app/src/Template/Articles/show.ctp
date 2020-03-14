@@ -3,11 +3,14 @@
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <div class="container">
+    <?= $this->element('modalFavoriteUsers') ?>
     <div class="hide-on-med-and-down fixed-btn">
             <p>
                 <a class="btn-floating btn-large waves-accent-2 z-depth-3 like-btn waves-effect
                  <?= $isFavorite ? 'red' : 'grey' ?>"><i class="material-icons">thumb_up</i></a>
-                <span class="bold"><?= h($article->favorite_count) ?></span>
+                <a class="modal-trigger black-text" href="#favorites">
+                    <span class="bold"><?= h($article->favorite_count) ?></span>
+                </a>
             </p>
             <p>
                 <a class="btn-floating btn-large z-depth-3" href="#comment"><i class="material-icons">comment</i></a>
@@ -62,7 +65,9 @@
                     <div class="hide-on-large-only">
                         <a class="btn-floating like-btn waves-effect
                         <?= $isFavorite ? 'red' : 'grey' ?>"><i class="material-icons">thumb_up</i></a>
-                        <span class="bold"><?= h($article->favorite_count) ?></span>
+                        <a class="modal-trigger black-text" href="#favorites">
+                            <span class="bold"><?= h($article->favorite_count) ?></span>
+                        </a>
                         <a class="btn-floating" href="#comment"><i class="material-icons">comment</i></a>
                         <span class="bold"><?= h($article->comment_count) ?></span>
                         <a class="btn-floating"
@@ -231,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     M.Dropdown.init(dropdownArticle);
     const dropdownComment = document.querySelectorAll('.dropdown-trigger-comment');
     M.Dropdown.init(dropdownComment);
+    M.Modal.init(document.querySelectorAll('.modal'));
 
     const articleId = '<?= $article->id ?>'
     const likeBtns = document.querySelectorAll('.like-btn')
