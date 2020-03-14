@@ -132,6 +132,7 @@
 </div>
 <?= $this->element('modalUnlogin', ['do' => 'フォロー']) ?>
 <?= $this->element('Article-list') ?>
+<?= $this->element('Tag-list') ?>
 <script>
     const userId = '<?= $user->id ?>'
     document.addEventListener('DOMContentLoaded', function() {
@@ -289,20 +290,6 @@
                 return this.comments.length < 1
             }
         }
-    })
-
-    Vue.component('Tag-list', {
-        props: ['tag'],
-        data() {
-            return {
-                tagUrl: `/tags/${this.tag.title}`
-            }
-        },
-        template: `
-            <span>
-                <a :href="tagUrl" class="tag-color">{{ tag.title }}</a>
-            </span>
-        `
     })
 
     Vue.component('comments', {
