@@ -96,7 +96,7 @@ class CommentsTableTest extends TestCase
         $this->Comments->save($comment);
         $expected = [
             'article_id' => [
-                '_existsIn' => '存在しない記事です。'
+                'existsPublished' => '存在しない記事です。'
             ]
         ];
         $this->assertSame($expected, $comment->getErrors());
@@ -110,7 +110,7 @@ class CommentsTableTest extends TestCase
             'body' => 'コメントテスト'
         ]);
         $this->Comments->save($comment);
-        $expected = ['existsPublished' => [
+        $expected = ['article_id' => [
             'existsPublished' => '存在しない記事です。'
         ]];
         $this->assertSame($expected, $comment->getErrors());

@@ -98,14 +98,12 @@ class CommentsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['article_id'], 'Articles', '存在しない記事です。'));
         $rules->add($rules->existsIn(['user_id'], 'Users', '存在しないユーザーです。'));
-        $rules->add(function($entity) {
-            $articles = TableRegistry::getTableLocator()->get('Articles');
-            return $articles->find('published')->where(['id' => $entity->article_id])->count() > 0;
-        }, 'existsPublished', [
+        $articles = TableRegistry::getTableLocator()->get('Articles');
+        $rules->add(fn($entity) => $articles->find('published')->where(['id' => $entity->article_id])->count() > 0,
+            'existsPublished', [
             'message' => '存在しない記事です。',
-            'errorField' => 'existsPublished'
+            'errorField' => 'article_id'
             ]
         );
 
