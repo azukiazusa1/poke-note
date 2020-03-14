@@ -23,24 +23,21 @@ class FavoritesControllerTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->Favorites = TableRegistry::getTableLocator()->get('Favorites');
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
     }
 
     public function tearDown()
     {
         unset($this->Favorites);
     }
-    /**
-     * Test initial setup
-     *
-     * @return void
-     */
+
     public function test記事にいいねをすることができる()
     {
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
-
         $this->session(['Auth.User.id' => 2]);
         $this->enableCsrfToken();
         $this->post('/api/articles/1/favorites.json');
@@ -57,6 +54,55 @@ class FavoritesControllerTest extends TestCase
             ->where([
                 'article_id' => 1,
                 'user_id' => 2
+            ])
+            ->first();
+        
+        $this->assertNotEmpty($favorite);
+    }
+
+    public function testいいねした記事を取り消すことができる()
+    {
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+        $this->post('/api/articles/3/favorites.json');
+
+        $this->assertResponseOk();
+
+        $expected = [
+            'message' => 'Deleted',
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+
+        $favorite = $this->Favorites->find()
+            ->where([
+                'article_id' => 1,
+                'user_id' => 2
+            ])
+            ->first();
+        
+        $this->assertEmpty($favorite);
+    }
+
+    public function test自分の記事にもいいねをすることができる()
+    {
+
+        $this->session(['Auth.User.id' => 1]);
+        $this->enableCsrfToken();
+        $this->post('/api/articles/1/favorites.json');
+
+        $this->assertResponseOk();
+
+        $expected = [
+            'message' => 'Saved',
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, (string)$this->_response->getBody());
+
+        $favorite = $this->Favorites->find()
+            ->where([
+                'article_id' => 1,
+                'user_id' => 1
             ])
             ->first();
         
