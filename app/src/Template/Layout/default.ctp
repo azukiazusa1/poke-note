@@ -91,7 +91,29 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js') ?>
     <?= $this->Flash->render() ?>
     <?= $this->fetch('content') ?>
-    <footer>
+    <footer class="page-footer blue-grey darken-3">
+        <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">PNote!</h5>
+                <p class="grey-text text-lighten-4">ポケモン好きのための、記事投稿サイトです。</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">サイトマップ</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">PNote!とは？</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">記事一覧</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">タグ一覧</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">ユーザー一覧</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2020 Copyright
+            </div>
+          </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

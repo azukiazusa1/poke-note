@@ -10,6 +10,7 @@
                 <?php endif ?>
             </select>
         </div>
+    </div>
     <div class="row">
         <div class="col s3 hide-on-med-and-down">
             <div class="collection">
