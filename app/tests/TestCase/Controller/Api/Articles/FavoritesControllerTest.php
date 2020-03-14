@@ -134,4 +134,12 @@ class FavoritesControllerTest extends TestCase
         
         $this->assertNotEmpty($favorite);
     }
+
+    public function testいいねするにはログインが必要()
+    {
+        $this->enableCsrfToken();
+        $this->post('/api/articles/1/favorites.json');
+
+        $this->assertResponseCode(401);
+    }
 }
