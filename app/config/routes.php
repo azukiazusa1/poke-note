@@ -111,6 +111,7 @@ Router::prefix('api', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
     $routes->resources('Tags');
     $routes->resources('Articles');
+    $routes->resources('Users');
     $routes->resources('Articles', function ($routes) {
         $routes->resources('Favorites', ['prefix' => 'Articles']);
         $routes->resources('Files', ['prefix' => 'Articles']);
