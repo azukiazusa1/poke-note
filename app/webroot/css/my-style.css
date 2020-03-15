@@ -122,3 +122,8 @@ a.title{
   top: 70px!important;
   right: 10px!important;
 }
+
+.search-box {
+  bottom: 0; 
+  border-radius: 10px;
+}
