@@ -2,7 +2,7 @@
 <div id="follow-modal">
     <div id="follows" class="modal">
         <div class="modal-content">
-            <h4>フォロー</h4>
+            <h1>フォロー</h1>
             <?= $this->element('loader') ?>
             <div v-else>
                 <ul class="collection">
@@ -22,7 +22,7 @@
     </div>
     <div id="followers" class="modal">
         <div class="modal-content">
-            <h4>フォロワー</h4>
+            <h1>フォロワー</h1>
             <?= $this->element('loader') ?>
             <div v-else>
                 <ul class="collection">

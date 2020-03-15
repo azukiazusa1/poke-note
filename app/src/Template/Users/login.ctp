@@ -3,7 +3,7 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title"><h3>ログイン</h3></span>
+                    <span class="card-title"><h1>ログイン</h1></span>
                     <?= $this->Form->create() ?>
                     <?= $this->Form->control('username', ['label' => 'ユーザー名', 'maxLength' => 50, 'class' => 'validate']) ?>
                     <?= $this->Form->control('password', ['label' => 'パスワード', 'maxLength' => 50, 'class' => 'validate']) ?>

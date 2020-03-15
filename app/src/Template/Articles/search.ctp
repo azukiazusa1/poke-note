@@ -1,8 +1,9 @@
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <div class="container" id="app">
+    <h1>記事一覧</h1>
     <div class="row">
-        <div class="col m10">
+        <div class="col m10 s12">
             <?= $this->element('loader') ?>
             <div v-else-if="isEmptyArticles">記事が見つかりませんでした。</div>
             <div v-else>
@@ -20,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="col m2">
+        <div class="col m2 hide-on-small-only">
             <div class="pinned">
                 <div class="row">
                     <div class="input-field col s12">

@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">
-                        <h3>パスワードの再設定</h3>
+                        <h1>パスワードの再設定</h1>
                     </span>
                     <div>
                        新しく設定するパスワードを入力してください。

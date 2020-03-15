@@ -15,7 +15,7 @@
         <div class="col m9 s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title"><h4 class="red-text">アカウントを削除 / @<?= h($user->username) ?></p></h4></span>
+                    <span class="card-title"><h1 class="red-text">アカウントを削除 / @<?= h($user->username) ?></p></h1></span>
                     <p>一度アカウントを削除されますと、もとに戻すことができません。</p>
                     <p>十分にご注意ください。</p>
                     <?= $this->Form->create() ?>

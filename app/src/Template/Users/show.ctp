@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col s12">
                     <ul class="collection with-header">
-                        <li class="collection-header"><h4>人気の記事</h4></li>
+                        <li class="collection-header"><h1>人気の記事</h1></li>
                         <?php foreach ($popular_articles as $popular_article): ?>
                             <li class="collection-item">
                                 <?= $this->Html->link(h($popular_article->title), ['controller' => 'articles', 'action' => 'show', h($popular_article->id)], ['class' => 'title']) ?>

@@ -56,7 +56,7 @@
                     <hr class="list-divider">
                     <span class="card-title">
                         <?php if ($article->isDraft()) :?>
-                            <h4 class="text-red">この記事はまだ公開されていません。</h4>
+                            <h1 class="text-red">この記事はまだ公開されていません。</h1>
                         <?php endif ?>
                         <h1><?= h($article->title) ?></h1>
                     </span>

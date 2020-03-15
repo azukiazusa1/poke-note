@@ -2,7 +2,7 @@
 <div id="favorite-users-modal">
     <div id="favorites" class="modal">
         <div class="modal-content">
-            <h4>いいねしたユーザー</h4>
+            <h1>いいねしたユーザー</h1>
             <?= $this->element('loader') ?>
             <div v-else>
                 <ul class="collection">

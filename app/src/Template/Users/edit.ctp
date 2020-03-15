@@ -15,7 +15,7 @@
         <div class="col m9 s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title"><h4>プロフィール編集 / @<?= h($user->username) ?></p></h4></span>
+                    <span class="card-title"><h1>プロフィール編集 / @<?= h($user->username) ?></p></h1></span>
                     <p><?= $this->Html->image($user->image, [
                             'alt' => 'user',
                             'class' => 'responsive-img circle icon-image',

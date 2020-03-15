@@ -55,7 +55,7 @@ class UsersControllerTest extends TestCase
         $this->get('/profile');
         $this->assertResponseOk();
 
-        $this->assertResponseContains('<h4>プロフィール編集');
+        $this->assertResponseContains('<h1>プロフィール編集');
 
         $user = $this->viewVariable('user');
 
@@ -140,7 +140,7 @@ class UsersControllerTest extends TestCase
         $this->session(['Auth.User.id' => 1]);
         $this->get('/password');
 
-        $this->assertResponseContains('<h4>パスワード');
+        $this->assertResponseContains('<h1>パスワード');
     }
 
     public function testパスワード変更画面はログイン時のみ()
@@ -205,7 +205,7 @@ class UsersControllerTest extends TestCase
         $this->get('/email');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('<h4>メールアドレス');
+        $this->assertResponseContains('<h1>メールアドレス');
     }
 
     public function testメールアドレス変更画面はログインが必要()
@@ -270,7 +270,7 @@ class UsersControllerTest extends TestCase
         $this->get('/users/delete');
         $this->assertResponseOk();
 
-        $this->assertResponseContains('<h4 class="red-text">アカウントを削除');
+        $this->assertResponseContains('<h1 class="red-text">アカウントを削除');
     }
 
     public function testユーザー削除画面はログインが必要()

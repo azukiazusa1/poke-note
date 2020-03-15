@@ -34,7 +34,7 @@
         <div class="col s12 m12 l6">
             <ul class="collection with-header">
                 <li class="collection-header">
-                    <h4 class="light-blue-text accent-1">
+                    <h1 class="light-blue-text accent-1">
                         <?php switch ($this->request->getParam('action')):
                         case 'index': ?>
                             <i class="material-icons">trending_up</i>トレンド
@@ -51,7 +51,7 @@
                         <?php default:
                                 break;
                         endswitch ?>
-                    </h4>
+                    </h1>
                 </li>
                 <?php foreach ($articles as $article): ?>
                     <li class="collection-item avatar">

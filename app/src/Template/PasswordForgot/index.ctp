@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">
-                        <h3>パスワードをリセットする</h3>
+                        <h1>パスワードをリセットする</h1>
                     </span>
                     <div>
                         ユーザー登録時に設定したパスワードを入力してください。

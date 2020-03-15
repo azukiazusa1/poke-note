@@ -9,6 +9,10 @@ main {
   flex: 1 0 auto;
 }
 
+h1 {
+  font-size: 30px;
+}
+
 .error-message {
   display: block;
   padding: 0.375rem 0.5625rem 0.5625rem;

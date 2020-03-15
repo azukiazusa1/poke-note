@@ -15,7 +15,7 @@
 		<div class="col m9 s12">
 			<div class="card">
 				<div class="card-content">
-                    <span class="card-title"><h4>メールアドレス / @<?= h($user->username) ?></p></h4></span>
+                    <span class="card-title"><h1>メールアドレス / @<?= h($user->username) ?></p></h1></span>
                     <div>現在のメールアドレス：<?= h($user->email) ?></div>
 					<?= $this->Form->create($user) ?>
 					<?= $this->Form->control('password', ['label' => '確認用パスワード', 'maxlength' => 32, 'type' => 'password', 'value' => '']) ?>
