@@ -73,6 +73,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/logout', ['controller' => 'Users', 'action' => 'logout']);
     $routes->connect('/login', ['controller' => 'Users', 'action' => 'login']);
     $routes->connect('/signup', ['controller' => 'Users', 'action' => 'signup']);
+    $routes->connect('/users', ['controller' => 'Users', 'action' => 'index']);
     $routes->connect('/users/delete', ['controller' => 'Users', 'action' => 'delete']);
     $routes->connect('/users/*', ['controller' => 'Users', 'action' => 'show']);
     $routes->connect('/tags', ['controller' => 'Tags', 'action' => 'index']);

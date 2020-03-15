@@ -407,4 +407,9 @@ class UsersControllerTest extends TestCase
         $this->assertResponseContains('パスワードが入力されていません。');
     }
 
+    public function testユーザー一覧ページ()
+    {
+        $this->get('/users');
+        $this->assertResponseOk();
+    }
 }

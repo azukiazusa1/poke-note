@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Cake\Http\Exception\NotFoundException;
 use Cake\Collection\Collection;
-use Cake\Http\Cookie\Cookie;
 
 class UsersController extends AppController 
 {
@@ -16,11 +15,16 @@ class UsersController extends AppController
 	public function initialize()
 	{
 		parent::initialize();
-        $this->Auth->allow(['signup', 'show']);
+        $this->Auth->allow(['signup', 'show', 'index']);
         $this->loadModel('Follows');
         $this->loadComponent('File');
         $this->loadComponent('LoginCookie');
-	}
+    }
+    
+    public function index()
+    {
+
+    }
 
 	public function show($username)
 	{

@@ -69,7 +69,7 @@ class UsersTable extends Table
         ]);
     }
 
-    public function search(Query $query, array $options): Query
+    public function findSearch(Query $query, array $options): Query
     {
         $params = $options['params'];
         if (empty($params['q'])) return $query;

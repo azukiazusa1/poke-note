@@ -114,7 +114,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                       ['controller' => 'Tags','action' => 'index'],
                       ['class' => 'grey-text text-lighten-3']) ?>
                   </li>
-                  <li><a class="grey-text text-lighten-3" href="#!">ユーザー一覧</a></li>
+                  <li>
+                      <?= $this->Html->link('ユーザー一覧',
+                      ['controller' => 'Users','action' => 'index'],
+                      ['class' => 'grey-text text-lighten-3']) ?>
+                  </li>
                 </ul>
               </div>
             </div>
