@@ -143,6 +143,15 @@ class ArticlesTable extends Table
         return $query;
     }
 
+    public function findByTagId(Query $query, array $options): Query
+    {
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->order(['Articles.created' => 'DESC'])
+            ->matching('Tags', fn($q) => $q->where(['Tags.id' => $options['tag_id']]))
+            ->limit(20);
+    }
+
     public function findByUserId(Query $query, array $options): Query
     {
         return $query->find('published')
