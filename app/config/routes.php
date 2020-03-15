@@ -124,6 +124,11 @@ Router::prefix('api', function (RouteBuilder $routes) {
         $routes->resources('Follows', ['prefix' => 'users']);
     });
 
+    $routes->resources('Tags', function ($routes) {
+        $routes->resources('Articles', ['prefix' => 'tags']);
+        $routes->resources('Follows', ['prefix' => 'tags']);
+    });
+
 });
 
 
