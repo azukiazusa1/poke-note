@@ -69,6 +69,18 @@ class UsersTable extends Table
         ]);
     }
 
+    public function search(Query $query, array $options): Query
+    {
+        $params = $options['params'];
+        if (empty($params['q'])) return $query;
+
+        return $query
+            ->where(['OR' => [
+                ['Users.username LIKE' => '%' . $params['q'] . '%'],
+                ['Users.nickname LIKE' => '%' . $params['q'] . '%'],
+            ]]);
+    }
+
     /**
      * Default validation rules.
      *
