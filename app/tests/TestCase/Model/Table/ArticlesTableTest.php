@@ -552,7 +552,8 @@ class ArticlesTableTest extends TestCase
      */
     public function testfindSearch()
     {
-        $query = $this->Articles->find('search', ['q' => 'draft']);
+        $params['q'] = 'draft';
+        $query = $this->Articles->find('search', ['params' => $params]);
         $this->assertInstanceOf(Query::class, $query);
         $result = $query->enableHydration(false)->toArray();
         $expected = [

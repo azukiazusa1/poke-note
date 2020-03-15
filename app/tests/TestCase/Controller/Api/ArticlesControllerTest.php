@@ -76,7 +76,7 @@ class ArticlesControllerTest extends TestCase
             'url' => '/api/articles/999.json',
             'code' => 404,
             'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
-            'line' => 38
+            'line' => 45
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, (string)$this->_response->getBody());
@@ -99,7 +99,7 @@ class ArticlesControllerTest extends TestCase
             'url' => '/api/articles/1.json',
             'code' => 401,
             'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
-            'line' => 42
+            'line' => 49
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, (string)$this->_response->getBody());
@@ -122,7 +122,7 @@ class ArticlesControllerTest extends TestCase
             'url' => '/api/articles/1.json',
             'code' => 500,
             'file' => '/var/www/html/app/src/Controller/Api/ArticlesController.php',
-            'line' => 47
+            'line' => 54
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, (string)$this->_response->getBody());

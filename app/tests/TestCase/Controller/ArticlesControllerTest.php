@@ -243,14 +243,6 @@ class ArticlesControllerTest extends TestCase
         $this->assertContains('first', $article->title);
     }
 
-    public function test検索パラメータが渡されなかったとき()
-    {
-        $this->get('/search/');
-        $this->assertResponseok();
-        $this->assertResponseNotContains('articles');
-        $this->assertTemplate('search_start');
-    }
-
     public function test下書き一覧画面()
     {
         $this->session(['Auth.User.id' => 1]);
