@@ -59,6 +59,7 @@
 <?= $this->element('modalUnlogin', ['do' => 'フォロー']) ?>
 <?= $this->element('Article-list') ?>
 <?= $this->element('Tag-list') ?>
+<?= $this->element('pagination') ?>
 <script>
     const tagId = '<?= $tag->id ?>'
     document.addEventListener('DOMContentLoaded', function() {
@@ -89,16 +90,10 @@
         data() {
             return { 
                 articles: '',
-                articlesPage: 1,
-                articlesPaging: '',
-                favorites: '',
-                favoritesPage: 1,
-                favoritesPaging: '',
-                comments: '',
-                commentsPage: 1,
-                commentsPaging: '',
+                page: 1,
+                paging: '',
                 loading: true,
-                userId: userId
+                tagId: tagId
             }
         },
         created() { this.fetchArticles() },
@@ -106,7 +101,7 @@
             fetchArticles: async function() {
                 try {
                     this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/articles.json?page=${this.articlesPage}`)
+                    const {data} = await axios.get(`/api/tags/${this.tagId}/articles.json?page=${this.articlesPage}`)
                     this.articles = data.articles
                     this.articlesPaging = data.paging
                 } catch (err) {
@@ -115,78 +110,16 @@
                     this.loading = false
                 }
             },
-            fetchFavorites: async function() {
-                try {
-                    this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/favorites.json?page=${this.favoritesPage}`)
-                    this.favorites = data.favorites
-                    this.favoritesPaging = data.paging
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    this.loading = false
-                }
-            },
-            fetchComments: async function() {
-                try {
-                    this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/comments.json?page=${this.commensPage}`)
-                    this.comments = data.comments
-                    this.commentsPaging = data.paging
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    this.loading = false
-                }
-            },
-            changeArticles: function() {
-                if (this.articles) {
-                    this.loading = false
-                    return
-                }
-                this.fetchArticles()
-            },
-            changeFavorites: function() {
-                if (this.favorites) {
-                    this.loading = false
-                    return
-                }
-                this.fetchFavorites()
-            },
-            changeComments: function() {
-                if (this.comments) {
-                    this.loading = false
-                    return
-                }
-                this.fetchComments()
-            },
         },
         watch: {
-            articlesPage: function() {
+            page: function() {
                 this.fetchArticles()
             },
-            favoritesPage: function()  {
-                this.fetchFavorites()
-            },
-            commentsPage: function() {
-                this.fetchComments()
-            }
         },
         computed: {
             isEmptyArticles: function() {
                 return this.articles.length < 1
-            },
-            isEmptyFavorites: function() {
-                return this.favorites.length < 1
-            },
-            isEmptyComments: function() {
-                return this.comments.length < 1
             }
         }
-    })
-
-    Vue.component('pagination', {
-        props: ['paging'],
-        template: '#pagination-template'
     })
 </script>

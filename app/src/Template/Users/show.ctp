@@ -133,6 +133,7 @@
 <?= $this->element('modalUnlogin', ['do' => 'フォロー']) ?>
 <?= $this->element('Article-list') ?>
 <?= $this->element('Tag-list') ?>
+<?= $this->element('pagination') ?>
 <script>
     const userId = '<?= $user->id ?>'
     document.addEventListener('DOMContentLoaded', function() {
@@ -174,21 +175,6 @@
             {{ comment.body }}
         </div>
     </li>
-</script>
-<script type="text/x-template" id="pagination-template">
-    <ul class="pagination">
-        <li class="waves-effect" v-if="paging.prevPage" @click="$emit('paginate', paging.page - 1)">
-            <a href="#!"><i class="material-icons">chevron_left</i></a>
-        </li>
-        <span v-for="n in paging.pageCount" :n="n">
-            <li :class="{ 'active': (paging.page === n), 'waves-effect': (paging.page !== n) }">
-                <a href="#!" @click="$emit('paginate', n)">{{ n }}</a>
-            </li>
-        </span>
-        <li class="waves-effect" v-if="paging.nextPage" @click="$emit('paginate', paging.page + 1)">
-            <a href="#!"><i class="material-icons">chevron_right</i></a>
-        </li>
-    </ul>
 </script>
 <script>
     new Vue({
@@ -302,10 +288,5 @@
             }
         },
         template: '#comment-template'
-    })
-
-    Vue.component('pagination', {
-        props: ['paging'],
-        template: '#pagination-template'
     })
 </script>
