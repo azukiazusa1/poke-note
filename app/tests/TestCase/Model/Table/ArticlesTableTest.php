@@ -555,7 +555,7 @@ class ArticlesTableTest extends TestCase
         $params['q'] = 'draft';
         $query = $this->Articles->find('search', ['params' => $params]);
         $this->assertInstanceOf(Query::class, $query);
-        $result = $query->enableHydratipon(false)->toArray();
+        $result = $query->enableHydration(false)->toArray();
         $expected = [
             [
                 'id' => 3,

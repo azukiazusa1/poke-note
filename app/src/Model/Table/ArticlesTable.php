@@ -124,7 +124,8 @@ class ArticlesTable extends Table
             $query
                 ->where(['OR' => [
                     ['title LIKE' => '%' . $params['q'] . '%'],
-                    ['title LIKE' => '%' . $params['q'] . '%'],
+                    ['Users.username LIKE' => '%' . $params['q'] . '%'],
+                    ['Users.nickname LIKE' => '%' . $params['q'] . '%'],
                     fn (QueryExpression $exp) => $exp->exists($subquery)
                 ]]);
         }
