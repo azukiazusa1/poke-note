@@ -320,7 +320,7 @@ class UsersControllerTest extends TestCase
     {
         $this->get('/login');
         $this->assertResponseOk();
-        $this->assertResponseContains('<h3>ログイン');
+        $this->assertResponseContains('<h1>ログイン');
     }
 
     public function testログイン成功()
@@ -366,7 +366,7 @@ class UsersControllerTest extends TestCase
     {
         $this->get('/signup');
         $this->assertResponseOk();
-        $this->assertResponseContains('<h3>ユーザー登録');
+        $this->assertResponseContains('<h1>ユーザー登録');
     }
 
     public function testユーザー登録成功()
