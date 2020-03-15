@@ -13,6 +13,10 @@ h1 {
   font-size: 30px;
 }
 
+h2 {
+  font-size: 28px;
+}
+
 .error-message {
   display: block;
   padding: 0.375rem 0.5625rem 0.5625rem;

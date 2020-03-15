@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Cake\Http\Exception\NotFoundException;
+
 class TagsController extends AppController 
 {
     /**
@@ -22,7 +24,13 @@ class TagsController extends AppController
 
     public function show(string $title)
     {
-        $this->set(compact('title'));
+        $tag = $this->Tags->findByTitle($title)->first();
+        if (!$tag) {
+            throw new NotFoundException();
+        }
+        $isFollowed = true;
+        $this->set(compact('tag', 'isFollowed'));
+
     }
    
 }

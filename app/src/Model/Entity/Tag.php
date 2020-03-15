@@ -29,5 +29,7 @@ class Tag extends Entity
         'created' => true,
         'modified' => true,
         'articles' => true,
+        'article_count' => true,
+        'description' => true,
     ];
 }

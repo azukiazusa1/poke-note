@@ -36,7 +36,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <nav class="red accent-2">
         <div class="nav-wrapper">
-            <?= $this->Html->link('Note!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
+            <?= $this->Html->link('PNote!',['controller' => 'Articles', 'action' => 'index'], ['class' => 'brand-logo left'])?>
             <ul class="right">
                 <li class="hide-on-small-only">
                     <form method="get" action="/search">
