@@ -130,6 +130,16 @@ class ArticlesTable extends Table
                 ]]);
         }
 
+        if (!empty($params['start_date'])) {
+            $query
+                ->where(['Articles.created >=' => $params['start_date']]);
+        }
+
+        if (!empty($params['end_date'])) {
+            $query
+                ->where(['Articles.created <=' => $params['end_date']]);
+        }
+
         return $query;
     }
 

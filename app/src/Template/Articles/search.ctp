@@ -45,6 +45,18 @@
                         <label>並び順</label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="date" class="validate" v-model="params.start_date">
+                        <label>投稿日(以降)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="date" class="validate" v-model="params.end_date">
+                        <label>投稿日(以前)</label>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row hide-on-med-and-up pinned white z-depth-5 search-box">
@@ -60,13 +72,27 @@
         <div id="modal-search" class="modal">
             <div class="modal-content">
                 <h4>詳細検索</h4>
-                <div class="input-field col s12">
-                    <select v-model="params.sort">
-                        <option value="created">新着順</option>
-                        <option value="favorite_count">いいね数順</option>
-                        <option value="comment_count">コメント数順</option>
-                    </select>
-                    <label>並び順</label>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select v-model="params.sort">
+                            <option value="created">新着順</option>
+                            <option value="favorite_count">いいね数順</option>
+                            <option value="comment_count">コメント数順</option>
+                        </select>
+                        <label>並び順</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="date" class="validate" v-model="params.start_date">
+                        <label>投稿日(以降)</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="date" class="validate" v-model="params.end_date">
+                        <label>投稿日(以前)</label>
+                    </div>
                 </div>
             </div>
                 <div class="modal-footer">
@@ -90,6 +116,8 @@
                 },
                 params: {
                     q: '<?= $q ?>',
+                    start_date: '',
+                    end_date: '',
                     sort: 'created',
                     direction: 'desc',
                 },
