@@ -236,11 +236,6 @@ class ArticlesControllerTest extends TestCase
     {
         $this->get('/search/?q=first');
         $this->assertResponseok();
-
-        $articles = $this->viewVariable('articles');
-        $article = $articles->sample(1)->first();
-        $this->assertInstanceOf(Article::class,$article);
-        $this->assertContains('first', $article->title);
     }
 
     public function test下書き一覧画面()
