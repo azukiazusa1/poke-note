@@ -6,6 +6,7 @@ use App\Controller\AppController;
 
 class TagsController extends AppController 
 {
+
     /**
      * @inheritDoc
      *
@@ -13,6 +14,15 @@ class TagsController extends AppController
      */
     public function initialize()
     {
+        $this->paginate = [
+            'limit' => 100,
+            'order' => [
+                'article_count' => 'desc'
+            ],
+            'finder' => [
+                'search' => ['params' => $this->request->getQueryParams()]
+            ]
+        ];
         parent::initialize();
         $this->loadComponent('RequestHandler');
         $this->Auth->allow(['index', 'add', 'delete']);
@@ -21,10 +31,12 @@ class TagsController extends AppController
 
     public function index()
     {
-      $tags = $this->Tags->find('all');
+      $tags = $this->paginate($this->Tags);
+      $paging = $this->request->getParam('paging')['Tags'];
       $this->set([
           'tags' => $tags,
-          '_serialize' => ['tags']
+          'paging' => $paging,
+          '_serialize' => ['tags', 'paging']
       ]);
     }
 

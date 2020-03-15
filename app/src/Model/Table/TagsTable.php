@@ -47,6 +47,14 @@ class TagsTable extends Table
         ]);
     }
 
+    public function findSearch(Query $query, array $options): Query
+    {
+        if (empty($options['params']['q'])) return $query;
+
+        return $query
+            ->where(['title LIKE' => '%' . $options['params']['q'] . '%']);
+    }
+
     /**
      * Default validation rules.
      *

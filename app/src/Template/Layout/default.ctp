@@ -109,7 +109,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                       ['controller' => 'Articles','action' => 'search'],
                       ['class' => 'grey-text text-lighten-3']) ?>
                   </li>
-                  <li><a class="grey-text text-lighten-3" href="#!">タグ一覧</a></li>
+                  <li>
+                      <?= $this->Html->link('タグ一覧',
+                      ['controller' => 'Tags','action' => 'index'],
+                      ['class' => 'grey-text text-lighten-3']) ?>
+                  </li>
                   <li><a class="grey-text text-lighten-3" href="#!">ユーザー一覧</a></li>
                 </ul>
               </div>

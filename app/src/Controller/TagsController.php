@@ -16,7 +16,11 @@ class TagsController extends AppController
         $this->Auth->allow(['index','show']);
     }
 
-    public function show(string $title = null)
+    public function index()
+    {
+    }
+
+    public function show(string $title)
     {
         $this->set(compact('title'));
     }
