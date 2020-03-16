@@ -63,6 +63,8 @@ class User extends Entity
         'email'
     ];
 
+    protected $_virtual = ['total_favorite'];
+
     protected function _setPassword($value) 
     {
         if (strlen($value)) {
@@ -86,7 +88,7 @@ class User extends Entity
             ->first();
     }
 
-    public function countFavorite(): int
+    protected function _getTotalFavorite(): int
     {
         if (!$this->articles) return 0;
         return array_reduce($this->articles, fn($total, $current) => $total += $current->favorite_count);

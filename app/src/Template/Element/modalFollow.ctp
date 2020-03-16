@@ -12,7 +12,8 @@
                     >
                         <li class="collection-item avatar">
                             <a :href=`/users/${follow.follow_user.username}`><img :src=`/img/${follow.follow_user.image}` :alt="follow.follow_user.username" class="circle"></a>
-                            <a class="title" :href=`/users/${follow.follow_user.username}`>{{ follow.follow_user.username }}</a>
+                            <a class="title" :href=`/users/${follow.follow_user.username}`>@{{ follow.follow_user.username }}</a>
+                            <span>{{ follow.follow_user.nickname }}</span>
                             <div>{{ follow.follow_user.description }}</div>
                         </li>   
                     </span>
@@ -32,7 +33,8 @@
                     >
                         <li class="collection-item avatar">
                             <a :href=`/users/${follower.user.username}`><img :src=`/img/${follower.user.image}` :alt="follower.user.username" class="circle"></a>
-                            <a class="title" :href=`/users/${follower.user.username}`>{{ follower.user.username }}</a>
+                            <a class="title" :href=`/users/${follower.user.username}`>@{{ follower.user.username }}</a>
+                            <span>{{ follower.user.nickname }}</span>
                             <div>{{ follower.user.description }}</div>
                         </li>
                     </span>

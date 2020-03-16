@@ -34,7 +34,7 @@
                     <div><?= h($user->description) ?></div>
                 </div>
                 <div class="card-action">
-                    <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($favorite_count) ?><br>
+                    <i class="tiny material-icons red-text text-accent-2">thumb_up</i><?= h($user->total_favorite) ?><br>
                     <a class="modal-trigger" href="#follows">
                         <span class="bold black-text">フォロー</span><?= h($user->follow_count) ?></a>
                     <a class="modal-trigger" href="#followers">

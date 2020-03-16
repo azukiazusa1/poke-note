@@ -23,7 +23,7 @@ class UsersController extends AppController
     
     public function index()
     {
-
+        $this->Users->find('userRanking')->toArray();
     }
 
 	public function show($username)
@@ -37,14 +37,12 @@ class UsersController extends AppController
 			throw new NotFoundException();
 		}
 
-		$favorite_count = $user->countFavorite();
-
 		$articles = new Collection($user->articles);
 		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
 		
 		$isFollowed = $user->isFollowed($this->Auth->user('id'));
 
-		$this->set(compact('user', 'favorite_count', 'popular_articles', 'isFollowed'));
+		$this->set(compact('user', 'popular_articles', 'isFollowed'));
 	}
 
 	public function edit()

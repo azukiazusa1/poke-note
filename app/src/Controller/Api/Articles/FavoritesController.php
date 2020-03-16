@@ -18,15 +18,15 @@ class FavoritesController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
         $this->Auth->allow(['index', 'add', 'delete']);
+        $this->loadModel('Users');
     }
 
     public function index()
     {
         $article_id = $this->request->getParam('article_id');
-        $favorites = $this->Favorites->findByArticleId($article_id)
-            ->contain('Users', fn($q) => $q->select([
-                'id', 'username', 'nickname', 'description', 'image'
-            ]));
+        
+        $favorites = $this->Users->find('byFavorite', ['article_id' => $article_id]);
+
         $this->set([
             'favorites' => $favorites,
             '_serialize' => ['favorites']

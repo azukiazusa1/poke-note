@@ -23,6 +23,9 @@ class UsersController extends AppController
         $this->paginate = [
             'finder' => [
                 'search' => ['params' => $this->request->getQueryParams()]
+            ],
+            'sortWhitelist' => [
+                'total_favorite', 'username','created'
             ]
         ];
         $users = $this->paginate($this->Users);

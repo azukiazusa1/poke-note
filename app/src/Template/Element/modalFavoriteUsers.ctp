@@ -6,21 +6,16 @@
             <?= $this->element('loader') ?>
             <div v-else>
                 <ul class="collection">
-                    <span v-for="favorite in favorites"
-                    :key="favorite.id"
-                    :favorite="favorite"
-                    >
-                        <li class="collection-item avatar">
-                            <a :href=`/users/${favorite.user.username}`><img :src=`/img/${favorite.user.image}` :alt="favorite.user.username" class="circle"></a>
-                            <a class="title" :href=`/users/${favorite.user.username}`>{{ favorite.user.username }}</a>
-                            <div>{{ favorite.user.description }}</div>
-                        </li>   
-                    </span>
+                    <user-list v-for="user in favorites"
+                    :key="user.id"
+                    :user="user"
+                    />
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<?= $this->element('User-list') ?>
 
 <script>
     new Vue({

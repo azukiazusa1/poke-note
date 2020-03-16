@@ -72,7 +72,8 @@ class UsersTable extends Table
     public function findSearch(Query $query, array $options): Query
     {
         $params = $options['params'];
-        $query->find('userRanking');
+        $query->find('userRanking')
+            ->contain('Articles', fn($q) => $q->select(['user_id', 'favorite_count']));
         if (empty($params['q'])) return $query;
 
         return $query
@@ -88,6 +89,12 @@ class UsersTable extends Table
             ->leftJoinWith('Articles')
             ->group(['Users.id'])
             ->enableAutoFields(true);
+    }
+
+    public function findByFavorite(Query $query, array $options): Query
+    {
+        return $query->contain('Articles', fn($q) => $q->select(['user_id', 'favorite_count']))
+            ->matching('Favorites', fn($q) => $q->where(['Favorites.article_id' => $options['article_id']]));
     }
 
     /**
