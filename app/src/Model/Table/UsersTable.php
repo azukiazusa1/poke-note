@@ -72,6 +72,7 @@ class UsersTable extends Table
     public function findSearch(Query $query, array $options): Query
     {
         $params = $options['params'];
+        $query->find('userRanking');
         if (empty($params['q'])) return $query;
 
         return $query
@@ -79,6 +80,14 @@ class UsersTable extends Table
                 ['Users.username LIKE' => '%' . $params['q'] . '%'],
                 ['Users.nickname LIKE' => '%' . $params['q'] . '%'],
             ]]);
+    }
+
+    public function findUserRanking(Query $query): Query
+    {
+        return $query->select(['total_favorite' => $query->func()->sum('Articles.favorite_count')])
+            ->leftJoinWith('Articles')
+            ->group(['Users.id'])
+            ->enableAutoFields(true);
     }
 
     /**
