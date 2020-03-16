@@ -122,7 +122,8 @@ class UsersController extends AppController
 			} 
 
 			if ($this->Users->delete($user)) {
-				$this->Flash->success('アカウントを削除いたしました。今までのご利用ありがとうございました。');
+                $this->Flash->success('アカウントを削除いたしました。今までのご利用ありがとうございました。');
+                $this->LoginCookie->delete();
 				return $this->redirect($this->Auth->logout());
 			} else {
 				$this->Flash->error('アカウントの削除に失敗しました。');
