@@ -1,3 +1,4 @@
+<? $this->assign('title', 'PNote!') ?>
 <div class="container">
     <div class="row">
         <div class="input-field col s12 hide-on-large-only">
