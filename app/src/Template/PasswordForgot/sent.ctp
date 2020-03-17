@@ -1,10 +1,11 @@
+<?php $this->assign('title', 'パスワードリセットメール送信 | PNote!') ?>
 <div class="container">
     <div class="row">
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">
-                        <h3>パスワードリセットメールを送信しました。</h3>
+                        <h1>パスワードリセットメールを送信しました。</h1>
                     </span>
                     <div>
                         <span class="bold"><?= h($email) ?></span>へパスワードリセットメールを送信しました。

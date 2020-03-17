@@ -1,3 +1,10 @@
+<?php 
+    if ($article->title) {
+       $this->assign('title', h($article->title) . ' | PNote!');
+    } else {
+        $this->assign('title', '新規記事 | PNote!');
+    }
+?>
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>

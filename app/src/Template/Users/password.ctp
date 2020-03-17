@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'パスワード | PNote!') ?>
 <div class="container">
     <div class="row">
         <div class="col m3 s12">

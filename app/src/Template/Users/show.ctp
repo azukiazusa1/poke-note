@@ -1,3 +1,4 @@
+<?php $this->assign('title', h($user->username) . ' | PNote!') ?>
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
 <div class="container">

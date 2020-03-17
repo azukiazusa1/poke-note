@@ -1,3 +1,4 @@
+<?php $this->assign('title', '下書き一覧 | PNote!') ?>
 <div class="container">
     <div class="row">
         <div class="col s12" id="app">

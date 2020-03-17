@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'パスワードの再設定 | PNote!') ?>
 <div class="container">
     <div class="row">
         <div class="col s12">
