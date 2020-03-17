@@ -75,10 +75,10 @@ class UserTest extends TestCase
         $this->assertFalse($this->User->isFollowed(3));
     }
 
-    public function testcountFavorite()
+    public function test総いいねを数える()
     {
         $users = TableRegistry::getTableLocator()->get('Users');
         $user = $users->get(2, ['contain' => ['Articles']]);
-        $this->assertSame(5, $user->countFavorite());
+        $this->assertSame(5, $user->total_favorite);
     }
 }

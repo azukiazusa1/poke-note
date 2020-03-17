@@ -41,22 +41,49 @@ class FavoritesControllerTest extends TestCase
         $this->get('api/articles/3/favorites.json');
         $this->assertResponseOk();
         $date = new \DateTime('2020-02-23 16:23:33');
+        $date_user = new \DateTime('2020-02-23 16:23:10');
         $expected = [
-            'favorites'  => [[
-                'id' => 1,
-                'article_id' => 3,
-                'user_id' => 1,
-                'created' => $date->format(DATE_ATOM),
-                'modified' => $date->format(DATE_ATOM),
-                'user' => [
-                    'id' => 1,
-                    'username' => 'user1',
-                    'nickname' => 'user1',
-                    'description' => null,
-                    'image' => 'user/default.png'
-                ]
-            ]]
-        ];
+            'favorites' => [[
+                "id"=> 1,
+                "username"=> "user1",
+                "nickname"=> "user1",
+                "description"=> null,
+                "image"=> "user/default.png",
+                "link"=> null,
+                "created"=> $date_user->format(DATE_ATOM),
+                "modified"=> $date_user->format(DATE_ATOM),
+                "article_count"=> 3,
+                "follow_count"=> 1,
+                "follower_count"=> 2,
+                "articles"=> [
+                    [
+                        "user_id"=> 1,
+                        "favorite_count"=> 0,
+                        "formated_created"=> null
+                    ],
+                    [
+                        "user_id"=> 1,
+                        "favorite_count"=> 1,
+                        "formated_created"=> null
+                    ],
+                    [
+                        "user_id"=> 1,
+                        "favorite_count"=> 0,
+                        "formated_created"=> null
+                    ]
+                ],
+                "_matchingData"=> [
+                    "Favorites"=> [
+                        "id"=> 1,
+                        "article_id"=> 3,
+                        "user_id"=> 1,
+                        "created"=> $date->format(DATE_ATOM),
+                        "modified"=> $date->format(DATE_ATOM),
+                    ]
+                ],
+                "total_favorite"=> 1
+            ]
+        ]];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, (string)$this->_response->getBody());
 
