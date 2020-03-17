@@ -24,83 +24,87 @@
                 </div>
             </div>
         </div>
-        <div class="col m2 hide-on-small-only">
-            <div class="pinned">
-                <div class="row">
-                    {{ paging.count }}記事
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">search</i>
-                        <input type="text" class="validate" v-model="params.q">
+        <form @submit.prevent="onSubmit">
+            <div class="col m2 hide-on-small-only">
+                <div class="pinned">
+                    <div class="row">
+                        {{ paging.count }}記事
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" class="validate" v-model="q">
+                            <button class="btn waves-effect waves-light grey lighten-2" type="submit">
+                                <i class="material-icons black-text">search</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select v-model="params.sort">
+                                <option value="created">新着順</option>
+                                <option value="favorite_count">いいね数順</option>
+                                <option value="comment_count">コメント数順</option>
+                            </select>
+                            <label>並び順</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="date" class="validate" v-model="params.start_date">
+                            <label>投稿日(以降)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="date" class="validate" v-model="params.end_date">
+                            <label>投稿日(以前)</label>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select v-model="params.sort">
-                            <option value="created">新着順</option>
-                            <option value="favorite_count">いいね数順</option>
-                            <option value="comment_count">コメント数順</option>
-                        </select>
-                        <label>並び順</label>
+            </div>
+            <div class="row hide-on-med-and-up pinned white z-depth-5 search-box">
+            <div class="input-field col s10">
+                <i class="material-icons prefix">search</i>
+                <input type="text" class="validate" v-model="q">
+            </div>
+            <div class="col s2">
+                <a href="#" data-target="modal-search" class="modal-trigger">
+                    <i class="material-icons medium black-text">more_vert</i>
+                </a>
+            </div>
+            <div id="modal-search" class="modal">
+                <div class="modal-content">
+                    <h4>詳細検索</h4>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select v-model="params.sort">
+                                <option value="created">新着順</option>
+                                <option value="favorite_count">いいね数順</option>
+                                <option value="comment_count">コメント数順</option>
+                            </select>
+                            <label>並び順</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="date" class="validate" v-model="params.start_date">
+                            <label>投稿日(以降)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="date" class="validate" v-model="params.end_date">
+                            <label>投稿日(以前)</label>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="date" class="validate" v-model="params.start_date">
-                        <label>投稿日(以降)</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="date" class="validate" v-model="params.end_date">
-                        <label>投稿日(以前)</label>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close"><i class="material-icons black-text">close</i></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row hide-on-med-and-up pinned white z-depth-5 search-box">
-        <div class="input-field col s10">
-            <i class="material-icons prefix">search</i>
-            <input type="text" class="validate" v-model="params.q">
-        </div>
-        <div class="col s2">
-            <a href="#" data-target="modal-search" class="modal-trigger">
-                <i class="material-icons medium black-text">more_vert</i>
-            </a>
-        </div>
-        <div id="modal-search" class="modal">
-            <div class="modal-content">
-                <h4>詳細検索</h4>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select v-model="params.sort">
-                            <option value="created">新着順</option>
-                            <option value="favorite_count">いいね数順</option>
-                            <option value="comment_count">コメント数順</option>
-                        </select>
-                        <label>並び順</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="date" class="validate" v-model="params.start_date">
-                        <label>投稿日(以降)</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="date" class="validate" v-model="params.end_date">
-                        <label>投稿日(以前)</label>
-                    </div>
-                </div>
-            </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close"><i class="material-icons black-text">close</i></a>
-                </div>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 <?= $this->element('Article-list') ?>
 <?= $this->element('Tag-list') ?>
@@ -114,8 +118,8 @@
                     nextPage: null,
                     count: 0,
                 },
+                q: '<?= $q ?>',
                 params: {
-                    q: '<?= $q ?>',
                     start_date: '',
                     end_date: '',
                     sort: 'created',
@@ -136,6 +140,7 @@
                 try {
                     const {data} = await axios.get('/api/articles.json', {
                         params: {
+                            q: this.q,
                             page: this.page,
                             ...this.params,
                         }
@@ -159,13 +164,27 @@
                 });
             observer.observe(this.$refs.infinitescrolltrigger);
             },
+            onSubmit() {
+				if (this.loading) return 
+				this.clearSearch()
+				this.fetchArticles()
+			},
+			clearSearch() {
+				this.page = 1
+				this.paging = null
+				this.paging =  {
+					nextPage: null,
+					count: 0,
+				}
+				this.articles.splice(0)
+				this.loading = true
+			}
         },
         watch: {
             params: {
                 handler: function () {
-                    this.page = 1
-                    this.articles.splice(0)
-                    this.loading = true
+                    if (this.loading) return 
+				    this.clearSearch()
                     this.fetchArticles()
                 },
                 deep: true
