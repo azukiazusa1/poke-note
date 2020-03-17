@@ -31,7 +31,6 @@ class TagsController extends AppController
         $isFollowed = true;
         $this->set(compact('tag', 'isFollowed'));
 
-        $this->render('show102');
     }
    
 }
