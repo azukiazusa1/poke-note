@@ -34,7 +34,7 @@
                     </span>
                     <div id="articles">
                         <?= $this->element('loader') ?>
-                        <div v-else-if="isEmptyArticles">投稿した記事はありません。</div>
+                        <div v-else-if="isEmptyArticles">投稿された記事はありません。</div>
                         <div v-else>
                             <ul class="collection">
                                 <articles
