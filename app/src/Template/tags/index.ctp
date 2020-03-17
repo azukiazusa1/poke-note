@@ -6,12 +6,18 @@
         <p>{{ paging.count }}個のタグが見つかりました。</p>
         <p>気になるタグをフォローしましょう。</p>
     </div>
-    <div class="row">
-        <div class="input-field col s12">
-            <i class="material-icons prefix">search</i>
-            <input type="text" class="validate" v-model="params.q">
+    <form @submit.prevent="onSubmit">
+        <div class="row">
+            <div class="input-field col s12 m10">
+                <input type="text" class="validate" v-model="q" placeholder="タグの名前で検索">
+            </div>
+            <div class="col m2 hide-on-small-only">
+                <button class="btn waves-effect waves-light grey lighten-2 btn-large" type="submit">
+                    <i class="material-icons black-text">search</i>
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
     <?= $this->element('loader') ?>
     <div v-else-if="isEmptyTags">タグが見つかりませんでした。</div>
     <div class="row" v-else>
@@ -51,9 +57,7 @@
                     nextPage: null,
                     count: 0,
                 },
-                params: {
-                    q: '',
-                },
+                q: '',
                 page: 1,
                 loading: true,
             }
@@ -70,7 +74,7 @@
                     const {data} = await axios.get('/api/tags.json', {
                         params: {
                             page: this.page,
-                            ...this.params,
+                            q: this.q
                         }
                     })
                     this.tags.push(...data.tags)
@@ -92,17 +96,21 @@
                 });
             observer.observe(this.$refs.infinitescrolltrigger);
             },
-        },
-        watch: {
-            params: {
-                handler: function () {
-                    this.page = 1
-                    this.tags.splice(0)
-                    this.loading = true
-                    this.fetchTags()
-                },
-                deep: true
-            },
+            onSubmit() {
+				if (this.loading) return 
+				this.clearSearch()
+				this.fetchTags()
+			},
+			clearSearch() {
+				this.page = 1
+				this.paging = null
+				this.paging =  {
+					nextPage: null,
+					count: 0,
+				}
+				this.tags.splice(0)
+				this.loading = true
+			}
         },
         computed: {
             isEmptyTags: function() {
