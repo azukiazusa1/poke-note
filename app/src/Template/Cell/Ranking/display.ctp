@@ -41,7 +41,10 @@
                 <li class="collection-item">
                     <?= h(++$i) ?>
                     <span class="chip">
-                        <?= h($tag->title) ?>
+                        <?= $this->Html->link(h($tag->title), 
+                            ['controller' => 'Tags', 'action' => 'show',h($tag->title)],
+                            ['class' => 'black-text']
+                        )?>
                         <span class="fa-stack fa-lg" style="font-size: 1em;">
                             <i class="fa fa-circle fa-stack-2x"></i>
                             <i class="fa fa-inverse fa-stack-1x"><?= h($tag->article_count) ?></i>
