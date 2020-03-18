@@ -38,7 +38,7 @@ class TagsController extends AppController
             $isUsedTag = $user->isUsedTag($tag->id);
         }
         $isFollowed = true;
-        $this->set(compact('tag', 'isFollowed'));
+        $this->set(compact('tag', 'isFollowed', 'isUsedTag'));
 
     }
    

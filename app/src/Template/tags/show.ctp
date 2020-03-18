@@ -21,9 +21,21 @@
                     </div>
                 </div>
                 <div class="card-action">
-                <h2>about</h2>
-                <hr>
-                <div style="word-wrap: break-word;"><?= h($tag->description) ?></div>
+                    <h2>about</h2>
+                    <i class="fa fa-question-circle tooltipped edit-list" aria-hidden="true" data-position="bottom" 
+                        data-tooltip="このタグを使用したことがある場合、タグの説明を編集することができます。"></i>
+                    <?php if($isUsedTag): ?>
+                        <a class="btn red accent-2 btn-small edit-tag edit-list">編集する<i class="material-icons left">create</i></a> 
+                    <?php endif ?>
+                    <hr>
+                    <div class="edit-list" style="word-wrap: break-word;"><?= h($tag->description) ?></div>
+                    <div class="hide edit-list">
+                        <?= $this->Form->create($tag, ['url' => ['controller' => 'Tags', 'action' => 'edit']]) ?>
+                        <?= $this->Form->control('description', ['label' => 'タグの説明', 'class' => 'white materialize-textarea']) ?>
+                        <?= $this->Form->button('編集', ['class' => 'btn blue right']) ?>
+                        <a class="btn white black-text right cancel-btn">キャンセル</a> 
+                        <?= $this->Form->end() ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,6 +77,7 @@
     const tagId = '<?= $tag->id ?>'
     document.addEventListener('DOMContentLoaded', function() {
         M.Modal.init(document.querySelectorAll('.modal'));
+        M.Tooltip.init(document.querySelectorAll('.tooltipped'));
 
         const followBtn =  document.getElementById('follow-btn')
         followBtn.addEventListener('click', async function() {
@@ -83,6 +96,17 @@
                 }
             }
        })
+       
+       function toggleHide() {
+            const ediList = document.querySelectorAll('.edit-list');
+            ediList.forEach(e => e.classList.toggle('hide'))
+        }
+
+        const editBtn = document.querySelector('.edit-tag')
+        editBtn.addEventListener('click', toggleHide)
+
+        const cancelBtn = document.querySelector('.cancel-btn')
+        cancelBtn.addEventListener('click', toggleHide)
   });
 </script>
 <script>
