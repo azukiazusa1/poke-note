@@ -107,7 +107,9 @@
                             )?>
                         <span><?= h($article->user->nickname) ?></span>
                         <p><?= h($article->user->description) ?></p>
-                        <p><?= $this->Html->link(h($article->user->link), $article->user->link) ?></p>
+                        <?php if ($article->user->link): ?>
+                            <p><?= $this->Html->link(h($article->user->link), $article->user->link) ?></p>
+                        <?php endif ?>
                         </li>
                     </ul>
                 </div>
