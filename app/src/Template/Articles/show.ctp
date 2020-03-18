@@ -93,6 +93,23 @@
                             :navigation=true
                         />
                     </div>
+                    <hr class="list-divider">
+                    <h2><i class="material-icons Medium">person</i>投稿者</h2>
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                        <?= $this->Html->image(h($article->user->image), [
+                        'alt' => 'user',
+                        'class' => 'responsive-img circle icon-image',
+                        'url' => ['controller' => 'Users', 'action' => 'show', h($article->user->username)]
+                    ])?>
+                        <?= $this->Html->link('@' . h($article->user->username), 
+                                ['controller' => 'Users', 'action' => 'show', $article->user->username]
+                            )?>
+                        <span><?= h($article->user->nickname) ?></span>
+                        <p><?= h($article->user->description) ?></p>
+                        <p><?= $this->Html->link(h($article->user->link), $article->user->link) ?></p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -101,7 +118,7 @@
         <div class="col s12 m11">
             <div class="card">
                 <div class="card-content">
-                    <h5 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h5>
+                    <h2 id="comment"><i class="material-icons Medium">comment</i>コメント一覧</h2>
                     <?php if (count($article->comments) > 0) : ?>
                         <?php foreach ($article->comments as $comment) :?>
                             <div class="row" id="<?= $comment->id ?>">
@@ -190,7 +207,7 @@
             <div class="card">
                 <?php if (isset($login_user)) :?>
                     <div class="card-content">
-                        <span class="card-title"><h5><i class="material-icons">near_me</i>コメントを投稿する</h5></span>
+                        <span class="card-title"><h2><i class="material-icons">near_me</i>コメントを投稿する</h2></span>
                         <?= $this->Form->create($new_comment, ['url' => ['controller' => 'comments', 'action' => 'add']]) ?>
                         <?= $this->Form->hidden('article_id', ['value' => $article->id]) ?>
                         <?= $this->Form->control('body', ['label' => 'コメント', 'class' => 'materialize-textarea']) ?>
