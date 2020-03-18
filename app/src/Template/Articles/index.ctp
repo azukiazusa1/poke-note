@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s3 hide-on-med-and-down">
+        <div class="col l3 hide-on-med-and-down">
             <div class="collection">
                 <?= $this->Html->link('<i class="material-icons tiny">trending_up</i>トレンド',
                     ['controller' => 'Articles', 'action' => 'index'],
@@ -105,18 +105,8 @@
                 <?php endforeach ?>
             </ul>
         </div>
-        <div class="col s3 hide-on-med-and-down">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">Card Title</span>
-                    <p>I am a very simple card. I am good at containing small bits of information.
-                    I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                    <a href="#">This is a link</a>
-                    <a href="#">This is a link</a>
-                </div>
-            </div>
+        <div class="col s12 m12 l3">
+            <?= $this->cell('Ranking') ?>
         </div>
     </div>
 </div>
