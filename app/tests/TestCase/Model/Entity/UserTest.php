@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 /**
  * App\Model\Entity\User Test Case
  */
-class UserTest extends TestCase
+class UsersTest extends TestCase
 {
     /**
      * Test subject
@@ -26,6 +26,8 @@ class UserTest extends TestCase
         'app.Users',
         'app.Articles',
         'app.Follows',
+        'app.Tags',
+        'app.ArticlesTags'
     ];
 
     /**
@@ -73,6 +75,26 @@ class UserTest extends TestCase
     {
         $this->User->id = 2;
         $this->assertFalse($this->User->isFollowed(3));
+    }
+
+    public function test使ったことがあるタグの場合trueを返す()
+    {
+        $users = TableRegistry::getTableLocator()->get('Users');
+        $user = $users->get(1, [
+            'contain' => ['Articles' => fn($q) => $q->select(['id', 'user_id'])->contain('Tags')]
+        ]);
+
+        $this->assertTrue($user->isUsedTag(1));
+    }
+
+    public function test使ったことがないタグの場合falseを返す()
+    {
+        $users = TableRegistry::getTableLocator()->get('Users');
+        $user = $users->get(1, [
+            'contain' => ['Articles' => fn($q) => $q->select(['id', 'user_id'])->contain('Tags')]
+        ]);
+
+        $this->assertFalse($user->isUsedTag(2));
     }
 
     public function test総いいねを数える()

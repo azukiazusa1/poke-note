@@ -3,6 +3,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Collection\Collection;
 use Cake\ORM\TableRegistry;
 use Token\Model\Entity\TokenTrait;
 
@@ -86,6 +87,23 @@ class User extends Entity
         return (bool)$follows_table->find()
             ->where(['follow_user_id' => $this->id, 'user_id' => $user_id])
             ->first();
+    }
+
+    /**
+     *  使用したことがあるタグか
+     *
+     * @param integer $tag_id
+     * @return boolean
+     */
+    public function isUsedTag(int $tag_id): bool
+    {
+        if (!$this->articles) return false;
+        $articles = new Collection($this->articles);
+        return $articles->some(function ($article) use ($tag_id) {
+            if (!$article->tags) return false;
+            $tags = new Collection($article->tags);
+            return $tags->some(fn($tag) => $tag->id === $tag_id);
+        });
     }
 
     protected function _getTotalFavorite(): int
