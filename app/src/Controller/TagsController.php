@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
+use Cake\Http\Exception\UnauthorizedException;
 
 class TagsController extends AppController 
 {
@@ -17,6 +17,7 @@ class TagsController extends AppController
         parent::initialize();
         $this->loadComponent('RequestHandler');
         $this->Auth->allow(['index','show']);
+        $this->loadModel('Users');
     }
 
     public function index()
@@ -31,7 +32,7 @@ class TagsController extends AppController
         }
         $isUsedTag = false;
         if ($this->Auth->user('id')) {
-            $user = TableRegistry::getTableLocator()->get('Users')->get($this->Auth->user('id'), [
+            $user = $this->Users->get($this->Auth->user('id'), [
                 'contain' => ['Articles' => fn($q) => $q->select(['id', 'user_id'])->contain('Tags')]
             ]);
 
@@ -39,6 +40,29 @@ class TagsController extends AppController
         }
         $isFollowed = true;
         $this->set(compact('tag', 'isFollowed', 'isUsedTag'));
+
+    }
+
+    public function edit(int $id)
+    {
+        $tag = $this->Tags->get($id);
+        $user = $this->Users->get($this->Auth->user('id'), [
+            'contain' => ['Articles' => fn($q) => $q->select(['id', 'user_id'])->contain('Tags')]
+        ]);
+
+        // タグの編集権限がない場合
+        if (!$user->isUsedTag($tag->id)) {
+            throw new UnauthorizedException();
+        }
+
+        $tag = $this->Tags->patchEntity($tag, $this->request->getData());
+        if ($this->Tags->save($tag)) {
+            $this->Flash->success(__('タグの説明の更新に成功しました。'));
+        } else {
+            $this->Flash->error(__('タグの説明の更新に失敗しました。'));
+        }
+
+        return $this->redirect($this->request->referer());
 
     }
    

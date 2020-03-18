@@ -28,12 +28,13 @@
                         <a class="btn red accent-2 btn-small edit-tag edit-list">編集する<i class="material-icons left">create</i></a> 
                     <?php endif ?>
                     <hr>
-                    <div class="edit-list" style="word-wrap: break-word;"><?= h($tag->description) ?></div>
+                    <div class="edit-list" style="word-wrap: break-word;"><?= nl2br(h($tag->description)) ?></div>
                     <div class="hide edit-list">
-                        <?= $this->Form->create($tag, ['url' => ['controller' => 'Tags', 'action' => 'edit']]) ?>
-                        <?= $this->Form->control('description', ['label' => 'タグの説明', 'class' => 'white materialize-textarea']) ?>
-                        <?= $this->Form->button('編集', ['class' => 'btn blue right']) ?>
-                        <a class="btn white black-text right cancel-btn">キャンセル</a> 
+                        <?= $this->Form->create($tag, ['url' => ['controller' => 'Tags', 'action' => 'edit', $tag->id]]) ?>
+                        <?= $this->Form->control('description', ['label' => 'タグの説明', 'type' => 'textarea', 
+                        'class' => 'white materialize-textarea text', 'data-length' => "255", 'maxLength' => '255']) ?>
+                        <a class="btn white black-text cancel-btn">キャンセル</a> 
+                        <?= $this->Form->button('編集', ['class' => 'btn blue']) ?>
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
@@ -78,6 +79,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         M.Modal.init(document.querySelectorAll('.modal'));
         M.Tooltip.init(document.querySelectorAll('.tooltipped'));
+        M.CharacterCounter.init(document.querySelectorAll('.text'))
 
         const followBtn =  document.getElementById('follow-btn')
         followBtn.addEventListener('click', async function() {

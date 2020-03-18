@@ -77,6 +77,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/users/delete', ['controller' => 'Users', 'action' => 'delete']);
     $routes->connect('/users/*', ['controller' => 'Users', 'action' => 'show']);
     $routes->connect('/tags', ['controller' => 'Tags', 'action' => 'index']);
+    $routes->connect('/tags/edit/*', ['controller' => 'Tags', 'action' => 'edit']);
     $routes->connect('/tags/*', ['controller' => 'Tags', 'action' => 'show']);
 
     /**
