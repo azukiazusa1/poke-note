@@ -108,7 +108,7 @@ class User extends Entity
     }
 
     /**
-     * フォローしているタグ化
+     * フォローしているタグか
      *
      * @param integer $tag_id
      * @return boolean
@@ -117,7 +117,7 @@ class User extends Entity
     {
         $users_tags = TableRegistry::getTableLocator()->get('UsersTags');
         return (bool)$users_tags->find()
-            ->where(['usre_id' => $this->id, 'tag_id' => $tag_id])
+            ->where(['user_id' => $this->id, 'tag_id' => $tag_id])
             ->first();
     }
 
