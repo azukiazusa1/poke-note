@@ -131,6 +131,10 @@ class UsersController extends AppController
 
 	public function signup()
 	{
+		// すでにログイン済み
+		if ($this->Auth->user('id')) {
+			return $this->redirect(['controller' => 'Articles', 'action' => 'index']);
+		}
 		$user = $this->Users->newEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
@@ -149,12 +153,16 @@ class UsersController extends AppController
 
 	public function login()
 	{
+		// すでにログイン済み
+		if ($this->Auth->user('id')) {
+			return $this->redirect(['controller' => 'Articles', 'action' => 'index']);
+		}
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
-                $this->Auth->setUser($user);
-                $user = $this->Users->get($user['id']);
-                $this->LoginCookie->generate($user);
+				$this->Auth->setUser($user);
+				$user = $this->Users->get($user['id']);
+				$this->LoginCookie->generate($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Flash->error(__('ユーザー名またはパスワードが間違っています。'));
@@ -164,7 +172,7 @@ class UsersController extends AppController
 
 	public function logout()
 	{
-        $this->LoginCookie->delete();
-		return $this->redirect($this->Auth->logout());
+    	$this->LoginCookie->delete();
+			return $this->redirect($this->Auth->logout());
 	}
 }
