@@ -31,6 +31,7 @@
             <a :href=`/tags/${tag.title}`>
                 <span class="chip">
                     {{ tag.title }}
+                    <?= $this->element('number_circle', ['n' => 1]) ?>
                     <span class="fa-stack fa-lg" style="font-size: 1em;">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-inverse fa-stack-1x">{{ tag.article_count }}</i>

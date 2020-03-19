@@ -41,7 +41,6 @@ class UsersController extends AppController
 		$popular_articles = $articles->sortBy('favorite_count')->take(5)->toArray();
 		
 		$isFollowed = $user->isFollowed($this->Auth->user('id'));
-
 		$this->set(compact('user', 'popular_articles', 'isFollowed'));
 	}
 

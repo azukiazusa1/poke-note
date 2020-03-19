@@ -15,6 +15,9 @@ CREATE TABLE `users` (
   `article_count` int NOT NULL DEFAULT 0, 
   `follow_count` int NOT NULL DEFAULT 0,
   `follower_count` int NOT NULL DEFAULT 0,
+  `favorite_count` int NOT NULL DEFAULT 0,
+  `comment_count` int NOT NULL DEFAULT 0,
+  `follow_tag_count` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)

@@ -63,9 +63,17 @@
                 <div class="card-tabs">
                     <ul class="tabs tabs-fixed-width">
                         <li class="tab" @click="changeArticles"><a class="active" href="#articles">投稿した記事
-                            <span class="btn-floating btn-small red accent-2"><?= h($user->article_count)?></span></a></li>
-                        <li class="tab" @click="changeFavorites"><a href="#favorites">いいねした記事</a></li>
-                        <li class="tab" @click="changeComments"><a href="#comments">コメント</a></li>
+                            <?= $this->element('number_circle', ['n' => $user->article_count]) ?>
+                        </a></li>
+                        <li class="tab" @click="changeFavorites"><a href="#favorites">いいねした記事
+                            <?= $this->element('number_circle', ['n' => $user->favorite_count]) ?>
+                        </a></li>
+                        <li class="tab" @click="changeComments"><a href="#comments">コメント
+                            <?= $this->element('number_circle', ['n' => $user->comment_count]) ?>
+                        </a></li>
+                        <li class="tab" @click="changeComments"><a href="#comments">フォロータグ
+                            <?= $this->element('number_circle', ['n' => $user->follow_tag_count]) ?>
+                        </a></li>
                     </ul>
                 </div>
                 <div class="card-content">

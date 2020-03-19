@@ -88,7 +88,7 @@ class ArticlesTable extends Table
     {
         return $query->find('published')
             ->contain(['Users', 'Tags'])
-            ->order(['favorite_count' => 'DESC'])
+            ->order(['Articles.favorite_count' => 'DESC'])
             ->limit(20);
     }
 

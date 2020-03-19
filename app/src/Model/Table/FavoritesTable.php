@@ -42,7 +42,8 @@ class FavoritesTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->addBehavior('CounterCache', [
-            'Articles' => ['favorite_count']
+            'Articles' => ['favorite_count'],
+            'Users' => ['favorite_count']
         ]);
 
         $this->belongsTo('Articles', [

@@ -37,6 +37,10 @@ class UsersTagsTable extends Table
         $this->setDisplayField('user_id');
         $this->setPrimaryKey(['user_id', 'tag_id']);
 
+        $this->addBehavior('CounterCache', [
+            'Users' => ['follow_tag_count']
+        ]);
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER',

@@ -42,7 +42,8 @@ class CommentsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('CounterCache', [
-            'Articles' => ['comment_count']
+            'Articles' => ['comment_count'],
+            'Users' => ['comment_count'],
         ]);
 
         $this->belongsTo('Articles', [
