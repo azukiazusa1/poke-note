@@ -154,9 +154,14 @@
                 const instance = M.Modal.getInstance(modal);
                 if (response.status === 401) {
                     instance.open()
+                    return 
+                } else if (response.status === 400) {
+                    const err = '自分自身をフォローすることはできません。'
                 } else {
-                    M.toast({html: response.message, classes: 'rounded red lighten-4 red-text darken-2-text'})
+                    const err = '予期せぬエラーが発生しました。'
                 }
+
+                M.toast({html: err, classes: 'rounded red lighten-4 red-text darken-2-text'})
             }
        })
   });

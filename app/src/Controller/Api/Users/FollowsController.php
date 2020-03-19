@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Users;
 
 use App\Controller\AppController;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\UnauthorizedException;
 use Cake\Http\Exception\InternalErrorException;
 
@@ -56,7 +57,7 @@ class FollowsController extends AppController
         if ($follow) {
             $message = 'Deleted';
             if (!$this->Follows->delete($follow))  {
-                throw new InternalErrorException('予期せぬエラーが発生しました。');
+                throw new BadRequestException('予期せぬエラーが発生しました。');
             }
         } else {
             $message = 'Saved';
