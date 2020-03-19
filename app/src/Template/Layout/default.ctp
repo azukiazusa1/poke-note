@@ -105,7 +105,11 @@
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">サイトマップ</h5>
                 <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">PNote!とは？</a></li>
+                  <li>
+                    <?= $this->Html->link('PNote!とは？', 
+                        ['controller' => 'Pages', 'action' => 'about'],
+                        ['class' => 'grey-text text-lighten-3']) ?>
+                　</li>
                   <li>
                       <?= $this->Html->link('記事一覧',
                       ['controller' => 'Articles','action' => 'search'],
