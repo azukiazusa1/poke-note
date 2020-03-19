@@ -1,10 +1,14 @@
 <?php
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Users Model
@@ -26,6 +30,7 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
+    use MailerAwareTrait;
     /**
      * Initialize method
      *
@@ -102,6 +107,14 @@ class UsersTable extends Table
     {
         return $query->contain('Articles', fn($q) => $q->select(['user_id', 'favorite_count']))
             ->matching('Favorites', fn($q) => $q->where(['Favorites.article_id' => $options['article_id']]));
+    }
+
+    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options)
+    {
+        // パスワード変更が変更されたときに通知メールを送る
+        if (!$entity->isNew() && $entity->isDirty('password')) {
+            $this->getMailer('User')->send('changePassword', [$entity]);
+        }
     }
 
     /**

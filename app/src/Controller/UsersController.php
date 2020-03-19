@@ -92,7 +92,7 @@ class UsersController extends AppController
 		$this->set(compact('user'));
 
 		if ($this->request->is('put')) {
-			if (!password_verify($this->request->getData('password'), $user->password)) {
+			if (!password_verify($this->request->getData('co_password'), $user->password)) {
 				$this->Flash->error('現在のパスワードと一致しません。');
 				return $this->render();
 			} 
