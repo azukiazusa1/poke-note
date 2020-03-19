@@ -39,7 +39,7 @@ class FollowsController extends AppController
         $user_id = $this->request->getParam('user_id');
 
         if (!$this->Auth->user('id')) {
-            throw new UnauthorizedException(__('いいねをするためにはログインが必要です。'));
+            throw new UnauthorizedException(__('フォローをするためにはログインが必要です。'));
         }
 
         if ($this->Auth->user('id') === $user_id) {
