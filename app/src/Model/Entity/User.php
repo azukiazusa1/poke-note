@@ -52,6 +52,7 @@ class User extends Entity
         'articles' => true,
         'comments' => true,
         'favorites' => true,
+        'tags' => true
     ];
 
     /**
@@ -104,6 +105,20 @@ class User extends Entity
             $tags = new Collection($article->tags);
             return $tags->some(fn($tag) => $tag->id === $tag_id);
         });
+    }
+
+    /**
+     * フォローしているタグ化
+     *
+     * @param integer $tag_id
+     * @return boolean
+     */
+    public function isFollowedTag(int $tag_id): bool
+    {
+        $users_tags = TableRegistry::getTableLocator()->get('UsersTags');
+        return (bool)$users_tags->find()
+            ->where(['usre_id' => $this->id, 'tag_id' => $tag_id])
+            ->first();
     }
 
     protected function _getTotalFavorite(): int

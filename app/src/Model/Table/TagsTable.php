@@ -45,6 +45,12 @@ class TagsTable extends Table
             'targetForeignKey' => 'article_id',
             'joinTable' => 'articles_tags',
         ]);
+
+        $this->belongsToMany('Users', [
+            'foreignKey' => 'tag_id',
+            'targetForeignKey' => 'user_id',
+            'joinTable' => 'users_tags',
+        ]);
     }
 
     public function findSearch(Query $query, array $options): Query

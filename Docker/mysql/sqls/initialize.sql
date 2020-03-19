@@ -88,6 +88,14 @@ CREATE TABLE `follows` (
   FOREIGN KEY follow_user_key(follow_user_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `users_tags` (
+  `user_id` INT NOT NULL,
+  `tag_id` INT NOT NULL,
+  PRIMARY KEY (user_id, tag_id),
+  FOREIGN KEY tag_key(tag_id) REFERENCES tags(id),
+  FOREIGN KEY user_key(user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 INSERT INTO users(username, password, nickname, email, created, modified)
 VALUES

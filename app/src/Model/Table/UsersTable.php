@@ -67,6 +67,13 @@ class UsersTable extends Table
             'foreignKey' => 'follow_user_id',
             'dependent' => true,
         ]);
+
+        $this->belongsToMany('Tags', [
+            'dependent' => true,
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'tag_id',
+            'joinTable' => 'users_tags',
+        ]);
     }
 
     public function findSearch(Query $query, array $options): Query
