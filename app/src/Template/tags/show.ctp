@@ -84,7 +84,8 @@
         const followBtn =  document.getElementById('follow-btn')
         followBtn.addEventListener('click', async function() {
             try {
-                const {data} = await axios.post(`/api/tags/${tagId}/follows.json`)
+                const {data} = await axios.post(`/api/tags/${tagId}/users.json`)
+                console.log(data)
                 const children = [...this.children];
                 children.map(child => child.classList.toggle('hide'))
             } catch ({response}) {
@@ -94,7 +95,7 @@
                 if (response.status === 401) {
                     instance.open()
                 } else {
-                    M.toast({html: response.message, classes: 'rounded red lighten-4 red-text darken-2-text'})
+                    M.toast({html: '予期せぬエラーが発生しました。', classes: 'rounded red lighten-4 red-text darken-2-text'})
                 }
             }
        })

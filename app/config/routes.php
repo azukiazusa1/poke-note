@@ -129,7 +129,7 @@ Router::prefix('api', function (RouteBuilder $routes) {
 
     $routes->resources('Tags', function ($routes) {
         $routes->resources('Articles', ['prefix' => 'tags']);
-        $routes->resources('Follows', ['prefix' => 'tags']);
+        $routes->resources('Users', ['prefix' => 'tags']);
     });
 
 });

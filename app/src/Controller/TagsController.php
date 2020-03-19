@@ -31,14 +31,15 @@ class TagsController extends AppController
             throw new NotFoundException();
         }
         $isUsedTag = false;
+        $isFollowed = false;
         if ($this->Auth->user('id')) {
             $user = $this->Users->get($this->Auth->user('id'), [
                 'contain' => ['Articles' => fn($q) => $q->select(['id', 'user_id'])->contain('Tags')]
             ]);
 
             $isUsedTag = $user->isUsedTag($tag->id);
+            $isFollowed = $user->isFollowedTag($tag->id);
         }
-        $isFollowed = true;
         $this->set(compact('tag', 'isFollowed', 'isUsedTag'));
 
     }
