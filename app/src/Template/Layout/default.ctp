@@ -96,6 +96,11 @@
               <div class="col l6 s12">
                 <h5 class="white-text">PNote!</h5>
                 <p class="grey-text text-lighten-4">ポケモン好きのための、記事投稿サイトです。</p>
+                <p class="grey-text text-lighten-4"><i class="fab fa-twitter twitter"></i>
+                    <a href="https://twitter.com/pnote18" class="grey-text text-lighten-3">@pnote18</a>
+                </p>
+                <p class="grey-text text-lighten-4"><i class="material-icons tiny">email</i>
+                    <a href="mailto:pokemonnote08@gmail.com" class="grey-text text-lighten-4">pokemonnote08@gmail.com</a></p>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">サイトマップ</h5>
@@ -114,6 +119,11 @@
                   <li>
                       <?= $this->Html->link('ユーザー一覧',
                       ['controller' => 'Users','action' => 'index'],
+                      ['class' => 'grey-text text-lighten-3']) ?>
+                  </li>
+                  <li>
+                      <?= $this->Html->link('お問い合わせ', 
+                      ['controller' => 'Pages', 'action' => 'contact'],
                       ['class' => 'grey-text text-lighten-3']) ?>
                   </li>
                 </ul>
