@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Collection\Collection;
 use Cake\ORM\Query;
 use Cake\Database\Expression\QueryExpression;
 use Cake\ORM\RulesChecker;
@@ -30,6 +31,7 @@ use Cake\Validation\Validator;
  */
 class ArticlesTable extends Table
 {
+    const TOPPAGE_ARTICLE_COUNT = 20;
     /**
      * Initialize method
      *
@@ -89,7 +91,7 @@ class ArticlesTable extends Table
         return $query->find('published')
             ->contain(['Users', 'Tags'])
             ->order(['Articles.favorite_count' => 'DESC'])
-            ->limit(20);
+            ->limit(self::TOPPAGE_ARTICLE_COUNT);
     }
 
     public function findLatest(Query $query): Query
@@ -97,7 +99,7 @@ class ArticlesTable extends Table
         return $query->find('published')
             ->contain(['Users', 'Tags'])
             ->order(['Articles.created' => 'DESC'])
-            ->limit(20);
+            ->limit(self::TOPPAGE_ARTICLE_COUNT);
     }
 
     public function findTimeLine(Query $query, array $options): Query
@@ -106,7 +108,15 @@ class ArticlesTable extends Table
             ->contain(['Users', 'Tags'])
             ->order(['Articles.created' => 'DESC'])
             ->matching('Users.Followers', fn($q) => $q->where(['Followers.user_id' => $options['user_id']]))
-            ->limit(20);
+            ->limit(self::TOPPAGE_ARTICLE_COUNT);
+    }
+
+    public function findTagFollow(Query $query, array $options): Collection
+    {
+        $users_tags = TableRegistry::getTableLocator()->get('UsersTags');
+        $tag_ids = $users_tags->find('list')->where(['user_id' => $options['user_id']])->toArray();
+        return $query
+            ->find('byTagIds', ['tag_ids' => $tag_ids]);
     }
 
     public function findSearch(Query $query, array $options): Query
@@ -148,8 +158,19 @@ class ArticlesTable extends Table
         return $query->find('published')
             ->contain(['Users', 'Tags'])
             ->order(['Articles.created' => 'DESC'])
-            ->matching('Tags', fn($q) => $q->where(['Tags.id' => $options['tag_id']]))
-            ->limit(20);
+            ->matching('Tags', fn($q) => $q->where(['Tags.id' => $options['tag_id']]));
+    }
+
+
+    public function findByTagIds(Query $query, array $options): Collection
+    {
+        return $query->find('published')
+            ->contain(['Users', 'Tags'])
+            ->order(['Articles.created' => 'DESC'])
+            ->matching('Tags', fn($q) => $q->where(['Tags.id IN' => $options['tag_ids']]))
+            ->all()
+            ->indexBy(fn($q) => $q->id)
+            ->take(self::TOPPAGE_ARTICLE_COUNT);
     }
 
     public function findByUserId(Query $query, array $options): Query

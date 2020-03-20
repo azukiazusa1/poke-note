@@ -1,13 +1,14 @@
 <? $this->assign('title', 'PNote!') ?>
+<? $page = $this->request->getParam('action') ?>
 <div class="container">
     <div class="row">
         <div class="input-field col s12 hide-on-large-only">
             <select id="top-select" onchange="location.href=value">
-                <option value="/" <?= $this->request->getParam('action') === 'index' ? 'selected' : '' ?>>トレンド</option>
-                <option value="/latest" <?= $this->request->getParam('action') === 'latest' ? 'selected' : '' ?>>最新</option>
+                <option value="/" <?= $page === 'index' ? 'selected' : '' ?>>トレンド</option>
+                <option value="/latest" <?= $page === 'latest' ? 'selected' : '' ?>>最新</option>
                 <?php if (isset($login_user)): ?>
-                    <option value="/timeline" <?= $this->request->getParam('action') === 'timeline' ? 'selected' : '' ?>>タイムライン</option>
-                    <option value="/tag" <?= $this->request->getParam('action') === 'tag' ? 'selected' : '' ?>>タグ</option>
+                    <option value="/timeline" <?= $page === 'timeline' ? 'selected' : '' ?>>タイムライン</option>
+                    <option value="/tag-follow" <?= $page === 'tag' ? 'selected' : '' ?>>タグ</option>
                 <?php endif ?>
             </select>
         </div>
@@ -17,18 +18,21 @@
             <div class="collection">
                 <?= $this->Html->link('<i class="material-icons tiny">trending_up</i>トレンド',
                     ['controller' => 'Articles', 'action' => 'index'],
-                    ['class' => 'collection-item', 'escape' => false]
+                    ['class' => $page === 'index' ? 'active collection-item' : 'collection-item', 'escape' => false]
                 )?>
                 <?= $this->Html->link('<i class="material-icons tiny">done</i>最新',
                     ['controller' => 'Articles', 'action' => 'latest'],
-                    ['class' => 'collection-item', 'escape' => false]
+                    ['class' => $page === 'latest' ? 'active collection-item' : 'collection-item', 'escape' => false]
                 )?>
                 <?php if (isset($login_user)): ?>
                     <?= $this->Html->link('<i class="material-icons tiny">people</i>タイムライン',
                         ['controller' => 'Articles', 'action' => 'timeline'],
-                        ['class' => 'collection-item', 'escape' => false]
+                        ['class' => $page === 'timeline' ? 'active collection-item' : 'collection-item', 'escape' => false]
                     )?>
-                    <a href="#!" class="collection-item"><i class="material-icons tiny">local_offer</i>タグ</a>
+                    <?= $this->Html->link('<i class="material-icons tiny">local_offer</i>タグ',
+                        ['controller' => 'Articles', 'action' => 'tag'],
+                        ['class' => $page === 'tag' ? 'active collection-item' : 'collection-item', 'escape' => false]
+                    )?>
                 <? endif ?>
             </div>
         </div>

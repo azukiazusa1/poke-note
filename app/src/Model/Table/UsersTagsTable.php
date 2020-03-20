@@ -34,7 +34,7 @@ class UsersTagsTable extends Table
         parent::initialize($config);
 
         $this->setTable('users_tags');
-        $this->setDisplayField('user_id');
+        $this->setDisplayField('tag_id');
         $this->setPrimaryKey(['user_id', 'tag_id']);
 
         $this->addBehavior('CounterCache', [

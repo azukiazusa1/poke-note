@@ -45,6 +45,13 @@ class ArticlesController extends AppController
         $this->render('index');
     }
 
+    public function tag()
+    {
+        $articles = $this->Articles->find('tagFollow', ['user_id' => $this->Auth->user('id')]);
+        $this->set(compact('articles'));
+        $this->render('index');
+    }
+
     public function new()
     {
         $article = $this->Articles->newEntity();
