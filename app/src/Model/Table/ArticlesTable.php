@@ -111,10 +111,11 @@ class ArticlesTable extends Table
             ->limit(self::TOPPAGE_ARTICLE_COUNT);
     }
 
-    public function findTagFollow(Query $query, array $options): Collection
+    public function findTagFollow(Query $query, array $options)
     {
         $users_tags = TableRegistry::getTableLocator()->get('UsersTags');
         $tag_ids = $users_tags->find('list')->where(['user_id' => $options['user_id']])->toArray();
+        if (!$tag_ids) return [];
         return $query
             ->find('byTagIds', ['tag_ids' => $tag_ids]);
     }
