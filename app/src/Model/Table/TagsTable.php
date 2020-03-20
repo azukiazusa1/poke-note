@@ -61,6 +61,11 @@ class TagsTable extends Table
             ->where(['title LIKE' => '%' . $options['params']['q'] . '%']);
     }
 
+    public function findByUserId(Query $query, array $options): Query
+    {
+        return $query
+            ->matching('Users', fn($q) => $q->where(['user_id' => $options['user_id']]));
+    }
     /**
      * Default validation rules.
      *
