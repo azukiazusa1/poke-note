@@ -85,7 +85,6 @@
         followBtn.addEventListener('click', async function() {
             try {
                 const {data} = await axios.post(`/api/tags/${tagId}/users.json`)
-                console.log(data)
                 const children = [...this.children];
                 children.map(child => child.classList.toggle('hide'))
             } catch ({response}) {

@@ -22,11 +22,23 @@ class TagsController extends AppController
     {
         $user_id = $this->request->getParam('user_id');
 
-        $tags = $this->Tags->find('byUserId', ['user_id' => $user_id]);
+        $this->paginate = [
+            'limit' => 100,
+            'order' => [
+                'article_count' => 'desc'
+            ],
+            'finder' => [
+                'byUserId' => ['user_id' => $user_id]
+            ]
+        ];
+
+        $tags = $this->paginate($this->Tags);
+        $paging = $this->request->getParam('paging')['Tags'];
 
         $this->set([
             'tags' => $tags,
-            '_serialize' => ['tags']
+            'paging' => $paging,
+            '_serialize' => ['tags', 'paging']
         ]);
     }
 }

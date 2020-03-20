@@ -62,16 +62,16 @@
             <div class="card" id="app">
                 <div class="card-tabs">
                     <ul class="tabs tabs-fixed-width">
-                        <li class="tab" @click="changeArticles"><a class="active" href="#articles">投稿した記事
+                        <li class="tab" @click="change('articles')"><a class="active" href="#articles">投稿した記事
                             <?= $this->element('number_circle', ['n' => $user->article_count]) ?>
                         </a></li>
-                        <li class="tab" @click="changeFavorites"><a href="#favorites">いいねした記事
+                        <li class="tab" @click="change('favorites')"><a href="#favorites">いいねした記事
                             <?= $this->element('number_circle', ['n' => $user->favorite_count]) ?>
                         </a></li>
-                        <li class="tab" @click="changeComments"><a href="#comments">コメント
+                        <li class="tab" @click="change('comments')"><a href="#comments">コメント
                             <?= $this->element('number_circle', ['n' => $user->comment_count]) ?>
                         </a></li>
-                        <li class="tab" @click="changeComments"><a href="#comments">フォロータグ
+                        <li class="tab" @click="change('tags')"><a href="#tags">フォロータグ
                             <?= $this->element('number_circle', ['n' => $user->follow_tag_count]) ?>
                         </a></li>
                     </ul>
@@ -120,7 +120,7 @@
                         <div v-else-if="isEmptyComments">コメントはありません。</div>
                         <div v-else>
                             <ul class="collection">
-                                <comments
+                                <comments-list
                                     v-for="comment in comments"
                                     :key="comment.id"
                                     :comment="comment"
@@ -134,6 +134,22 @@
                             </div>
                         </div>
                     </div>
+                    <div id="tags">
+                        <?= $this->element('loader') ?>
+                        <div v-else-if="isEmptyTags">フォローしているタグはありません。</div>
+                        <div v-else>
+                            <div class="grey-text TagList">
+                                <i class="tiny material-icons grey-text">local_offer</i>
+                                <Tag-list v-for="tag in tags" :key="tag.id" :tag="tag" class="tag" />
+                            </div>
+                            <div class="center">
+                                <pagination
+                                    :paging="tagsPaging"
+                                    @paginate="tagsPage = $event"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,6 +158,7 @@
 <?= $this->element('modalUnlogin', ['do' => 'フォロー']) ?>
 <?= $this->element('Article-list') ?>
 <?= $this->element('Tag-list') ?>
+<?= $this->element('Comment-list') ?>
 <?= $this->element('pagination') ?>
 <script>
     const userId = '<?= $user->id ?>'
@@ -174,22 +191,6 @@
        })
   });
 </script>
-
-<script type="text/x-template" id="comment-template">
-    <li class="collection-item avatar">
-        <div>
-            <a :href="userUrl"><img class="circle responsive-img" :src="userImg" /></a>
-            <a :href="articleUrl" class="title">{{ comment.article.title }}</a>にコメントしました。
-            <span class="grey-text darken-1 right">
-                <i class="tiny material-icons">date_range</i>
-                {{ comment.formated_created }}
-            </span>
-        </div>
-        <div class="truncate">
-            {{ comment.body }}
-        </div>
-    </li>
-</script>
 <script>
     new Vue({
         el: '#app',
@@ -204,79 +205,47 @@
                 comments: '',
                 commentsPage: 1,
                 commentsPaging: '',
+                tags: '',
+                tagsPage: 1,
+                tagsPaging: '',
                 loading: true,
                 userId: userId
             }
         },
-        created() { this.fetchArticles() },
+        created() { this.fetch('articles') },
         methods: {
-            fetchArticles: async function() {
+            fetch: async function(name) {
                 try {
                     this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/articles.json?page=${this.articlesPage}`)
-                    this.articles = data.articles
-                    this.articlesPaging = data.paging
+                    const {data} = await axios.get(`/api/users/${this.userId}/${name}.json?page=${this[`${name}Page`]}`)
+                    this[name] = data[name]
+                    this[`${name}Paging`] = data.paging
                 } catch (err) {
                     console.log(err)
                 } finally {
                     this.loading = false
                 }
             },
-            fetchFavorites: async function() {
-                try {
-                    this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/favorites.json?page=${this.favoritesPage}`)
-                    this.favorites = data.favorites
-                    this.favoritesPaging = data.paging
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    this.loading = false
-                }
-            },
-            fetchComments: async function() {
-                try {
-                    this.loading = true
-                    const {data} = await axios.get(`/api/users/${this.userId}/comments.json?page=${this.commensPage}`)
-                    this.comments = data.comments
-                    this.commentsPaging = data.paging
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    this.loading = false
-                }
-            },
-            changeArticles: function() {
-                if (this.articles) {
+            change: function(name) {
+                if (this[name]) {
                     this.loading = false
                     return
                 }
-                this.fetchArticles()
-            },
-            changeFavorites: function() {
-                if (this.favorites) {
-                    this.loading = false
-                    return
-                }
-                this.fetchFavorites()
-            },
-            changeComments: function() {
-                if (this.comments) {
-                    this.loading = false
-                    return
-                }
-                this.fetchComments()
+                this.fetch(name)
             },
         },
         watch: {
             articlesPage: function() {
-                this.fetchArticles()
+                this.fetch('articles')
             },
             favoritesPage: function()  {
-                this.fetchFavorites()
+                this.fetch('favorites')
             },
             commentsPage: function() {
-                this.fetchComments()
+                this.fetch('comments')
+            },
+            tagsPage: function() {
+                this.fetch('tags')
             }
         },
         computed: {
@@ -288,19 +257,10 @@
             },
             isEmptyComments: function() {
                 return this.comments.length < 1
+            },
+            isEmptyTags: function() {
+                return this.tags.length < 1
             }
         }
-    })
-
-    Vue.component('comments', {
-        props: ['comment'],
-        data() {
-            return {
-                userUrl: `/users/${this.comment.user.username}`,
-                userImg: `/img/${this.comment.user.image}`,
-                articleUrl: `/articles/show/${this.comment.article.id}`
-            }
-        },
-        template: '#comment-template'
     })
 </script>

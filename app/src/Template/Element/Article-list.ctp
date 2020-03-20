@@ -4,7 +4,7 @@
         <a :href="articleUrl" class="title">{{ article.title }}</a><br>
         <div class="grey-text TagList">
             <i class="tiny material-icons grey-text">local_offer</i>
-            <Tag-list v-for="tag in article.tags" :key="tag.id" :tag="tag" class="tag" />
+            <tag-list v-for="tag in article.tags" :key="tag.id" :tag="tag" class="tag" />
         </div>
         <div>
             <span>
