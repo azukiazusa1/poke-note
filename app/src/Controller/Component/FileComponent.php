@@ -5,10 +5,18 @@ namespace App\Controller\Component;
 use RuntimeException;
 
 use Cake\Controller\Component;
-use Cake\ORM\TableRegistry;
+use App\Model\Utility\S3Manager;
 
 class FileComponent extends Component
 {
+    private $s3;
+
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->s3 = new S3Manager();
+
+    }
     /**
      * ファイルアップロード処理
      *
@@ -33,15 +41,9 @@ class FileComponent extends Component
                 throw new RuntimeException('ファイル形式が不正です。');
             }
 
-            $filename = $dir . '/' . sha1_file($file['tmp_name']) . '.' . $ext;
-            $path = '../webroot/img/' . $filename;
+            $filename = $dir . '/' .sha1_file($file['tmp_name']) . '.' . $ext;
 
-            if (!move_uploaded_file($file['tmp_name'], $path)) {
-                throw new RuntimeException('ファイル保存時にエラーが発生しました。');
-            }
-
-            chmod($path, 0644);
-            return $filename;
+            return $this->s3->putObject($file['tmp_name'], $filename);
             
         } catch (RuntimeException $e) {
             $this->Flash->error($e->getMessage());

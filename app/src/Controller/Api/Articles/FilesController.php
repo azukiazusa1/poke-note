@@ -33,11 +33,13 @@ class FilesController extends AppController
         $article_id = $this->request->getParam('article_id');
         $image = $this->request->getData();
 
-        $filename = $this->File->upload($image['image'], 'article');
+        $dir = 'article/' . $article_id;
+
+        $filename = $this->File->upload($image['image'], $dir);
 
         $this->set([
             'image' => $image['image']['tmp_name'],
-            'filename' => '/img/' . $filename,
+            'filename' => $filename,
             '_serialize' => ['image', 'filename']
         ]);
     }

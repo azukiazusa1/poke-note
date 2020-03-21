@@ -16,6 +16,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Http\Response;
+use Cake\Routing\Router;
 use Token\Util\Token;
 
 /**
@@ -90,4 +92,11 @@ class AppController extends Controller
             $this->set(compact('login_user'));
         }
     }
+
+    // public function beforeRedirect(Event $event, $url, Response $response)
+    // {
+    //     // httpsにリダイレクトするように設定
+    //     $response = $response->withLocation('https://' . $_SERVER["HTTP_HOST"] . Router::url($url));
+    //     return $response;
+    // }
 }

@@ -34,7 +34,7 @@ Vue.component('articles', {
         props: ['article'],
         data() {
             return {
-                userImg: `/img/${this.article.user.image}`,
+                userImg: `${this.article.user.image}`,
                 userUrl: `/users/${this.article.user.username}`,
                 articleUrl: `/articles/show/${this.article.id}`
             }

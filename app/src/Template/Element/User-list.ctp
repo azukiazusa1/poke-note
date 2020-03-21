@@ -15,7 +15,7 @@ Vue.component('user-list', {
     props: ['user'],
     data() {
         return {
-            userImg: `/img/${this.user.image}`,
+            userImg: `${this.user.image}`,
             userUrl: `/users/${this.user.username}`,
         }
     },
