@@ -10,7 +10,7 @@
     <form @submit.prevent="onSubmit">
         <div class="row">
             <div class="input-field col s12 m10">
-                <input type="text" class="validate" v-model="q" placeholder="タグの名前で検索">
+                <input type="search" class="validate" v-model="q" placeholder="タグの名前で検索">
             </div>
             <div class="col m2 hide-on-small-only">
                 <button class="btn waves-effect waves-light grey lighten-2 btn-large" type="submit">

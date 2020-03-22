@@ -39,7 +39,7 @@
                     <form method="get" action="/search">
                         <div class="input-field">
                             <i class="material-icons prefix white-text">search</i>
-                            <input name="q" id="search" type="text" class="validate white" placeholder="キーワード検索">
+                            <input name="q" id="search" input type="search" class="validate white" placeholder="キーワード検索">
                         </div>
                     </form>
                 </li>
@@ -48,7 +48,7 @@
                     <ul id="dropdown2" class="dropdown-content">
                         <form method="get" action="/search">
                             <div class="input-field">
-                                <input name="q" id="search-mobile" type="text" class="validate white" placeholder="キーワード検索" value="<?= $q ?? ''?>">
+                                <input name="q" id="search-mobile" input type="search" class="validate white" placeholder="キーワード検索" value="<?= $q ?? ''?>">
                             </div>
                         </form>
                     </ul>

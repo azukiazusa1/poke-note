@@ -32,7 +32,7 @@
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<input type="text" class="validate" v-model="q">
+							<input type="search" class="validate" v-model="q">
 							<button class="btn waves-effect waves-light grey lighten-2" type="submit">
 								<i class="material-icons black-text">search</i>
 							</button>
@@ -53,7 +53,7 @@
 			<div class="row hide-on-med-and-up pinned white z-depth-5 search-box">
 				<div class="input-field col s10">
 					<i class="material-icons prefix">search</i>
-					<input type="text" class="validate" v-model="q">
+					<input type="search" class="validate" v-model="q">
 				</div>
 				<div class="col s2">
 					<a href="#" data-target="modal-search" class="modal-trigger">
