@@ -24,7 +24,7 @@
                 </div>
             </div>
 		</div>
-		<form @submit.prevent="onSubmit">
+		<form @submit.prevent="onSubmit" action="#">
 			<div class="col m2 hide-on-small-only">
 				<div class="pinned">
 					<div class="row">

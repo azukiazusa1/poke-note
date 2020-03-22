@@ -7,7 +7,7 @@
         <p>{{ paging.count }}個のタグが見つかりました。</p>
         <p>気になるタグをフォローしましょう。</p>
     </div>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" action="#">
         <div class="row">
             <div class="input-field col s12 m10">
                 <input type="search" class="validate" v-model="q" placeholder="タグの名前で検索">
