@@ -8,6 +8,7 @@
 <?= $this->Html->script('../node_modules/vue/dist/vue.js') ?>
 <?= $this->Html->script('../node_modules/mavon-editor/dist/mavon-editor.js') ?>
 <?= $this->Html->script('../node_modules/axios/dist/axios.min.js') ?>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 <?= $this->Html->css('../node_modules/mavon-editor/dist/css/index.css') ?>
 <?= $this->Form->create($article) ?>
 <?= $this->Form->control('title', ['label' => 'タイトル', 'class' => 'validate', 'id' => 'title']) ?>
@@ -58,10 +59,13 @@ Vue.use(window['MavonEditor'])
 new Vue({
    el: '#app',
    data() {
-        return { 
+        return {
             value: document.getElementById('body').value,
             message: '',
         }
+    },
+    mounted: function() {
+        this.delayFunc = _.debounce(this.put, 2000)
     },
     methods: {
         $imgAdd(pos, $file) {
@@ -79,10 +83,14 @@ new Vue({
             })
         },
         $save(body) {
+            this.delayFunc()
+        },
+        put() {
             const data = {
-                body: body,
+                body: this.value,
                 title: document.getElementById('title').value
             }
+            console.log('autosave')
             axios.put(`/api/articles/${articleId}.json`, data)
         }
     },
